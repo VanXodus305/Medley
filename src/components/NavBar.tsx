@@ -9,8 +9,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Home", href: "#home" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Our Team", href: "#team" },
+  // { label: "How It Works", href: "#how-it-works" },
+  // { label: "Our Team", href: "#team" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -114,7 +114,7 @@ const NavBar = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <span className="text-secondary-200">Meds</span>
+          <span className="text-secondary-200">Medley</span>
         </motion.div>
 
         <motion.div
@@ -135,7 +135,7 @@ const NavBar = () => {
           <Link href="/signin" className="w-full max-w-[120px]">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
-                className="bg-secondary-200/45 font-medium text-sm"
+                className="bg-secondary-200/60 font-medium text-sm"
                 size="sm"
                 variant="shadow"
                 fullWidth

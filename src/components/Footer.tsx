@@ -88,7 +88,7 @@ const Footer = () => {
   return (
     <footer
       id="contact"
-      className="bg-gradient-to-br from-background via-blue-50 to-blue-100 text-primary py-16 px-6 md:px-20"
+      className="bg-gradient-to-br from-background via-green-50 to-green-100 text-primary py-16 px-6 md:px-20"
     >
       <motion.div
         className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-y-10 gap-x-10 items-start"
