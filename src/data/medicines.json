@@ -1,0 +1,1402 @@
+[
+  {
+    "id": "MED001",
+    "name": "Paracetamol",
+    "uses": ["Fever", "Headache", "Body Pain"],
+    "brand": "Crocin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED002",
+    "name": "Ibuprofen",
+    "uses": ["Fever", "Pain", "Inflammation"],
+    "brand": "Brufen",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED003",
+    "name": "Cetirizine",
+    "uses": ["Allergy", "Cold", "Sneezing"],
+    "brand": "Cetzine",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED004",
+    "name": "Amoxicillin",
+    "uses": ["Infection", "Sore Throat"],
+    "brand": "Amoxil",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED005",
+    "name": "Azithromycin",
+    "uses": ["Infection", "Fever"],
+    "brand": "Zithromax",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED006",
+    "name": "Dolo 650",
+    "uses": ["Fever", "Pain"],
+    "brand": "Micro Labs",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED007",
+    "name": "Aspirin",
+    "uses": ["Pain", "Fever", "Inflammation"],
+    "brand": "Disprin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED008",
+    "name": "Loratadine",
+    "uses": ["Allergy", "Cold"],
+    "brand": "Claritin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED009",
+    "name": "Ranitidine",
+    "uses": ["Acidity", "Stomach Ache"],
+    "brand": "Zantac",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED010",
+    "name": "Domperidone",
+    "uses": ["Nausea", "Vomiting"],
+    "brand": "Motilium",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED011",
+    "name": "ORS",
+    "uses": ["Dehydration", "Diarrhea"],
+    "brand": "Electral",
+    "form": "Powder"
+  },
+  {
+    "id": "MED012",
+    "name": "Metronidazole",
+    "uses": ["Infection", "Diarrhea"],
+    "brand": "Flagyl",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED013",
+    "name": "Pantoprazole",
+    "uses": ["Acidity", "Stomach Ache"],
+    "brand": "Somac",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED014",
+    "name": "Dicyclomine",
+    "uses": ["Stomach Ache", "Cramps"],
+    "brand": "Bentyl",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED015",
+    "name": "Chlorpheniramine",
+    "uses": ["Allergy", "Cold"],
+    "brand": "Avil",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED016",
+    "name": "Montelukast",
+    "uses": ["Allergy", "Asthma"],
+    "brand": "Singulair",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED017",
+    "name": "Dextromethorphan",
+    "uses": ["Cough"],
+    "brand": "Benadryl DM",
+    "form": "Syrup"
+  },
+  {
+    "id": "MED018",
+    "name": "Guaifenesin",
+    "uses": ["Cough", "Cold"],
+    "brand": "Robitussin",
+    "form": "Syrup"
+  },
+  {
+    "id": "MED019",
+    "name": "Ambroxol",
+    "uses": ["Cough", "Cold"],
+    "brand": "Mucosolvan",
+    "form": "Syrup"
+  },
+  {
+    "id": "MED020",
+    "name": "Salbutamol",
+    "uses": ["Asthma", "Cough"],
+    "brand": "Ventolin",
+    "form": "Inhaler"
+  },
+  {
+    "id": "MED021",
+    "name": "Levocetirizine",
+    "uses": ["Allergy", "Cold"],
+    "brand": "Xyzal",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED022",
+    "name": "Ciprofloxacin",
+    "uses": ["Infection", "Diarrhea"],
+    "brand": "Cipro",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED023",
+    "name": "Amoxicillin-Clavulanate",
+    "uses": ["Infection"],
+    "brand": "Augmentin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED024",
+    "name": "Doxycycline",
+    "uses": ["Infection", "Fever"],
+    "brand": "Doxy",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED025",
+    "name": "Hydroxyzine",
+    "uses": ["Allergy", "Itching"],
+    "brand": "Atarax",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED026",
+    "name": "Meclizine",
+    "uses": ["Nausea", "Vomiting"],
+    "brand": "Antivert",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED027",
+    "name": "Ondansetron",
+    "uses": ["Nausea", "Vomiting"],
+    "brand": "Zofran",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED028",
+    "name": "Loperamide",
+    "uses": ["Diarrhea"],
+    "brand": "Imodium",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED029",
+    "name": "Simethicone",
+    "uses": ["Gas", "Bloating"],
+    "brand": "Gas-X",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED030",
+    "name": "Calcium Carbonate",
+    "uses": ["Acidity", "Indigestion"],
+    "brand": "Tums",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED031",
+    "name": "Acetaminophen",
+    "uses": ["Fever", "Pain"],
+    "brand": "Tylenol",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED032",
+    "name": "Naproxen",
+    "uses": ["Pain", "Inflammation"],
+    "brand": "Aleve",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED033",
+    "name": "Diclofenac",
+    "uses": ["Pain", "Inflammation"],
+    "brand": "Voveran",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED034",
+    "name": "Mefenamic Acid",
+    "uses": ["Pain", "Cramps"],
+    "brand": "Meftal",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED035",
+    "name": "Tramadol",
+    "uses": ["Pain"],
+    "brand": "Ultram",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED036",
+    "name": "Codeine",
+    "uses": ["Cough", "Pain"],
+    "brand": "Codeine Phosphate",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED037",
+    "name": "Chlorzoxazone",
+    "uses": ["Muscle Spasm"],
+    "brand": "Parafon",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED038",
+    "name": "Metformin",
+    "uses": ["Diabetes"],
+    "brand": "Glucophage",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED039",
+    "name": "Glibenclamide",
+    "uses": ["Diabetes"],
+    "brand": "Daonil",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED040",
+    "name": "Gliclazide",
+    "uses": ["Diabetes"],
+    "brand": "Diamicron",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED041",
+    "name": "Insulin",
+    "uses": ["Diabetes"],
+    "brand": "Humulin",
+    "form": "Injection"
+  },
+  {
+    "id": "MED042",
+    "name": "Amlodipine",
+    "uses": ["Hypertension"],
+    "brand": "Norvasc",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED043",
+    "name": "Losartan",
+    "uses": ["Hypertension"],
+    "brand": "Cozaar",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED044",
+    "name": "Atenolol",
+    "uses": ["Hypertension"],
+    "brand": "Tenormin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED045",
+    "name": "Metoprolol",
+    "uses": ["Hypertension"],
+    "brand": "Lopressor",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED046",
+    "name": "Enalapril",
+    "uses": ["Hypertension"],
+    "brand": "Vasotec",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED047",
+    "name": "Ramipril",
+    "uses": ["Hypertension"],
+    "brand": "Altace",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED048",
+    "name": "Furosemide",
+    "uses": ["Edema", "Hypertension"],
+    "brand": "Lasix",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED049",
+    "name": "Spironolactone",
+    "uses": ["Edema", "Hypertension"],
+    "brand": "Aldactone",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED050",
+    "name": "Hydrochlorothiazide",
+    "uses": ["Hypertension", "Edema"],
+    "brand": "Microzide",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED051",
+    "name": "Simvastatin",
+    "uses": ["Cholesterol"],
+    "brand": "Zocor",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED052",
+    "name": "Atorvastatin",
+    "uses": ["Cholesterol"],
+    "brand": "Lipitor",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED053",
+    "name": "Rosuvastatin",
+    "uses": ["Cholesterol"],
+    "brand": "Crestor",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED054",
+    "name": "Ezetimibe",
+    "uses": ["Cholesterol"],
+    "brand": "Zetia",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED055",
+    "name": "Levothyroxine",
+    "uses": ["Thyroid"],
+    "brand": "Synthroid",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED056",
+    "name": "Carbimazole",
+    "uses": ["Thyroid"],
+    "brand": "Neomercazole",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED057",
+    "name": "Prednisolone",
+    "uses": ["Inflammation", "Allergy"],
+    "brand": "Omnipred",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED058",
+    "name": "Dexamethasone",
+    "uses": ["Inflammation", "Allergy"],
+    "brand": "Decadron",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED059",
+    "name": "Betamethasone",
+    "uses": ["Inflammation", "Allergy"],
+    "brand": "Celestone",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED060",
+    "name": "Hydrocortisone",
+    "uses": ["Inflammation", "Allergy"],
+    "brand": "Cortef",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED061",
+    "name": "Omeprazole",
+    "uses": ["Acidity", "Ulcer"],
+    "brand": "Prilosec",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED062",
+    "name": "Rabeprazole",
+    "uses": ["Acidity", "Ulcer"],
+    "brand": "Acidil",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED063",
+    "name": "Esomeprazole",
+    "uses": ["Acidity", "Ulcer"],
+    "brand": "Nexium",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED064",
+    "name": "Lansoprazole",
+    "uses": ["Acidity", "Ulcer"],
+    "brand": "Prevacid",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED065",
+    "name": "Sucralfate",
+    "uses": ["Ulcer", "Acidity"],
+    "brand": "Carafate",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED066",
+    "name": "Famotidine",
+    "uses": ["Acidity", "Ulcer"],
+    "brand": "Pepcid",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED067",
+    "name": "Cimetidine",
+    "uses": ["Acidity", "Ulcer"],
+    "brand": "Tagamet",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED068",
+    "name": "Budesonide",
+    "uses": ["Asthma", "Allergy"],
+    "brand": "Pulmicort",
+    "form": "Inhaler"
+  },
+  {
+    "id": "MED069",
+    "name": "Fluticasone",
+    "uses": ["Asthma", "Allergy"],
+    "brand": "Flovent",
+    "form": "Inhaler"
+  },
+  {
+    "id": "MED070",
+    "name": "Beclomethasone",
+    "uses": ["Asthma", "Allergy"],
+    "brand": "Qvar",
+    "form": "Inhaler"
+  },
+  {
+    "id": "MED071",
+    "name": "Ipratropium",
+    "uses": ["Asthma", "COPD"],
+    "brand": "Atrovent",
+    "form": "Inhaler"
+  },
+  {
+    "id": "MED072",
+    "name": "Tiotropium",
+    "uses": ["Asthma", "COPD"],
+    "brand": "Spiriva",
+    "form": "Inhaler"
+  },
+  {
+    "id": "MED073",
+    "name": "Theophylline",
+    "uses": ["Asthma", "COPD"],
+    "brand": "Uniphyl",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED074",
+    "name": "Levosalbutamol",
+    "uses": ["Asthma", "Cough"],
+    "brand": "Levolin",
+    "form": "Inhaler"
+  },
+  {
+    "id": "MED075",
+    "name": "Bromhexine",
+    "uses": ["Cough", "Cold"],
+    "brand": "Bisolvon",
+    "form": "Syrup"
+  },
+  {
+    "id": "MED076",
+    "name": "Phenylephrine",
+    "uses": ["Cold", "Nasal Congestion"],
+    "brand": "Sudafed PE",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED077",
+    "name": "Pseudoephedrine",
+    "uses": ["Cold", "Nasal Congestion"],
+    "brand": "Sudafed",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED078",
+    "name": "Oxymetazoline",
+    "uses": ["Nasal Congestion"],
+    "brand": "Afrin",
+    "form": "Nasal Spray"
+  },
+  {
+    "id": "MED079",
+    "name": "Xylometazoline",
+    "uses": ["Nasal Congestion"],
+    "brand": "Otrivin",
+    "form": "Nasal Spray"
+  },
+  {
+    "id": "MED080",
+    "name": "Sodium Chloride Nasal Drops",
+    "uses": ["Nasal Congestion"],
+    "brand": "Nasoclear",
+    "form": "Drops"
+  },
+  {
+    "id": "MED081",
+    "name": "Chloramphenicol",
+    "uses": ["Infection", "Eye Infection"],
+    "brand": "Chloromycetin",
+    "form": "Eye Drops"
+  },
+  {
+    "id": "MED082",
+    "name": "Ofloxacin",
+    "uses": ["Infection", "Eye Infection"],
+    "brand": "Ocuflox",
+    "form": "Eye Drops"
+  },
+  {
+    "id": "MED083",
+    "name": "Moxifloxacin",
+    "uses": ["Infection", "Eye Infection"],
+    "brand": "Vigamox",
+    "form": "Eye Drops"
+  },
+  {
+    "id": "MED084",
+    "name": "Tobramycin",
+    "uses": ["Infection", "Eye Infection"],
+    "brand": "Tobrex",
+    "form": "Eye Drops"
+  },
+  {
+    "id": "MED085",
+    "name": "Gentamicin",
+    "uses": ["Infection", "Eye Infection"],
+    "brand": "Garamycin",
+    "form": "Eye Drops"
+  },
+  {
+    "id": "MED086",
+    "name": "Neomycin",
+    "uses": ["Infection", "Skin Infection"],
+    "brand": "Neosporin",
+    "form": "Ointment"
+  },
+  {
+    "id": "MED087",
+    "name": "Mupirocin",
+    "uses": ["Skin Infection"],
+    "brand": "Bactroban",
+    "form": "Ointment"
+  },
+  {
+    "id": "MED088",
+    "name": "Clotrimazole",
+    "uses": ["Fungal Infection"],
+    "brand": "Canesten",
+    "form": "Cream"
+  },
+  {
+    "id": "MED089",
+    "name": "Terbinafine",
+    "uses": ["Fungal Infection"],
+    "brand": "Lamisil",
+    "form": "Cream"
+  },
+  {
+    "id": "MED090",
+    "name": "Ketoconazole",
+    "uses": ["Fungal Infection"],
+    "brand": "Nizoral",
+    "form": "Cream"
+  },
+  {
+    "id": "MED091",
+    "name": "Fluconazole",
+    "uses": ["Fungal Infection"],
+    "brand": "Diflucan",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED092",
+    "name": "Itraconazole",
+    "uses": ["Fungal Infection"],
+    "brand": "Sporanox",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED093",
+    "name": "Albendazole",
+    "uses": ["Worm Infection"],
+    "brand": "Zentel",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED094",
+    "name": "Mebendazole",
+    "uses": ["Worm Infection"],
+    "brand": "Vermox",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED095",
+    "name": "Levamisole",
+    "uses": ["Worm Infection"],
+    "brand": "Decaris",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED096",
+    "name": "Pyrantel Pamoate",
+    "uses": ["Worm Infection"],
+    "brand": "Combantrin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED097",
+    "name": "Niclosamide",
+    "uses": ["Worm Infection"],
+    "brand": "Yomesan",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED098",
+    "name": "Praziquantel",
+    "uses": ["Worm Infection"],
+    "brand": "Biltricide",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED099",
+    "name": "Dicyclomine Hydrochloride",
+    "uses": ["Stomach Ache", "Cramps"],
+    "brand": "Bentylol",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED100",
+    "name": "Hyoscine Butylbromide",
+    "uses": ["Stomach Ache", "Cramps"],
+    "brand": "Buscopan",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED101",
+    "name": "Lactulose",
+    "uses": ["Constipation"],
+    "brand": "Duphalac",
+    "form": "Syrup"
+  },
+  {
+    "id": "MED102",
+    "name": "Bisacodyl",
+    "uses": ["Constipation"],
+    "brand": "Dulcolax",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED103",
+    "name": "Senna",
+    "uses": ["Constipation"],
+    "brand": "Senokot",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED104",
+    "name": "Docusate Sodium",
+    "uses": ["Constipation"],
+    "brand": "Colace",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED105",
+    "name": "Polyethylene Glycol",
+    "uses": ["Constipation"],
+    "brand": "Miralax",
+    "form": "Powder"
+  },
+  {
+    "id": "MED106",
+    "name": "Magnesium Hydroxide",
+    "uses": ["Constipation", "Acidity"],
+    "brand": "Milk of Magnesia",
+    "form": "Suspension"
+  },
+  {
+    "id": "MED107",
+    "name": "Sodium Picosulfate",
+    "uses": ["Constipation"],
+    "brand": "Laxoberon",
+    "form": "Drops"
+  },
+  {
+    "id": "MED108",
+    "name": "Potassium Citrate",
+    "uses": ["Urinary Alkalizer"],
+    "brand": "Alkasol",
+    "form": "Syrup"
+  },
+  {
+    "id": "MED109",
+    "name": "Cranberry Extract",
+    "uses": ["UTI Prevention"],
+    "brand": "Cranmed",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED110",
+    "name": "Nitrofurantoin",
+    "uses": ["UTI"],
+    "brand": "Macrobid",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED111",
+    "name": "Cefixime",
+    "uses": ["Infection"],
+    "brand": "Suprax",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED112",
+    "name": "Cefuroxime",
+    "uses": ["Infection"],
+    "brand": "Zinnat",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED113",
+    "name": "Ceftriaxone",
+    "uses": ["Infection"],
+    "brand": "Rocephin",
+    "form": "Injection"
+  },
+  {
+    "id": "MED114",
+    "name": "Cefotaxime",
+    "uses": ["Infection"],
+    "brand": "Claforan",
+    "form": "Injection"
+  },
+  {
+    "id": "MED115",
+    "name": "Piperacillin-Tazobactam",
+    "uses": ["Infection"],
+    "brand": "Zosyn",
+    "form": "Injection"
+  },
+  {
+    "id": "MED116",
+    "name": "Meropenem",
+    "uses": ["Infection"],
+    "brand": "Meronem",
+    "form": "Injection"
+  },
+  {
+    "id": "MED117",
+    "name": "Imipenem-Cilastatin",
+    "uses": ["Infection"],
+    "brand": "Primaxin",
+    "form": "Injection"
+  },
+  {
+    "id": "MED118",
+    "name": "Vancomycin",
+    "uses": ["Infection"],
+    "brand": "Vancocin",
+    "form": "Injection"
+  },
+  {
+    "id": "MED119",
+    "name": "Linezolid",
+    "uses": ["Infection"],
+    "brand": "Zyvox",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED120",
+    "name": "Clindamycin",
+    "uses": ["Infection"],
+    "brand": "Cleocin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED121",
+    "name": "Aztreonam",
+    "uses": ["Infection"],
+    "brand": "Azactam",
+    "form": "Injection"
+  },
+  {
+    "id": "MED122",
+    "name": "Colistin",
+    "uses": ["Infection"],
+    "brand": "Coly-Mycin",
+    "form": "Injection"
+  },
+  {
+    "id": "MED123",
+    "name": "Rifampicin",
+    "uses": ["Tuberculosis"],
+    "brand": "Rifadin",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED124",
+    "name": "Isoniazid",
+    "uses": ["Tuberculosis"],
+    "brand": "Nydrazid",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED125",
+    "name": "Pyrazinamide",
+    "uses": ["Tuberculosis"],
+    "brand": "Zinamide",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED126",
+    "name": "Ethambutol",
+    "uses": ["Tuberculosis"],
+    "brand": "Myambutol",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED127",
+    "name": "Streptomycin",
+    "uses": ["Tuberculosis"],
+    "brand": "Streptomycin Sulfate",
+    "form": "Injection"
+  },
+  {
+    "id": "MED128",
+    "name": "Levofloxacin",
+    "uses": ["Infection"],
+    "brand": "Levaquin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED129",
+    "name": "Moxifloxacin (oral)",
+    "uses": ["Infection"],
+    "brand": "Avelox",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED130",
+    "name": "Clarithromycin",
+    "uses": ["Infection"],
+    "brand": "Biaxin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED131",
+    "name": "Roxithromycin",
+    "uses": ["Infection"],
+    "brand": "Rulide",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED132",
+    "name": "Minocycline",
+    "uses": ["Infection"],
+    "brand": "Minocin",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED133",
+    "name": "Tetracycline",
+    "uses": ["Infection"],
+    "brand": "Sumycin",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED134",
+    "name": "Chloramphenicol (oral)",
+    "uses": ["Infection"],
+    "brand": "Chloromycetin",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED135",
+    "name": "Nitazoxanide",
+    "uses": ["Diarrhea", "Infection"],
+    "brand": "Alinia",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED136",
+    "name": "Rifaximin",
+    "uses": ["Diarrhea", "Infection"],
+    "brand": "Xifaxan",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED137",
+    "name": "Ornidazole",
+    "uses": ["Infection", "Diarrhea"],
+    "brand": "Tiberal",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED138",
+    "name": "Tinidazole",
+    "uses": ["Infection", "Diarrhea"],
+    "brand": "Fasigyn",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED139",
+    "name": "Secnidazole",
+    "uses": ["Infection", "Diarrhea"],
+    "brand": "Secnil",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED140",
+    "name": "Dapsone",
+    "uses": ["Leprosy", "Infection"],
+    "brand": "Aczone",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED141",
+    "name": "Clofazimine",
+    "uses": ["Leprosy"],
+    "brand": "Lamprene",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED142",
+    "name": "Thalidomide",
+    "uses": ["Leprosy", "Inflammation"],
+    "brand": "Thalomid",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED143",
+    "name": "Methotrexate",
+    "uses": ["Cancer", "Inflammation"],
+    "brand": "Trexall",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED144",
+    "name": "Cyclophosphamide",
+    "uses": ["Cancer"],
+    "brand": "Cytoxan",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED145",
+    "name": "5-Fluorouracil",
+    "uses": ["Cancer"],
+    "brand": "Adrucil",
+    "form": "Injection"
+  },
+  {
+    "id": "MED146",
+    "name": "Doxorubicin",
+    "uses": ["Cancer"],
+    "brand": "Adriamycin",
+    "form": "Injection"
+  },
+  {
+    "id": "MED147",
+    "name": "Vincristine",
+    "uses": ["Cancer"],
+    "brand": "Oncovin",
+    "form": "Injection"
+  },
+  {
+    "id": "MED148",
+    "name": "Paclitaxel",
+    "uses": ["Cancer"],
+    "brand": "Taxol",
+    "form": "Injection"
+  },
+  {
+    "id": "MED149",
+    "name": "Tamoxifen",
+    "uses": ["Cancer"],
+    "brand": "Nolvadex",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED150",
+    "name": "Letrozole",
+    "uses": ["Cancer"],
+    "brand": "Femara",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED151",
+    "name": "Anastrozole",
+    "uses": ["Cancer"],
+    "brand": "Arimidex",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED152",
+    "name": "Imatinib",
+    "uses": ["Cancer"],
+    "brand": "Gleevec",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED153",
+    "name": "Hydroxyurea",
+    "uses": ["Cancer"],
+    "brand": "Hydrea",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED154",
+    "name": "Allopurinol",
+    "uses": ["Gout", "Uric Acid"],
+    "brand": "Zyloprim",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED155",
+    "name": "Febuxostat",
+    "uses": ["Gout", "Uric Acid"],
+    "brand": "Uloric",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED156",
+    "name": "Colchicine",
+    "uses": ["Gout"],
+    "brand": "Colcrys",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED157",
+    "name": "Sildenafil",
+    "uses": ["Erectile Dysfunction"],
+    "brand": "Viagra",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED158",
+    "name": "Tadalafil",
+    "uses": ["Erectile Dysfunction"],
+    "brand": "Cialis",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED159",
+    "name": "Finasteride",
+    "uses": ["Hair Loss", "Prostate"],
+    "brand": "Propecia",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED160",
+    "name": "Dutasteride",
+    "uses": ["Prostate"],
+    "brand": "Avodart",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED161",
+    "name": "Tamsulosin",
+    "uses": ["Prostate"],
+    "brand": "Flomax",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED162",
+    "name": "Alfuzosin",
+    "uses": ["Prostate"],
+    "brand": "Uroxatral",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED163",
+    "name": "Desmopressin",
+    "uses": ["Bedwetting", "Diabetes Insipidus"],
+    "brand": "DDAVP",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED164",
+    "name": "Oxybutynin",
+    "uses": ["Overactive Bladder"],
+    "brand": "Ditropan",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED165",
+    "name": "Tolterodine",
+    "uses": ["Overactive Bladder"],
+    "brand": "Detrol",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED166",
+    "name": "Solifenacin",
+    "uses": ["Overactive Bladder"],
+    "brand": "Vesicare",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED167",
+    "name": "Mirabegron",
+    "uses": ["Overactive Bladder"],
+    "brand": "Myrbetriq",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED168",
+    "name": "Sodium Valproate",
+    "uses": ["Epilepsy"],
+    "brand": "Epilim",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED169",
+    "name": "Carbamazepine",
+    "uses": ["Epilepsy", "Pain"],
+    "brand": "Tegretol",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED170",
+    "name": "Phenytoin",
+    "uses": ["Epilepsy"],
+    "brand": "Dilantin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED171",
+    "name": "Levetiracetam",
+    "uses": ["Epilepsy"],
+    "brand": "Keppra",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED172",
+    "name": "Lamotrigine",
+    "uses": ["Epilepsy"],
+    "brand": "Lamictal",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED173",
+    "name": "Topiramate",
+    "uses": ["Epilepsy", "Migraine"],
+    "brand": "Topamax",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED174",
+    "name": "Gabapentin",
+    "uses": ["Epilepsy", "Pain"],
+    "brand": "Neurontin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED175",
+    "name": "Pregabalin",
+    "uses": ["Epilepsy", "Pain"],
+    "brand": "Lyrica",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED176",
+    "name": "Valproic Acid",
+    "uses": ["Epilepsy"],
+    "brand": "Depakene",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED177",
+    "name": "Clonazepam",
+    "uses": ["Epilepsy", "Anxiety"],
+    "brand": "Klonopin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED178",
+    "name": "Diazepam",
+    "uses": ["Anxiety", "Muscle Spasm"],
+    "brand": "Valium",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED179",
+    "name": "Alprazolam",
+    "uses": ["Anxiety"],
+    "brand": "Xanax",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED180",
+    "name": "Lorazepam",
+    "uses": ["Anxiety"],
+    "brand": "Ativan",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED181",
+    "name": "Buspirone",
+    "uses": ["Anxiety"],
+    "brand": "Buspar",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED182",
+    "name": "Sertraline",
+    "uses": ["Depression", "Anxiety"],
+    "brand": "Zoloft",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED183",
+    "name": "Fluoxetine",
+    "uses": ["Depression", "Anxiety"],
+    "brand": "Prozac",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED184",
+    "name": "Escitalopram",
+    "uses": ["Depression", "Anxiety"],
+    "brand": "Lexapro",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED185",
+    "name": "Citalopram",
+    "uses": ["Depression", "Anxiety"],
+    "brand": "Celexa",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED186",
+    "name": "Amitriptyline",
+    "uses": ["Depression", "Pain"],
+    "brand": "Elavil",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED187",
+    "name": "Nortriptyline",
+    "uses": ["Depression", "Pain"],
+    "brand": "Pamelor",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED188",
+    "name": "Mirtazapine",
+    "uses": ["Depression"],
+    "brand": "Remeron",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED189",
+    "name": "Trazodone",
+    "uses": ["Depression", "Sleep"],
+    "brand": "Desyrel",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED190",
+    "name": "Bupropion",
+    "uses": ["Depression", "Smoking Cessation"],
+    "brand": "Wellbutrin",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED191",
+    "name": "Venlafaxine",
+    "uses": ["Depression", "Anxiety"],
+    "brand": "Effexor",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED192",
+    "name": "Duloxetine",
+    "uses": ["Depression", "Pain"],
+    "brand": "Cymbalta",
+    "form": "Capsule"
+  },
+  {
+    "id": "MED193",
+    "name": "Paroxetine",
+    "uses": ["Depression", "Anxiety"],
+    "brand": "Paxil",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED194",
+    "name": "Risperidone",
+    "uses": ["Schizophrenia", "Bipolar Disorder"],
+    "brand": "Risperdal",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED195",
+    "name": "Olanzapine",
+    "uses": ["Schizophrenia", "Bipolar Disorder"],
+    "brand": "Zyprexa",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED196",
+    "name": "Quetiapine",
+    "uses": ["Schizophrenia", "Bipolar Disorder"],
+    "brand": "Seroquel",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED197",
+    "name": "Aripiprazole",
+    "uses": ["Schizophrenia", "Bipolar Disorder"],
+    "brand": "Abilify",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED198",
+    "name": "Haloperidol",
+    "uses": ["Schizophrenia", "Psychosis"],
+    "brand": "Haldol",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED199",
+    "name": "Lithium Carbonate",
+    "uses": ["Bipolar Disorder"],
+    "brand": "Lithobid",
+    "form": "Tablet"
+  },
+  {
+    "id": "MED200",
+    "name": "Propranolol",
+    "uses": ["Hypertension", "Migraine"],
+    "brand": "Inderal",
+    "form": "Tablet"
+  }
+]

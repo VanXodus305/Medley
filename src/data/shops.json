@@ -1,0 +1,334 @@
+[
+  {
+    "id": "SHOP001",
+    "name": "HealthPlus Pharmacy",
+    "owner": "Amit Sharma",
+    "phone": "+91-9876543210",
+    "location": "123 Main Street, City Center",
+    "distance_from_user": "50 metres",
+    "medicines": [
+      { "medicine_id": "MED001", "quantity": 30, "price": 20 },
+      { "medicine_id": "MED003", "quantity": 15, "price": 15 },
+      { "medicine_id": "MED005", "quantity": 10, "price": 50 },
+      { "medicine_id": "MED020", "quantity": 8, "price": 120 }
+    ]
+  },
+  {
+    "id": "SHOP002",
+    "name": "City Medicos",
+    "owner": "Priya Verma",
+    "phone": "+91-9123456780",
+    "location": "456 Market Road, Near Park",
+    "distance_from_user": "120 metres",
+    "medicines": [
+      { "medicine_id": "MED002", "quantity": 25, "price": 18 },
+      { "medicine_id": "MED001", "quantity": 10, "price": 22 },
+      { "medicine_id": "MED004", "quantity": 8, "price": 60 },
+      { "medicine_id": "MED021", "quantity": 12, "price": 35 },
+      { "medicine_id": "MED050", "quantity": 5, "price": 40 }
+    ]
+  },
+  {
+    "id": "SHOP003",
+    "name": "Wellness Chemist",
+    "owner": "Rohit Singh",
+    "phone": "+91-9988776655",
+    "location": "789 Hospital Lane, Sector 5",
+    "distance_from_user": "200 metres",
+    "medicines": [
+      { "medicine_id": "MED006", "quantity": 20, "price": 25 },
+      { "medicine_id": "MED007", "quantity": 12, "price": 10 },
+      { "medicine_id": "MED008", "quantity": 18, "price": 12 },
+      { "medicine_id": "MED030", "quantity": 7, "price": 18 }
+    ]
+  },
+  {
+    "id": "SHOP004",
+    "name": "Family Pharmacy",
+    "owner": "Sunita Patel",
+    "phone": "+91-9871234567",
+    "location": "321 Suburb Road, Block A",
+    "distance_from_user": "350 metres",
+    "medicines": [
+      { "medicine_id": "MED009", "quantity": 14, "price": 16 },
+      { "medicine_id": "MED010", "quantity": 9, "price": 14 },
+      { "medicine_id": "MED011", "quantity": 30, "price": 8 },
+      { "medicine_id": "MED040", "quantity": 6, "price": 55 }
+    ]
+  },
+  {
+    "id": "SHOP005",
+    "name": "Neighborhood Meds",
+    "owner": "Vikas Kumar",
+    "phone": "+91-9001122334",
+    "location": "654 College Street, Near Library",
+    "distance_from_user": "500 metres",
+    "medicines": [
+      { "medicine_id": "MED012", "quantity": 11, "price": 22 },
+      { "medicine_id": "MED013", "quantity": 17, "price": 19 },
+      { "medicine_id": "MED014", "quantity": 13, "price": 21 },
+      { "medicine_id": "MED060", "quantity": 4, "price": 70 },
+      { "medicine_id": "MED100", "quantity": 2, "price": 90 }
+    ]
+  },
+  {
+    "id": "SHOP006",
+    "name": "Apollo Pharmacy",
+    "owner": "Ramesh Gupta",
+    "phone": "+91-9812345678",
+    "location": "12 MG Road, Downtown",
+    "distance_from_user": "700 metres",
+    "medicines": [
+      { "medicine_id": "MED015", "quantity": 20, "price": 12 },
+      { "medicine_id": "MED016", "quantity": 10, "price": 30 },
+      { "medicine_id": "MED017", "quantity": 8, "price": 60 }
+    ]
+  },
+  {
+    "id": "SHOP007",
+    "name": "Medico Mart",
+    "owner": "Sonal Mehta",
+    "phone": "+91-9876543201",
+    "location": "88 Green Avenue, Sector 9",
+    "distance_from_user": "1 km",
+    "medicines": [
+      { "medicine_id": "MED018", "quantity": 15, "price": 25 },
+      { "medicine_id": "MED019", "quantity": 7, "price": 18 }
+    ]
+  },
+  {
+    "id": "SHOP008",
+    "name": "Lifeline Chemists",
+    "owner": "Deepak Joshi",
+    "phone": "+91-9823456789",
+    "location": "22 Lake View, East End",
+    "distance_from_user": "1.2 km",
+    "medicines": [
+      { "medicine_id": "MED022", "quantity": 12, "price": 45 },
+      { "medicine_id": "MED023", "quantity": 6, "price": 80 },
+      { "medicine_id": "MED024", "quantity": 9, "price": 65 },
+      { "medicine_id": "MED025", "quantity": 5, "price": 50 }
+    ]
+  },
+  {
+    "id": "SHOP009",
+    "name": "Carewell Pharmacy",
+    "owner": "Anjali Rao",
+    "phone": "+91-9834567890",
+    "location": "5 Park Lane, West City",
+    "distance_from_user": "1.5 km",
+    "medicines": [
+      { "medicine_id": "MED026", "quantity": 10, "price": 35 },
+      { "medicine_id": "MED027", "quantity": 8, "price": 40 },
+      { "medicine_id": "MED028", "quantity": 6, "price": 28 }
+    ]
+  },
+  {
+    "id": "SHOP010",
+    "name": "Good Health Store",
+    "owner": "Manoj Sinha",
+    "phone": "+91-9845678901",
+    "location": "77 Hill Road, North Block",
+    "distance_from_user": "1.8 km",
+    "medicines": [
+      { "medicine_id": "MED029", "quantity": 14, "price": 22 },
+      { "medicine_id": "MED031", "quantity": 11, "price": 32 },
+      { "medicine_id": "MED032", "quantity": 7, "price": 38 },
+      { "medicine_id": "MED033", "quantity": 5, "price": 45 }
+    ]
+  },
+  {
+    "id": "SHOP011",
+    "name": "Sunrise Medicos",
+    "owner": "Kavita Jain",
+    "phone": "+91-9856789012",
+    "location": "9 Sunrise Street, South City",
+    "distance_from_user": "2 km",
+    "medicines": [
+      { "medicine_id": "MED034", "quantity": 13, "price": 27 },
+      { "medicine_id": "MED035", "quantity": 6, "price": 55 }
+    ]
+  },
+  {
+    "id": "SHOP012",
+    "name": "QuickCare Pharmacy",
+    "owner": "Suresh Nair",
+    "phone": "+91-9867890123",
+    "location": "101 Central Plaza, Midtown",
+    "distance_from_user": "2.3 km",
+    "medicines": [
+      { "medicine_id": "MED036", "quantity": 8, "price": 60 },
+      { "medicine_id": "MED037", "quantity": 4, "price": 80 },
+      { "medicine_id": "MED038", "quantity": 10, "price": 90 }
+    ]
+  },
+  {
+    "id": "SHOP013",
+    "name": "Trust Pharmacy",
+    "owner": "Meena Shah",
+    "phone": "+91-9878901234",
+    "location": "33 Trust Lane, Old Town",
+    "distance_from_user": "2.7 km",
+    "medicines": [
+      { "medicine_id": "MED039", "quantity": 7, "price": 55 },
+      { "medicine_id": "MED040", "quantity": 5, "price": 60 },
+      { "medicine_id": "MED041", "quantity": 3, "price": 120 }
+    ]
+  },
+  {
+    "id": "SHOP014",
+    "name": "Medicoz",
+    "owner": "Rajesh Khanna",
+    "phone": "+91-9889012345",
+    "location": "44 New Market, Central City",
+    "distance_from_user": "3 km",
+    "medicines": [
+      { "medicine_id": "MED042", "quantity": 9, "price": 40 },
+      { "medicine_id": "MED043", "quantity": 6, "price": 45 },
+      { "medicine_id": "MED044", "quantity": 4, "price": 50 }
+    ]
+  },
+  {
+    "id": "SHOP015",
+    "name": "Pharma Point",
+    "owner": "Nisha Agarwal",
+    "phone": "+91-9890123456",
+    "location": "55 Pharma Street, East Block",
+    "distance_from_user": "3.5 km",
+    "medicines": [
+      { "medicine_id": "MED045", "quantity": 8, "price": 35 },
+      { "medicine_id": "MED046", "quantity": 5, "price": 60 },
+      { "medicine_id": "MED047", "quantity": 2, "price": 80 },
+      { "medicine_id": "MED048", "quantity": 6, "price": 70 }
+    ]
+  },
+  {
+    "id": "SHOP016",
+    "name": "WellCare Chemists",
+    "owner": "Sanjay Patel",
+    "phone": "+91-9901234567",
+    "location": "66 Well Street, South End",
+    "distance_from_user": "4 km",
+    "medicines": [
+      { "medicine_id": "MED049", "quantity": 7, "price": 55 },
+      { "medicine_id": "MED050", "quantity": 3, "price": 90 }
+    ]
+  },
+  {
+    "id": "SHOP017",
+    "name": "GreenLeaf Pharmacy",
+    "owner": "Pooja Desai",
+    "phone": "+91-9912345678",
+    "location": "77 Green Avenue, North City",
+    "distance_from_user": "4.5 km",
+    "medicines": [
+      { "medicine_id": "MED051", "quantity": 12, "price": 25 },
+      { "medicine_id": "MED052", "quantity": 8, "price": 30 },
+      { "medicine_id": "MED053", "quantity": 5, "price": 40 }
+    ]
+  },
+  {
+    "id": "SHOP018",
+    "name": "MedExpress",
+    "owner": "Arun Kumar",
+    "phone": "+91-9923456789",
+    "location": "88 Express Lane, West End",
+    "distance_from_user": "5 km",
+    "medicines": [
+      { "medicine_id": "MED054", "quantity": 10, "price": 60 },
+      { "medicine_id": "MED055", "quantity": 6, "price": 80 },
+      { "medicine_id": "MED056", "quantity": 4, "price": 90 },
+      { "medicine_id": "MED057", "quantity": 2, "price": 100 }
+    ]
+  },
+  {
+    "id": "SHOP019",
+    "name": "CureWell Pharmacy",
+    "owner": "Shalini Singh",
+    "phone": "+91-9934567890",
+    "location": "99 Cure Street, Central Park",
+    "distance_from_user": "5.5 km",
+    "medicines": [
+      { "medicine_id": "MED058", "quantity": 8, "price": 70 },
+      { "medicine_id": "MED059", "quantity": 5, "price": 85 }
+    ]
+  },
+  {
+    "id": "SHOP020",
+    "name": "Urban Medicos",
+    "owner": "Vivek Anand",
+    "phone": "+91-9945678901",
+    "location": "100 Urban Road, City Center",
+    "distance_from_user": "6 km",
+    "medicines": [
+      { "medicine_id": "MED060", "quantity": 9, "price": 60 },
+      { "medicine_id": "MED061", "quantity": 7, "price": 75 },
+      { "medicine_id": "MED062", "quantity": 4, "price": 90 }
+    ]
+  },
+  {
+    "id": "SHOP021",
+    "name": "PharmaCare",
+    "owner": "Ritu Sharma",
+    "phone": "+91-9956789012",
+    "location": "101 Pharma Lane, Midtown",
+    "distance_from_user": "6.5 km",
+    "medicines": [
+      { "medicine_id": "MED063", "quantity": 11, "price": 35 },
+      { "medicine_id": "MED064", "quantity": 8, "price": 50 }
+    ]
+  },
+  {
+    "id": "SHOP022",
+    "name": "LifeSaver Pharmacy",
+    "owner": "Ajay Mehra",
+    "phone": "+91-9967890123",
+    "location": "102 Life Street, East City",
+    "distance_from_user": "7 km",
+    "medicines": [
+      { "medicine_id": "MED065", "quantity": 10, "price": 45 },
+      { "medicine_id": "MED066", "quantity": 6, "price": 60 },
+      { "medicine_id": "MED067", "quantity": 3, "price": 80 }
+    ]
+  },
+  {
+    "id": "SHOP023",
+    "name": "MedicoHub",
+    "owner": "Sneha Kapoor",
+    "phone": "+91-9978901234",
+    "location": "103 Hub Road, North Block",
+    "distance_from_user": "7.5 km",
+    "medicines": [
+      { "medicine_id": "MED068", "quantity": 8, "price": 55 },
+      { "medicine_id": "MED069", "quantity": 5, "price": 70 },
+      { "medicine_id": "MED070", "quantity": 2, "price": 90 }
+    ]
+  },
+  {
+    "id": "SHOP024",
+    "name": "Trust Chemists",
+    "owner": "Kiran Joshi",
+    "phone": "+91-9989012345",
+    "location": "104 Trust Lane, South City",
+    "distance_from_user": "8 km",
+    "medicines": [
+      { "medicine_id": "MED071", "quantity": 7, "price": 60 },
+      { "medicine_id": "MED072", "quantity": 4, "price": 80 },
+      { "medicine_id": "MED073", "quantity": 2, "price": 100 }
+    ]
+  },
+  {
+    "id": "SHOP025",
+    "name": "Medico24x7",
+    "owner": "Tarun Bansal",
+    "phone": "+91-9990123456",
+    "location": "105 24x7 Road, West End",
+    "distance_from_user": "8.5 km",
+    "medicines": [
+      { "medicine_id": "MED074", "quantity": 10, "price": 65 },
+      { "medicine_id": "MED075", "quantity": 6, "price": 80 },
+      { "medicine_id": "MED076", "quantity": 3, "price": 95 },
+      { "medicine_id": "MED077", "quantity": 1, "price": 120 }
+    ]
+  }
+]

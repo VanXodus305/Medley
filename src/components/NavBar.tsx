@@ -87,7 +87,7 @@ const NavBar = () => {
             delay: onClickHandler ? index * 0.1 : 0,
           }}
         >
-          <Link
+          {/* <Link
             href={href}
             className={`hover:text-secondary-200/70 transition-colors duration-300 ${
               activeSection === href.substring(1) ? "text-secondary-200" : ""
@@ -95,7 +95,7 @@ const NavBar = () => {
             onClick={onClickHandler}
           >
             {label}
-          </Link>
+          </Link> */}
         </motion.div>
       );
     });
