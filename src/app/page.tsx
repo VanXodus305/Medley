@@ -9,11 +9,11 @@ import { motion } from "framer-motion";
 import ChatInput from "@/components/ChatInput";
 import MedicineList from "@/components/MedicineList";
 import ShopList from "@/components/ShopList";
-import '../app/globals.css';
+import "../app/globals.css";
 
 // Font Awesome imports & configuration
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 
 const fadeInUp = {
@@ -51,11 +51,9 @@ export default function HomePage() {
           <HeroSection />
         </motion.section>
         <motion.section id="chat" variants={fadeInUp}>
-          <ChatInput  />
+          <ChatInput />
         </motion.section>
-        
 
-          
         <motion.section id="medicines" variants={fadeInUp}>
           <MedicineList />
         </motion.section>

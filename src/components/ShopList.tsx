@@ -138,50 +138,49 @@ const ShopList: React.FC = () => {
         Nearby Medical Shops
       </h2>
 
-<Slider {...sliderSettings}>
-  {shop.map((shop) => (
-    <div key={shop.id} className="p-3 flex justify-center">
-      <div className="w-[270px] h-[300px] bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 flex flex-col">
-        {/* Card Header */}
-        <div className="bg-gradient-to-r from-[#4FAA84] to-[#3C7168] p-4 rounded-t-2xl">
-          <h3 className="text-lg font-bold text-white">{shop.name}</h3>
-        </div>
+      <Slider {...sliderSettings}>
+        {shop.map((shop) => (
+          <div key={shop.id} className="p-3 flex justify-center">
+            <div className="w-[270px] h-[300px] bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 flex flex-col">
+              {/* Card Header */}
+              <div className="bg-gradient-to-r from-[#4FAA84] to-[#3C7168] p-4 rounded-t-2xl">
+                <h3 className="text-lg font-bold text-white">{shop.name}</h3>
+              </div>
 
-        {/* Card Body */}
-        <div className="p-4 flex flex-col flex-1 font-sans">
-          <p className="text-base font-semibold text-gray-800 tracking-wide mb-1 flex items-center gap-2">
-            <FaUser className="w-5 h-5 text-green-700" />
-            {shop.owner}
-          </p>
+              {/* Card Body */}
+              <div className="p-4 flex flex-col flex-1 font-sans">
+                <p className="text-base font-semibold text-gray-800 tracking-wide mb-1 flex items-center gap-2">
+                  <FaUser className="w-5 h-5 text-green-700" />
+                  {shop.owner}
+                </p>
 
-          <p className="text-base font-medium text-gray-800 mb-1 flex items-center gap-2">
-            <FaPhone className="w-5 h-5 text-blue-700" />
-            {shop.phone}
-          </p>
+                <p className="text-base font-medium text-gray-800 mb-1 flex items-center gap-2">
+                  <FaPhone className="w-5 h-5 text-blue-700" />
+                  {shop.phone}
+                </p>
 
-          <p className="text-sm italic text-gray-700 mb-3 leading-relaxed flex items-center gap-2">
-            <FaMapMarkerAlt className="w-4 h-4 text-red-600" />
-            {shop.location}
-          </p>
+                <p className="text-sm italic text-gray-700 mb-3 leading-relaxed flex items-center gap-2">
+                  <FaMapMarkerAlt className="w-4 h-4 text-red-600" />
+                  {shop.location}
+                </p>
 
-          {/* Distance pill */}
-          <div className="mt-auto mb-3 flex justify-center">
-            <div className="flex items-center gap-1 bg-white text-[#3C7168] border border-[#3C7168] px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
-              <GiPill size={16} />
-              <span>{shop.distance_from_user}</span>
+                {/* Distance pill */}
+                <div className="mt-auto mb-3 flex justify-center">
+                  <div className="flex items-center gap-1 bg-white text-[#3C7168] border border-[#3C7168] px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
+                    <GiPill size={16} />
+                    <span>{shop.distance_from_user}</span>
+                  </div>
+                </div>
+
+                {/* CTA Button */}
+                <button className="py-2 px-3 rounded-lg text-sm font-medium bg-[#4FAA84] text-white hover:bg-[#3C7168] transition">
+                  View Shop
+                </button>
+              </div>
             </div>
           </div>
-
-          {/* CTA Button */}
-          <button className="py-2 px-3 rounded-lg text-sm font-medium bg-[#4FAA84] text-white hover:bg-[#3C7168] transition">
-            View Shop
-          </button>
-        </div>
-      </div>
-    </div>
-  ))}
-</Slider>
-
+        ))}
+      </Slider>
     </div>
   );
 };

@@ -1,12 +1,10 @@
 "use client";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPills } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPills } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-
-
 
 interface Medicine {
   id: string;
@@ -112,8 +110,8 @@ const MedicineList: React.FC = () => {
     arrows: false,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } }
-    ]
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
+    ],
   };
 
   return (
@@ -136,7 +134,9 @@ const MedicineList: React.FC = () => {
                 </span>
               </div>
 
-              <h3 className="text-lg font-bold text-[#3C7168] mb-1">{med.name}</h3>
+              <h3 className="text-lg font-bold text-[#3C7168] mb-1">
+                {med.name}
+              </h3>
               <p className="text-sm text-gray-600 mb-2">Brand: {med.brand}</p>
 
               <div className="flex flex-wrap gap-1 justify-center mb-3">

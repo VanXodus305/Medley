@@ -1,0 +1,288 @@
+{
+  "medicines": [
+    {
+      "id": "MED001",
+      "name": "Paracetamol",
+      "uses": ["Fever", "Headache", "Body Pain"],
+      "brand": "Crocin",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED002",
+      "name": "Ibuprofen",
+      "uses": ["Fever", "Pain", "Inflammation"],
+      "brand": "Brufen",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED003",
+      "name": "Cetirizine",
+      "uses": ["Allergy", "Cold", "Sneezing"],
+      "brand": "Cetzine",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED004",
+      "name": "Amoxicillin",
+      "uses": ["Infection", "Sore Throat"],
+      "brand": "Amoxil",
+      "form": "Capsule"
+    },
+    {
+      "id": "MED005",
+      "name": "Azithromycin",
+      "uses": ["Infection", "Fever"],
+      "brand": "Zithromax",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED006",
+      "name": "Dolo 650",
+      "uses": ["Fever", "Pain"],
+      "brand": "Micro Labs",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED007",
+      "name": "Aspirin",
+      "uses": ["Pain", "Fever", "Inflammation"],
+      "brand": "Disprin",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED008",
+      "name": "Loratadine",
+      "uses": ["Allergy", "Cold"],
+      "brand": "Claritin",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED009",
+      "name": "Ranitidine",
+      "uses": ["Acidity", "Stomach Ache"],
+      "brand": "Zantac",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED010",
+      "name": "Domperidone",
+      "uses": ["Nausea", "Vomiting"],
+      "brand": "Motilium",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED011",
+      "name": "ORS",
+      "uses": ["Dehydration", "Diarrhea"],
+      "brand": "Electral",
+      "form": "Powder"
+    },
+    {
+      "id": "MED012",
+      "name": "Metronidazole",
+      "uses": ["Infection", "Diarrhea"],
+      "brand": "Flagyl",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED013",
+      "name": "Pantoprazole",
+      "uses": ["Acidity", "Stomach Ache"],
+      "brand": "Somac",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED014",
+      "name": "Dicyclomine",
+      "uses": ["Stomach Ache", "Cramps"],
+      "brand": "Bentyl",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED015",
+      "name": "Chlorpheniramine",
+      "uses": ["Allergy", "Cold"],
+      "brand": "Avil",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED016",
+      "name": "Montelukast",
+      "uses": ["Allergy", "Asthma"],
+      "brand": "Singulair",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED017",
+      "name": "Dextromethorphan",
+      "uses": ["Cough"],
+      "brand": "Benadryl DM",
+      "form": "Syrup"
+    },
+    {
+      "id": "MED018",
+      "name": "Guaifenesin",
+      "uses": ["Cough", "Cold"],
+      "brand": "Robitussin",
+      "form": "Syrup"
+    },
+    {
+      "id": "MED019",
+      "name": "Ambroxol",
+      "uses": ["Cough", "Cold"],
+      "brand": "Mucosolvan",
+      "form": "Syrup"
+    },
+    {
+      "id": "MED020",
+      "name": "Salbutamol",
+      "uses": ["Asthma", "Cough"],
+      "brand": "Ventolin",
+      "form": "Inhaler"
+    },
+    {
+      "id": "MED021",
+      "name": "Levocetirizine",
+      "uses": ["Allergy", "Cold"],
+      "brand": "Xyzal",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED022",
+      "name": "Ciprofloxacin",
+      "uses": ["Infection", "Diarrhea"],
+      "brand": "Cipro",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED023",
+      "name": "Amoxicillin-Clavulanate",
+      "uses": ["Infection"],
+      "brand": "Augmentin",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED024",
+      "name": "Doxycycline",
+      "uses": ["Infection", "Fever"],
+      "brand": "Doxy",
+      "form": "Capsule"
+    },
+    {
+      "id": "MED025",
+      "name": "Hydroxyzine",
+      "uses": ["Allergy", "Itching"],
+      "brand": "Atarax",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED026",
+      "name": "Meclizine",
+      "uses": ["Nausea", "Vomiting"],
+      "brand": "Antivert",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED027",
+      "name": "Ondansetron",
+      "uses": ["Nausea", "Vomiting"],
+      "brand": "Zofran",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED028",
+      "name": "Loperamide",
+      "uses": ["Diarrhea"],
+      "brand": "Imodium",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED029",
+      "name": "Simethicone",
+      "uses": ["Gas", "Bloating"],
+      "brand": "Gas-X",
+      "form": "Tablet"
+    },
+    {
+      "id": "MED030",
+      "name": "Calcium Carbonate",
+      "uses": ["Acidity", "Indigestion"],
+      "brand": "Tums",
+      "form": "Tablet"
+    }
+  ],
+  "shops": [
+    {
+      "id": "SHOP001",
+      "name": "HealthPlus Pharmacy",
+      "owner": "Amit Sharma",
+      "phone": "+91-9876543210",
+      "location": "123 Main Street, City Center",
+      "distance_from_user": "50 metres",
+      "medicines": [
+        { "medicine_id": "MED001", "quantity": 30, "price": 20 },
+        { "medicine_id": "MED003", "quantity": 15, "price": 15 },
+        { "medicine_id": "MED005", "quantity": 10, "price": 50 },
+        { "medicine_id": "MED020", "quantity": 8, "price": 120 }
+      ]
+    },
+    {
+      "id": "SHOP002",
+      "name": "City Medicos",
+      "owner": "Priya Verma",
+      "phone": "+91-9123456780",
+      "location": "456 Market Road, Near Park",
+      "distance_from_user": "120 metres",
+      "medicines": [
+        { "medicine_id": "MED002", "quantity": 25, "price": 18 },
+        { "medicine_id": "MED001", "quantity": 10, "price": 22 },
+        { "medicine_id": "MED004", "quantity": 8, "price": 60 },
+        { "medicine_id": "MED021", "quantity": 12, "price": 35 },
+        { "medicine_id": "MED050", "quantity": 5, "price": 40 }
+      ]
+    },
+    {
+      "id": "SHOP003",
+      "name": "Wellness Chemist",
+      "owner": "Rohit Singh",
+      "phone": "+91-9988776655",
+      "location": "789 Hospital Lane, Sector 5",
+      "distance_from_user": "200 metres",
+      "medicines": [
+        { "medicine_id": "MED006", "quantity": 20, "price": 25 },
+        { "medicine_id": "MED007", "quantity": 12, "price": 10 },
+        { "medicine_id": "MED008", "quantity": 18, "price": 12 },
+        { "medicine_id": "MED030", "quantity": 7, "price": 18 }
+      ]
+    },
+    {
+      "id": "SHOP004",
+      "name": "Family Pharmacy",
+      "owner": "Sunita Patel",
+      "phone": "+91-9871234567",
+      "location": "321 Suburb Road, Block A",
+      "distance_from_user": "350 metres",
+      "medicines": [
+        { "medicine_id": "MED009", "quantity": 14, "price": 16 },
+        { "medicine_id": "MED010", "quantity": 9, "price": 14 },
+        { "medicine_id": "MED011", "quantity": 30, "price": 8 },
+        { "medicine_id": "MED040", "quantity": 6, "price": 55 }
+      ]
+    },
+    {
+      "id": "SHOP005",
+      "name": "Neighborhood Meds",
+      "owner": "Vikas Kumar",
+      "phone": "+91-9001122334",
+      "location": "654 College Street, Near Library",
+      "distance_from_user": "500 metres",
+      "medicines": [
+        { "medicine_id": "MED012", "quantity": 11, "price": 22 },
+        { "medicine_id": "MED013", "quantity": 17, "price": 19 },
+        { "medicine_id": "MED014", "quantity": 13, "price": 21 },
+        { "medicine_id": "MED060", "quantity": 4, "price": 70 },
+        { "medicine_id": "MED100", "quantity": 2, "price": 90 }
+      ]
+    }
+  ]
+}
