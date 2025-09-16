@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Send, Pill, Heart, AlertCircle, User, Bot } from "lucide-react";
+import GeminiService from "../services/geminiService";
 
 const ChatInput = () => {
   const [messages, setMessages] = useState([
@@ -12,92 +13,14 @@ const ChatInput = () => {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [geminiService] = useState(() => new GeminiService());
 
-  const medicalKnowledge = {
-    headache: {
-      disease: "Headache",
-      medicines: ["Ibuprofen", "Paracetamol", "Aspirin"],
-      remedies: [
-        "Stay hydrated",
-        "Rest in a dark room",
-        "Apply cold compress",
-        "Gentle neck massage",
-      ],
-      description: "Common condition causing pain in the head or neck area",
-    },
-    fever: {
-      disease: "Fever",
-      medicines: ["Paracetamol", "Ibuprofen", "Aspirin"],
-      remedies: [
-        "Drink plenty of fluids",
-        "Rest",
-        "Use cool compress",
-        "Wear light clothing",
-      ],
-      description:
-        "Elevated body temperature, usually indicating infection or illness",
-    },
-    cold: {
-      disease: "Common Cold",
-      medicines: ["Decongestants", "Antihistamines", "Pain relievers"],
-      remedies: [
-        "Drink warm fluids",
-        "Gargle with salt water",
-        "Use humidifier",
-        "Get plenty of rest",
-      ],
-      description: "Viral infection of the upper respiratory tract",
-    },
-    "stomach ache": {
-      disease: "Stomach Pain",
-      medicines: ["Antacids", "Simethicone", "Loperamide (for diarrhea)"],
-      remedies: [
-        "Drink ginger tea",
-        "Apply heat pad",
-        "Eat bland foods (BRAT diet)",
-        "Stay hydrated",
-      ],
-      description: "Discomfort or pain in the abdominal area",
-    },
-    cough: {
-      disease: "Cough",
-      medicines: ["Dextromethorphan", "Guaifenesin", "Honey-based syrups"],
-      remedies: [
-        "Drink warm honey and lemon",
-        "Use humidifier",
-        "Stay hydrated",
-        "Throat lozenges",
-      ],
-      description: "Reflex action to clear airways of irritants",
-    },
-  };
-
-  const findMedicalInfo = (query: string) => {
-    const normalizedQuery = query.toLowerCase();
-    for (const [key, info] of Object.entries(medicalKnowledge)) {
-      if (normalizedQuery.includes(key)) {
-        return info;
-      }
-    }
-    return null;
-  };
-
-  const generateBotResponse = (userMessage: string) => {
-    const medicalInfo = findMedicalInfo(userMessage);
-
-    if (medicalInfo) {
-      return `**${medicalInfo.disease}**
-      
-${medicalInfo.description}
-
-**💊 Recommended Medicines:**
-${medicalInfo.medicines.map((med) => `• ${med}`).join("\n")}
-
-**🌿 Home Remedies:**
-${medicalInfo.remedies.map((remedy) => `• ${remedy}`).join("\n")}
-
-*⚠️ Important: This is general information only. Please consult a healthcare professional for proper diagnosis and treatment.*`;
-    } else {
+  const generateBotResponse = async (userMessage: string): Promise<string> => {
+    try {
+      const response = await geminiService.processUserPrompt(userMessage);
+      return geminiService.formatMedicineResponse(response);
+    } catch (error) {
+      console.error("Error generating response:", error);
       return "I understand you're asking about a medical concern. While I can provide general information about common conditions, I'd recommend consulting with a healthcare professional for accurate diagnosis and treatment. Could you describe your specific symptoms?";
     }
   };
@@ -113,21 +36,34 @@ ${medicalInfo.remedies.map((remedy) => `• ${remedy}`).join("\n")}
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const currentInput = inputValue;
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate bot thinking time
-    setTimeout(() => {
+    try {
+      // Generate bot response using Gemini API
+      const botResponseText = await generateBotResponse(currentInput);
+
       const botResponse = {
         id: messages.length + 2,
         type: "bot",
-        text: generateBotResponse(inputValue),
+        text: botResponseText,
         timestamp: new Date().toLocaleTimeString(),
       };
 
       setMessages((prev) => [...prev, botResponse]);
+    } catch (error) {
+      console.error("Error generating response:", error);
+      const errorResponse = {
+        id: messages.length + 2,
+        type: "bot",
+        text: "I'm sorry, I'm experiencing some technical difficulties. Please try again later or consult with a healthcare professional for medical advice.",
+        timestamp: new Date().toLocaleTimeString(),
+      };
+      setMessages((prev) => [...prev, errorResponse]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const handleKeyPress = (e: {
