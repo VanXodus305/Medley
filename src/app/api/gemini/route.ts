@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
-import * as fs from "fs";
-import * as path from "path";
+import medicines from "../../../data/medicines.json";
+import shops from "../../../data/shops.json";
 
 export interface MedicineWithShops {
   name: string;
@@ -49,64 +49,35 @@ export async function POST(request: NextRequest) {
     }
 
     const ai = new GoogleGenAI({ apiKey });
-    const model = "gemini-2.5-pro";
+    const model = "gemini-2.5-pro"; // Using pro for better reliability
 
-    // Read JSON files and convert to base64 for inline data
-    const medicinesPath = path.join(
-      process.cwd(),
-      "src",
-      "data",
-      "medicines.json"
-    );
-    const shopsPath = path.join(process.cwd(), "src", "data", "shops.json");
-
-    const medicinesData = Buffer.from(fs.readFileSync(medicinesPath)).toString(
-      "base64"
-    );
-    const shopsData = Buffer.from(fs.readFileSync(shopsPath)).toString(
-      "base64"
-    );
+    // Prepare context data more efficiently
+    const medicinesContext = JSON.stringify(medicines);
+    const shopsContext = JSON.stringify(shops);
 
     const prompt = `
-Analyze the user's prompt. If the user describes a health related condition/situation, diagnose the problems of the user and suggest what could have happened as a general message or a list of medicines nearby based on the data available in the attached JSON files (medicines.json and shops.json). Give the response based on the structure and the general diagnosis should only be of a few lines giving a general idea about the problem that the user might be facing. In case of a query like - "give me the list of shops within 1km", it should only return a list of shops. If a user asks a simple non medicine/shop related query then simple return a normal response, keeping in context that this website gives users a way to find medicines at the best prices at their closest medicine shops while also providing them with appropriate medicines along with their availability if the user provides their health information.
+You are a medical assistant for a medicine price comparison platform. 
 
-User Prompt: ${userPrompt}
+CONTEXT DATA:
+Medicines Database: ${medicinesContext}
+Shops Database: ${shopsContext}
 
-Please respond in JSON format following this exact structure. Only include the relevant fields based on the query type:
+INSTRUCTIONS:
+Analyze the user's prompt and respond accordingly:
+1. For health symptoms: Provide brief diagnosis + relevant medicines with shop availability
+2. For shop queries (e.g. "shops within 1km"): Return shop list 
+3. For general queries: Provide helpful response about the platform
 
-For health conditions: Include medicines array with relevant medicines and shops where they're available
-For shop queries: Include shops array with shop information  
-For general queries: Include only response field
+User Query: "${userPrompt}"
 
-Example response structure:
+Respond in JSON format with this structure (only include relevant fields):
 {
-  "medicines": [
-    {
-      "name": "Medicine Name",
-      "id": "MED_ID", 
-      "dosage": "Recommended dosage if applicable",
-      "shops": [
-        {
-          "id": "SHOP_ID",
-          "name": "Shop Name",
-          "distance": 150,
-          "price": 25
-        }
-      ]
-    }
-  ],
-  "response": "Your diagnostic message or general response here. Keep it concise and helpful.",
-  "shops": [
-    {
-      "name": "Shop Name",
-      "id": "SHOP_ID",
-      "distance": 500, 
-      "location": "Shop Address"
-    }
-  ]
+  "response": "Your helpful response here (always include this field)",
+  "medicines": [{"name": "Medicine", "id": "MED_ID", "dosage": "dose info", "shops": [{"id": "SHOP_ID", "name": "Shop", "distance": 150, "price": 25}]}],
+  "shops": [{"name": "Shop", "id": "SHOP_ID", "distance": 500, "location": "Address"}]
 }
 
-IMPORTANT: Always include a "response" field. For medicine recommendations, include proper medical disclaimers.
+Always include medical disclaimers for health advice.
 `;
 
     const config = {
@@ -188,18 +159,6 @@ IMPORTANT: Always include a "response" field. For medicine recommendations, incl
         parts: [
           {
             text: prompt,
-          },
-          {
-            inlineData: {
-              mimeType: "application/json",
-              data: medicinesData,
-            },
-          },
-          {
-            inlineData: {
-              mimeType: "application/json",
-              data: shopsData,
-            },
           },
         ],
       },
