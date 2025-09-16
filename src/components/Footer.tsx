@@ -1,7 +1,6 @@
 "use client";
 
 import { FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
-import { SiGeeksforgeeks } from "react-icons/si";
 import { FiMail, FiUser, FiMessageSquare, FiPhone } from "react-icons/fi";
 import { useState } from "react";
 import { motion } from "framer-motion";

@@ -64,19 +64,19 @@ const NavBar = () => {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  const scrollToContact = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    e.preventDefault(); // Prevent default jump behavior
-    const footer = document.getElementById("contact"); // footer has id="contact"
-    if (footer) {
-      footer.scrollIntoView({ behavior: "smooth" });
-    }
-    setIsMenuOpen(false);
-  };
+  // const scrollToContact = (
+  //   e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  // ) => {
+  //   e.preventDefault(); // Prevent default jump behavior
+  //   const footer = document.getElementById("contact"); // footer has id="contact"
+  //   if (footer) {
+  //     footer.scrollIntoView({ behavior: "smooth" });
+  //   }
+  //   setIsMenuOpen(false);
+  // };
 
   const renderNavLinks = (onClickHandler?: () => void) =>
-    navLinks.map(({ href, label }, index) => {
+    navLinks.map(({ label }, index) => {
       return (
         <motion.div
           key={label}

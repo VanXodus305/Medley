@@ -66,11 +66,18 @@ const ChatInput = () => {
     }
   };
 
-  const handleKeyPress = (e: {
-    key: string;
-    shiftKey: any;
-    preventDefault: () => void;
-  }) => {
+  interface Message {
+    id: number;
+    type: "user" | "bot";
+    text: string;
+    timestamp: string;
+  }
+
+  interface QuickQuestion {
+    question: string;
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
