@@ -2,12 +2,19 @@
 
 import NavBar from "@/components/NavBar";
 import HeroSection from "@/components/HeroSection";
+
 import Footer from "@/components/Footer";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import ChatInput from "@/components/ChatInput";
 import MedicineList from "@/components/MedicineList";
 import ShopList from "@/components/ShopList";
+import '../app/globals.css';
+
+// Font Awesome imports & configuration
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -46,6 +53,9 @@ export default function HomePage() {
         <motion.section id="chat" variants={fadeInUp}>
           <ChatInput />
         </motion.section>
+        
+
+          
         <motion.section id="medicines" variants={fadeInUp}>
           <MedicineList />
         </motion.section>
