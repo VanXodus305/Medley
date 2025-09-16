@@ -51,7 +51,7 @@ export default function HomePage() {
           <HeroSection />
         </motion.section>
         <motion.section id="chat" variants={fadeInUp}>
-          <ChatInput />
+          <ChatInput  />
         </motion.section>
         
 
