@@ -1,7 +1,9 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPills } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faPills, faSyringe, faCapsules, faTint, faEye,} from '@fortawesome/free-solid-svg-icons';
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -24,14 +26,7 @@ const medicines: Medicine[] = [
     form: "Tablet",
     image: "/images/med1.jpg",
   },
-  {
-    id: "MED002",
-    name: "Ibuprofen",
-    uses: ["Fever", "Pain", "Inflammation"],
-    brand: "Brufen",
-    form: "Tablet",
-    image: "/images/med2.jpg",
-  },
+  
   {
     id: "MED003",
     name: "Cetirizine",
@@ -64,38 +59,52 @@ const medicines: Medicine[] = [
     form: "Tablet",
     image: "/images/med6.jpg",
   },
+ {
+    id: "MED101",
+    name: "Lactulose",
+    uses: ["Constipation"],
+    brand: "Duphalac",
+    form: "Syrup",
+    image: "/images/med6.jpg",
+  },
+
   {
-    id: "MED007",
-    name: "Aspirin",
-    uses: ["Pain", "Fever", "Inflammation"],
-    brand: "Disprin",
-    form: "Tablet",
-    image: "/images/med7.jpg",
+    id: "MED075",
+    name: "Bromhexine",
+    uses: ["Cough", "Cold"],
+    brand: "Bisolvon",
+    form: "Syrup",
+    image: "/images/med6.jpg",
+    
   },
   {
-    id: "MED008",
-    name: "Loratadine",
-    uses: ["Allergy", "Cold"],
-    brand: "Claritin",
-    form: "Tablet",
-    image: "/images/med8.jpg",
+    id: "MED081",
+    name: "Chloramphenicol",
+    uses: ["Infection", "Eye Infection"],
+    brand: "Chloromycetin",
+    form: "Eye Drops",
+    image: "/images/med6.jpg",
+  },
+   {
+    id: "MED019",
+    name: "Ambroxol",
+    uses: ["Cough", "Cold"],
+    brand: "Mucosolvan",
+    form: "Syrup",
+    image: "/images/med6.jpg",
+
   },
   {
-    id: "MED009",
-    name: "Ranitidine",
-    uses: ["Acidity", "Stomach Ache"],
-    brand: "Zantac",
-    form: "Tablet",
-    image: "/images/med9.jpg",
+    id: "MED041",
+    name: "Insulin",
+    uses: ["Diabetes"],
+    brand: "Humulin",
+    form: "Injection",
+    image: "/images/med6.jpg",
+
   },
-  {
-    id: "MED010",
-    name: "Domperidone",
-    uses: ["Nausea", "Vomiting"],
-    brand: "Motilium",
-    form: "Tablet",
-    image: "/images/med10.jpg",
-  },
+
+  
 ];
 
 const MedicineList: React.FC = () => {
@@ -106,13 +115,32 @@ const MedicineList: React.FC = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 1500,
     arrows: false,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
       { breakpoint: 640, settings: { slidesToShow: 1 } },
     ],
   };
+
+
+const getIconByForm = (form: string): IconProp => {
+  switch (form) {
+    case "Tablet":
+      return faPills;
+    case "Capsule":
+      return faCapsules;
+    case "Syrup":
+      return faTint;
+    case "Eye Drops":
+      return faEye;
+    case "Injection":
+      return faSyringe;
+    default:
+      return faPills;
+  }
+};
+
 
   return (
     <div className="w-full px-6 py-12 font-poppins bg-gradient-to-r from-[#f8faf9] to-[#f1fdf8]">
@@ -126,7 +154,7 @@ const MedicineList: React.FC = () => {
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-5 flex flex-col items-center text-center">
               <div className="relative">
                 <div className="w-28 h-28 flex items-center justify-center text-[#4FAA84] text-6xl mb-4 hover:scale-105 transition-transform duration-300">
-                  <FontAwesomeIcon icon={faPills} />
+                  <FontAwesomeIcon icon={getIconByForm(med.form)} />
                 </div>
 
                 <span className="absolute -top-2 -right-2 bg-[#4FAA84] text-white text-[10px] px-2 py-0.5 rounded-full shadow">
