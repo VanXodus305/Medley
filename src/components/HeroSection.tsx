@@ -62,7 +62,7 @@ const HeroSection = () => {
                 radius="lg"
                 fullWidth
               >
-                Search Medicines
+                Find Medicines
               </Button>
             </motion.div>
           </Link>
@@ -76,7 +76,7 @@ const HeroSection = () => {
                 radius="lg"
                 fullWidth
               >
-                For Pharmacies
+                Nearby Medical Shops
               </Button>
             </motion.div>
           </Link>
