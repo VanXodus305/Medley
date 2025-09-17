@@ -5,7 +5,7 @@ import { FaUser, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import { GiPill } from "react-icons/gi";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider, { Settings } from "react-slick";
+import Slider from "react-slick";
 
 interface Medicine {
   medicine_id: string;
@@ -117,30 +117,32 @@ const shop: Shop[] = [
 ];
 
 const ShopList: React.FC = () => {
-  const sliderSettings: Settings = {
+  const sliderSettings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3.75,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 1500,
     arrows: false,
+    centerMode: true,
+    centerPadding: "0px",
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
+      { breakpoint: 1024, settings: { slidesToShow: 2, centerPadding: "0px" } },
+      { breakpoint: 640, settings: { slidesToShow: 1, centerPadding: "0px" } },
     ],
   };
 
   return (
     <div className="w-full px-6 py-12 font-poppins bg-gradient-to-r from-[#f8faf9] to-[#f1fdf8]">
-      <h2 className="text-3xl font-bold mb-6 text-center text-[#1F2A37]">
+      <h2 className="text-3xl font-bold mb-8 text-center text-[#1F2A37]">
         Nearby Medical Shops
       </h2>
 
       <Slider {...sliderSettings}>
         {shop.map((shop) => (
-          <div key={shop.id} className="p-3 flex justify-center">
+          <div key={shop.id} className="p-3 flex justify-center items-center">
             <div className="w-[270px] h-[300px] bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 flex flex-col">
               {/* Card Header */}
               <div className="bg-gradient-to-r from-[#4FAA84] to-[#3C7168] p-4 rounded-t-2xl">
@@ -148,7 +150,7 @@ const ShopList: React.FC = () => {
               </div>
 
               {/* Card Body */}
-              <div className="p-4 flex flex-col flex-1 font-sans">
+              <div className="p-7 flex flex-col flex-1 font-sans">
                 <p className="text-base font-semibold text-gray-800 tracking-wide mb-1 flex items-center gap-2">
                   <FaUser className="w-5 h-5 text-green-700" />
                   {shop.owner}
