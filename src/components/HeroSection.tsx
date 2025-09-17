@@ -6,9 +6,9 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const stats = [
-  { label: "Medicines Listed", value: "10,000+" },
-  { label: "Pharmacies Connected", value: "5,000+" },
-  { label: "Search Speed", value: "<3 sec" },
+  { label: "Medicines Listed", value: "500+" },
+  { label: "Pharmacies Connected", value: "100+" },
+  { label: "Search Speed", value: "<5 sec" },
 ];
 
 const HeroSection = () => {
