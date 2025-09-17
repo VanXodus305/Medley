@@ -132,10 +132,10 @@ const NavBar = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <Link href="/signin" className="w-full max-w-[120px]">
+          <Link href="#chat" className="w-full max-w-[120px]">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
-                className="bg-secondary-200/60 font-medium text-sm"
+                className="bg-secondary-100/70 font-medium text-sm"
                 size="sm"
                 variant="shadow"
                 fullWidth

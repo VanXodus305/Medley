@@ -15,11 +15,11 @@ const HeroSection = () => {
   return (
     <div className="relative container mx-auto px-5 flex flex-col lg:flex-row items-center justify-between min-h-[100vh] lg:gap-8">
       {/* Subtle gradient background */}
-      <div className="absolute top-0 left-0 w-full h-full -z-10 bg-gradient-to-b from-primary/5 via-white to-white" />
+      <div className="absolute top-0 left-0 w-full h-full -z-10 bg-transparent" />
 
       {/* Left side - text and CTA */}
       <motion.div
-        className="flex w-full lg:w-3/5 items-start justify-center flex-col py-12"
+        className="flex w-full lg:w-3/5 items-start justify-center flex-col pb-12 pt-8"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -53,7 +53,7 @@ const HeroSection = () => {
 
         {/* Call to Actions */}
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
-          <Link href="/search" className="w-full max-w-[200px]">
+          <Link href="#medicines" className="w-full max-w-[200px]">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 className="bg-primary text-white font-medium text-md md:text-lg shadow-md hover:shadow-lg transition-all"
@@ -67,10 +67,10 @@ const HeroSection = () => {
             </motion.div>
           </Link>
 
-          <Link href="/register" className="w-full max-w-[200px]">
+          <Link href="#shops" className="w-full max-w-[200px]">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
-                className="bg-secondary-200/45 border border-secondary-300 hover:bg-secondary-100 transition-all font-medium text-md md:text-lg"
+                className="bg-secondary-100/70 border border-secondary-300 hover:bg-secondary-100 transition-all font-semibold text-neutral-00 text-lg px-28"
                 size="lg"
                 variant="flat"
                 radius="lg"
@@ -84,13 +84,13 @@ const HeroSection = () => {
 
         {/* Stats */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12"
+          className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-12 justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.7 }}
         >
           {stats.map((stat, i) => (
-            <div key={i} className="text-center sm:text-left">
+            <div key={i} className="text-left">
               <h3 className="text-2xl font-bold text-gray-800">{stat.value}</h3>
               <p className="text-sm text-gray-500">{stat.label}</p>
             </div>

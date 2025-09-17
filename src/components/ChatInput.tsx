@@ -1,9 +1,126 @@
 import React, { useState } from "react";
-import { Send, Pill, Heart, AlertCircle, User, Bot } from "lucide-react";
-import GeminiService from "../services/geminiService";
+import {
+  Send,
+  Pill,
+  Heart,
+  AlertCircle,
+  User,
+  Bot,
+  MapPin,
+  IndianRupee,
+  Clock,
+} from "lucide-react";
+import GeminiService, {
+  GeminiResponse,
+  MedicineWithShops,
+  ShopInfo,
+} from "../services/geminiService";
+
+interface Message {
+  id: number;
+  type: "user" | "bot";
+  text: string;
+  timestamp: string;
+  structured?: GeminiResponse; // Add structured data for bot responses
+}
+
+// Medicine Card Component
+const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
+  const formatDistance = (distance: number) => {
+    return distance >= 1000
+      ? `${(distance / 1000).toFixed(1)} km`
+      : `${distance} metres`;
+  };
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg p-4 min-w-[280px] shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex items-start gap-3">
+        <div className="bg-blue-100 p-2 rounded-lg">
+          <Pill className="w-5 h-5 text-blue-600" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-semibold text-gray-900 text-sm">
+            {medicine.name}
+          </h3>
+          {medicine.dosage && (
+            <p className="text-xs text-gray-600 mt-1">{medicine.dosage}</p>
+          )}
+
+          {medicine.shops && medicine.shops.length > 0 && (
+            <div className="mt-3">
+              <p className="text-xs font-medium text-gray-700 mb-2">
+                Available at:
+              </p>
+              <div className="space-y-1">
+                {medicine.shops.slice(0, 2).map((shop, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between text-xs"
+                  >
+                    <div className="flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-gray-400" />
+                      <span className="text-gray-600 truncate">
+                        {shop.name}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-600 font-medium flex items-center gap-1">
+                        <IndianRupee className="w-3 h-3" />
+                        {shop.price}
+                      </span>
+                      <span className="text-gray-500">
+                        {formatDistance(shop.distance)}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {medicine.shops.length > 2 && (
+                <p className="text-xs text-gray-500 mt-1">
+                  +{medicine.shops.length - 2} more shops
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Shop Card Component
+const ShopCard = ({ shop }: { shop: ShopInfo }) => {
+  const formatDistance = (distance: number) => {
+    return distance >= 1000
+      ? `${(distance / 1000).toFixed(1)} km`
+      : `${distance} metres`;
+  };
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-lg p-4 min-w-[280px] shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex items-start gap-3">
+        <div className="bg-green-100 p-2 rounded-lg">
+          <MapPin className="w-5 h-5 text-green-600" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-semibold text-gray-900 text-sm">{shop.name}</h3>
+          <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+            {shop.location}
+          </p>
+          <div className="flex items-center gap-1 mt-2">
+            <Clock className="w-3 h-3 text-gray-400" />
+            <span className="text-xs text-gray-600">
+              {formatDistance(shop.distance)} away
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ChatInput = () => {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       type: "bot",
@@ -15,20 +132,25 @@ const ChatInput = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [geminiService] = useState(() => new GeminiService());
 
-  const generateBotResponse = async (userMessage: string): Promise<string> => {
+  const generateBotResponse = async (
+    userMessage: string
+  ): Promise<GeminiResponse> => {
     try {
       const response = await geminiService.processUserPrompt(userMessage);
-      return geminiService.formatMedicineResponse(response);
+      return response;
     } catch (error) {
       console.error("Error generating response:", error);
-      return "I understand you're asking about a medical concern. While I can provide general information about common conditions, I'd recommend consulting with a healthcare professional for accurate diagnosis and treatment. Could you describe your specific symptoms?";
+      return {
+        response:
+          "I understand you're asking about a medical concern. While I can provide general information about common conditions, I'd recommend consulting with a healthcare professional for accurate diagnosis and treatment. Could you describe your specific symptoms?",
+      };
     }
   };
 
   const handleSend = async () => {
     if (!inputValue.trim()) return;
 
-    const userMessage = {
+    const userMessage: Message = {
       id: messages.length + 1,
       type: "user",
       text: inputValue,
@@ -42,19 +164,20 @@ const ChatInput = () => {
 
     try {
       // Generate bot response using Gemini API
-      const botResponseText = await generateBotResponse(currentInput);
+      const structuredResponse = await generateBotResponse(currentInput);
 
-      const botResponse = {
+      const botResponse: Message = {
         id: messages.length + 2,
         type: "bot",
-        text: botResponseText,
+        text: structuredResponse.response,
         timestamp: new Date().toLocaleTimeString(),
+        structured: structuredResponse,
       };
 
       setMessages((prev) => [...prev, botResponse]);
     } catch (error) {
       console.error("Error generating response:", error);
-      const errorResponse = {
+      const errorResponse: Message = {
         id: messages.length + 2,
         type: "bot",
         text: "I'm sorry, I'm experiencing some technical difficulties. Please try again later or consult with a healthcare professional for medical advice.",
@@ -82,7 +205,7 @@ const ChatInput = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+    <div className="max-w-5xl sm:mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden mb-20 mx-5">
       <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white p-6">
         <div className="flex items-center gap-3">
           <div className="bg-white/20 p-2 rounded-full">
@@ -149,9 +272,57 @@ const ChatInput = () => {
                 <div className="whitespace-pre-line text-sm leading-relaxed">
                   {message.text}
                 </div>
+
+                {/* Render structured data for bot messages */}
+                {message.type === "bot" && message.structured && (
+                  <div className="mt-4 space-y-4">
+                    {/* Medicines Carousel */}
+                    {message.structured.medicines &&
+                      message.structured.medicines.length > 0 && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                            <Pill className="w-4 h-4" />
+                            Recommended Medicines
+                          </h4>
+                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300">
+                            {message.structured.medicines.map(
+                              (medicine, index) => (
+                                <MedicineCard key={index} medicine={medicine} />
+                              )
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                    {/* Shops Carousel */}
+                    {message.structured.shops &&
+                      message.structured.shops.length > 0 && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                            <MapPin className="w-4 h-4" />
+                            Nearby Shops
+                          </h4>
+                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300">
+                            {message.structured.shops.map((shop, index) => (
+                              <ShopCard key={index} shop={shop} />
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                  </div>
+                )}
+
                 <div className={`text-xs mt-2 opacity-70`}>
                   {message.timestamp}
                 </div>
+
+                {/* Medical disclaimer for bot messages with medicines */}
+                {message.type === "bot" && message.structured?.medicines && (
+                  <div className="mt-3 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800">
+                    ⚠️ This is general information only. Please consult a
+                    healthcare professional for proper diagnosis and treatment.
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -192,7 +363,7 @@ const ChatInput = () => {
 
       {/* Input Area */}
       <div className="p-4 border-t bg-white">
-        <div className="flex gap-3">
+        <div className="flex sm:flex-row flex-col gap-3">
           <div className="flex-1 relative">
             <textarea
               value={inputValue}
@@ -209,7 +380,7 @@ const ChatInput = () => {
           <button
             onClick={handleSend}
             disabled={!inputValue.trim() || isTyping}
-            className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+            className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 md:max-h-12"
           >
             <Send className="w-4 h-4" />
             Send

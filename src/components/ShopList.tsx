@@ -124,7 +124,7 @@ const ShopList: React.FC = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 1500,
+    autoplaySpeed: 1300,
     arrows: false,
     centerMode: true,
     centerPadding: "0px",
@@ -135,7 +135,7 @@ const ShopList: React.FC = () => {
   };
 
   return (
-    <div className="w-full px-6 py-12 font-poppins bg-gradient-to-r from-[#f8faf9] to-[#f1fdf8]">
+    <div className="w-full px-6 py-12 font-poppins bg-gradient-to-r from-[#f8faf9] to-[#f1fdf8] pb-20">
       <h2 className="text-3xl font-bold mb-8 text-center text-[#1F2A37]">
         Nearby Medical Shops
       </h2>

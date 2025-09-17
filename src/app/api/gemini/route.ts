@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     }
 
     const ai = new GoogleGenAI({ apiKey });
-    const model = "gemini-2.5-pro"; // Using pro for better reliability
+    const model = "gemini-2.5-flash"; // Using flash for better reliability
 
     // Prepare context data more efficiently
     const medicinesContext = JSON.stringify(medicines);

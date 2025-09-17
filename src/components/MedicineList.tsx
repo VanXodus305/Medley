@@ -1,8 +1,14 @@
 "use client";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faPills, faSyringe, faCapsules, faTint, faEye,} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import {
+  faPills,
+  faSyringe,
+  faCapsules,
+  faTint,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -26,7 +32,7 @@ const medicines: Medicine[] = [
     form: "Tablet",
     image: "/images/med1.jpg",
   },
-  
+
   {
     id: "MED003",
     name: "Cetirizine",
@@ -59,7 +65,7 @@ const medicines: Medicine[] = [
     form: "Tablet",
     image: "/images/med6.jpg",
   },
- {
+  {
     id: "MED101",
     name: "Lactulose",
     uses: ["Constipation"],
@@ -75,7 +81,6 @@ const medicines: Medicine[] = [
     brand: "Bisolvon",
     form: "Syrup",
     image: "/images/med6.jpg",
-    
   },
   {
     id: "MED081",
@@ -85,14 +90,13 @@ const medicines: Medicine[] = [
     form: "Eye Drops",
     image: "/images/med6.jpg",
   },
-   {
+  {
     id: "MED019",
     name: "Ambroxol",
     uses: ["Cough", "Cold"],
     brand: "Mucosolvan",
     form: "Syrup",
     image: "/images/med6.jpg",
-
   },
   {
     id: "MED041",
@@ -101,10 +105,7 @@ const medicines: Medicine[] = [
     brand: "Humulin",
     form: "Injection",
     image: "/images/med6.jpg",
-
   },
-
-  
 ];
 
 const MedicineList: React.FC = () => {
@@ -115,7 +116,7 @@ const MedicineList: React.FC = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 1500,
+    autoplaySpeed: 1300,
     arrows: false,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
@@ -123,27 +124,25 @@ const MedicineList: React.FC = () => {
     ],
   };
 
-
-const getIconByForm = (form: string): IconProp => {
-  switch (form) {
-    case "Tablet":
-      return faPills;
-    case "Capsule":
-      return faCapsules;
-    case "Syrup":
-      return faTint;
-    case "Eye Drops":
-      return faEye;
-    case "Injection":
-      return faSyringe;
-    default:
-      return faPills;
-  }
-};
-
+  const getIconByForm = (form: string): IconProp => {
+    switch (form) {
+      case "Tablet":
+        return faPills;
+      case "Capsule":
+        return faCapsules;
+      case "Syrup":
+        return faTint;
+      case "Eye Drops":
+        return faEye;
+      case "Injection":
+        return faSyringe;
+      default:
+        return faPills;
+    }
+  };
 
   return (
-    <div className="w-full px-6 py-12 font-poppins bg-gradient-to-r from-[#f8faf9] to-[#f1fdf8]">
+    <div className="w-full px-6 py-12 font-poppins bg-gradient-to-r from-[#f8faf9] to-[#f1fdf8] pb-16">
       <h2 className="text-3xl font-bold mb-10 text-center text-[#1F2A37]">
         Popular Medicines
       </h2>
