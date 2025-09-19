@@ -9,6 +9,7 @@ import {
   MapPin,
   IndianRupee,
   Clock,
+  Phone,
 } from "lucide-react";
 import GeminiService, {
   GeminiResponse,
@@ -43,7 +44,9 @@ const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
             {medicine.name}
           </h3>
           {medicine.dosage && (
-            <p className="text-xs text-gray-600 mt-1">{medicine.dosage}</p>
+            <p className="text-xs text-green-600 mt-1 font-medium">
+              {medicine.dosage}
+            </p>
           )}
 
           {medicine.shops && medicine.shops.length > 0 && (
@@ -51,23 +54,22 @@ const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
               <p className="text-xs font-medium text-gray-700 mb-2">
                 Available at:
               </p>
-              <div className="space-y-1">
+              <div className="space-y-2">
                 {medicine.shops.slice(0, 2).map((shop, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between text-xs"
-                  >
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-gray-400" />
-                      <span className="text-gray-600 truncate">
-                        {shop.name}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-green-600 font-medium flex items-center gap-1">
+                  <div key={index} className="text-xs">
+                    <div className="flex justify-start mb-1">
+                      <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
                         <IndianRupee className="w-3 h-3" />
                         {shop.price}
                       </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-gray-400" />
+                        <span className="text-gray-600 truncate">
+                          {shop.name}
+                        </span>
+                      </div>
                       <span className="text-gray-500">
                         {formatDistance(shop.distance)}
                       </span>
@@ -113,6 +115,12 @@ const ShopCard = ({ shop }: { shop: ShopInfo }) => {
               {formatDistance(shop.distance)} away
             </span>
           </div>
+          {shop.phone && (
+            <div className="flex items-center gap-1 mt-1">
+              <Phone className="w-3 h-3 text-gray-400" />
+              <span className="text-xs text-gray-600">{shop.phone}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -224,7 +232,7 @@ const ChatInput = () => {
   ];
 
   return (
-    <div className="max-w-5xl sm:mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden mb-20 mx-5">
+    <div className="max-w-[1100px] sm:mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden mb-20 mx-5">
       <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white p-6">
         <div className="flex items-center gap-3">
           <div className="bg-white/20 p-2 rounded-full">
@@ -264,7 +272,7 @@ const ChatInput = () => {
             }`}
           >
             <div
-              className={`flex gap-3 max-w-[80%] ${
+              className={`flex gap-3 max-w-[80%] min-w-0 ${
                 message.type === "user" ? "flex-row-reverse" : ""
               }`}
             >
@@ -283,7 +291,7 @@ const ChatInput = () => {
               </div>
 
               <div
-                className={`rounded-2xl p-4 ${
+                className={`rounded-2xl p-4 min-w-0 max-w-full ${
                   message.type === "user"
                     ? "bg-green-500 text-white rounded-br-sm"
                     : "bg-gray-100 text-gray-800 rounded-bl-sm"
@@ -295,16 +303,16 @@ const ChatInput = () => {
 
                 {/* Render structured data for bot messages */}
                 {message.type === "bot" && message.structured && (
-                  <div className="mt-4 space-y-4">
+                  <div className="mt-4 space-y-4 min-w-0">
                     {/* Medicines Carousel */}
                     {message.structured.medicines &&
                       message.structured.medicines.length > 0 && (
-                        <div>
+                        <div className="min-w-0">
                           <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                             <Pill className="w-4 h-4" />
                             Recommended Medicines
                           </h4>
-                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300">
+                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 min-w-0">
                             {message.structured.medicines.map(
                               (medicine, index) => (
                                 <MedicineCard key={index} medicine={medicine} />
@@ -317,12 +325,12 @@ const ChatInput = () => {
                     {/* Shops Carousel */}
                     {message.structured.shops &&
                       message.structured.shops.length > 0 && (
-                        <div>
+                        <div className="min-w-0">
                           <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                             <MapPin className="w-4 h-4" />
                             Nearby Shops
                           </h4>
-                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300">
+                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 min-w-0">
                             {message.structured.shops.map((shop, index) => (
                               <ShopCard key={index} shop={shop} />
                             ))}

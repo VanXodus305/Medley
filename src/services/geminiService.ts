@@ -15,6 +15,7 @@ export interface ShopInfo {
   id: string;
   distance: number;
   location: string;
+  phone: string;
 }
 
 export interface GeminiResponse {

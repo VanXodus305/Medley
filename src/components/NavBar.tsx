@@ -11,7 +11,7 @@ const navLinks = [
   { label: "Home", href: "#home" },
   { label: "Chat", href: "#chat" },
   { label: "Medicines", href: "#medicines" },
-  { label: "Shops", href: "#shops" }, 
+  { label: "Shops", href: "#shops" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -109,14 +109,16 @@ const NavBar = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <motion.div
-          className="text-2xl font-semibold w-full justify-start items-center"
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <span className="text-secondary-200">Medley</span>
-        </motion.div>
+        <Link href="/" className="w-full justify-start items-center">
+          <motion.div
+            className="text-2xl font-semibold "
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <span className="text-secondary-200">Medley</span>
+          </motion.div>
+        </Link>
 
         <motion.div
           className="md:flex hidden text-center items-center justify-between w-full font-medium text-lg"

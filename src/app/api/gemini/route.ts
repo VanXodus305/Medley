@@ -20,6 +20,7 @@ export interface ShopInfo {
   id: string;
   distance: number;
   location: string;
+  phone: string;
 }
 
 export interface GeminiResponse {
@@ -64,7 +65,7 @@ Shops Database: ${shopsContext}
 
 INSTRUCTIONS:
 Analyze the user's prompt and respond accordingly:
-1. For health symptoms: Provide brief diagnosis + relevant medicines with shop availability
+1. For health symptoms: Provide brief diagnosis + relevant medicines along with their dosage (like how many tablets to take) along with their shop availability
 2. For shop queries (e.g. "shops within 1km"): Return shop list 
 3. For general queries: Provide helpful response about the platform
 
@@ -74,7 +75,7 @@ Respond in JSON format with this structure (only include relevant fields):
 {
   "response": "Your helpful response here (always include this field)",
   "medicines": [{"name": "Medicine", "id": "MED_ID", "dosage": "dose info", "shops": [{"id": "SHOP_ID", "name": "Shop", "distance": 150, "price": 25}]}],
-  "shops": [{"name": "Shop", "id": "SHOP_ID", "distance": 500, "location": "Address"}]
+  "shops": [{"name": "Shop", "id": "SHOP_ID", "distance": 500, "location": "Address", "phone": "+91-1234567890"}]
 }
 
 Always include medical disclaimers for health advice.
@@ -132,7 +133,7 @@ Always include medical disclaimers for health advice.
             type: Type.ARRAY,
             items: {
               type: Type.OBJECT,
-              required: ["name", "id", "distance", "location"],
+              required: ["name", "id", "distance", "location", "phone"],
               properties: {
                 name: {
                   type: Type.STRING,
@@ -144,6 +145,9 @@ Always include medical disclaimers for health advice.
                   type: Type.NUMBER,
                 },
                 location: {
+                  type: Type.STRING,
+                },
+                phone: {
                   type: Type.STRING,
                 },
               },
