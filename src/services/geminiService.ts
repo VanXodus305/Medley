@@ -13,7 +13,7 @@ export interface MedicineWithShops {
 export interface ShopInfo {
   name: string;
   id: string;
-  distance: number;
+  distance: string;
   location: string;
   phone: string;
 }
@@ -66,10 +66,7 @@ class GeminiService {
           formattedResponse += "\n*Available at:*\n";
 
           medicine.shops.slice(0, 3).forEach((shop) => {
-            const distanceStr =
-              shop.distance >= 1000
-                ? `${(shop.distance / 1000).toFixed(1)} km`
-                : `${shop.distance} metres`;
+            const distanceStr = shop.distance;
             formattedResponse += `• ${shop.name} - ₹${shop.price} (${distanceStr} away)\n`;
           });
         }
@@ -80,10 +77,7 @@ class GeminiService {
       formattedResponse += "\n\n**🏪 Nearby Shops:**\n";
 
       data.shops.forEach((shop) => {
-        const distanceStr =
-          shop.distance >= 1000
-            ? `${(shop.distance / 1000).toFixed(1)} km`
-            : `${shop.distance} metres`;
+        const distanceStr = shop.distance;
         formattedResponse += `• ${shop.name} - ${distanceStr} away\n  📍 ${shop.location}\n`;
       });
     }

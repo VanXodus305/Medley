@@ -18,7 +18,7 @@ export interface MedicineWithShops {
 export interface ShopInfo {
   name: string;
   id: string;
-  distance: number;
+  distance: string;
   location: string;
   phone: string;
 }
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     }
 
     const ai = new GoogleGenAI({ apiKey });
-    const model = "gemini-2.5-flash"; // Using flash for better reliability
+    const model = "gemini-2.5-flash-lite"; // Using flash for better reliability
 
     // Prepare context data more efficiently
     const medicinesContext = JSON.stringify(medicines);
@@ -115,7 +115,7 @@ Always include medical disclaimers for health advice.
                         type: Type.STRING,
                       },
                       distance: {
-                        type: Type.NUMBER,
+                        type: Type.STRING,
                       },
                       price: {
                         type: Type.NUMBER,
@@ -142,7 +142,7 @@ Always include medical disclaimers for health advice.
                   type: Type.STRING,
                 },
                 distance: {
-                  type: Type.NUMBER,
+                  type: Type.STRING,
                 },
                 location: {
                   type: Type.STRING,

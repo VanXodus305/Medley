@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 const stats = [
   { label: "Medicines Listed", value: "500+" },
   { label: "Shops Connected", value: "100+" },
-  { label: "Search Speed", value: "<5 sec" },
+  { label: "Search Speed", value: "<10 sec" },
 ];
 
 const HeroSection = () => {

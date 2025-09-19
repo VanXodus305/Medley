@@ -10,12 +10,38 @@ import {
   IndianRupee,
   Clock,
   Phone,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import GeminiService, {
   GeminiResponse,
   MedicineWithShops,
   ShopInfo,
 } from "../services/geminiService";
+
+// Custom Arrow Components for Carousel
+const PrevArrow = ({ onClick }: { onClick?: () => void }) => (
+  <button
+    onClick={onClick}
+    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white border border-gray-200 rounded-full p-2 shadow-sm hover:shadow-md transition-all duration-200"
+    aria-label="Previous"
+  >
+    <ChevronLeft className="w-4 h-4 text-gray-600" />
+  </button>
+);
+
+const NextArrow = ({ onClick }: { onClick?: () => void }) => (
+  <button
+    onClick={onClick}
+    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white border border-gray-200 rounded-full p-2 shadow-sm hover:shadow-md transition-all duration-200"
+    aria-label="Next"
+  >
+    <ChevronRight className="w-4 h-4 text-gray-600" />
+  </button>
+);
 
 interface Message {
   id: number;
@@ -27,58 +53,52 @@ interface Message {
 
 // Medicine Card Component
 const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
-  const formatDistance = (distance: number) => {
-    return distance >= 1000
-      ? `${(distance / 1000).toFixed(1)} km`
-      : `${distance} metres`;
-  };
-
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 min-w-[280px] shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white border border-gray-200 rounded-lg p-4 w-full max-w-[360px] shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start gap-3">
-        <div className="bg-blue-100 p-2 rounded-lg">
+        <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
           <Pill className="w-5 h-5 text-blue-600" />
         </div>
-        <div className="flex-1">
-          <h3 className="font-semibold text-gray-900 text-sm">
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-gray-900 text-sm mb-1">
             {medicine.name}
           </h3>
           {medicine.dosage && (
-            <p className="text-xs text-green-600 mt-1 font-medium">
+            <p className="text-xs text-green-600 mb-3 font-medium leading-relaxed">
               {medicine.dosage}
             </p>
           )}
 
           {medicine.shops && medicine.shops.length > 0 && (
-            <div className="mt-3">
+            <div>
               <p className="text-xs font-medium text-gray-700 mb-2">
                 Available at:
               </p>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {medicine.shops.slice(0, 2).map((shop, index) => (
                   <div key={index} className="text-xs">
-                    <div className="flex justify-start mb-1">
+                    <div className="flex justify-start mb-2">
                       <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
                         <IndianRupee className="w-3 h-3" />
                         {shop.price}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="space-y-1">
                       <div className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-gray-400" />
-                        <span className="text-gray-600 truncate">
+                        <MapPin className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <span className="text-gray-600 font-medium">
                           {shop.name}
                         </span>
                       </div>
-                      <span className="text-gray-500">
-                        {formatDistance(shop.distance)}
-                      </span>
+                      <div className="text-gray-500 text-xs ml-4">
+                        {typeof shop.distance === 'number' ? shop.distance : shop.distance}
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
               {medicine.shops.length > 2 && (
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 mt-2">
                   +{medicine.shops.length - 2} more shops
                 </p>
               )}
@@ -92,19 +112,13 @@ const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
 
 // Shop Card Component
 const ShopCard = ({ shop }: { shop: ShopInfo }) => {
-  const formatDistance = (distance: number) => {
-    return distance >= 1000
-      ? `${(distance / 1000).toFixed(1)} km`
-      : `${distance} metres`;
-  };
-
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 min-w-[280px] shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white border border-gray-200 rounded-lg p-4 w-full max-w-[360px] shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start gap-3">
-        <div className="bg-green-100 p-2 rounded-lg">
+        <div className="bg-green-100 p-2 rounded-lg flex-shrink-0">
           <MapPin className="w-5 h-5 text-green-600" />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-gray-900 text-sm">{shop.name}</h3>
           <p className="text-xs text-gray-600 mt-1 line-clamp-2">
             {shop.location}
@@ -112,7 +126,10 @@ const ShopCard = ({ shop }: { shop: ShopInfo }) => {
           <div className="flex items-center gap-1 mt-2">
             <Clock className="w-3 h-3 text-gray-400" />
             <span className="text-xs text-gray-600">
-              {formatDistance(shop.distance)} away
+              {typeof shop.distance === "number"
+                ? `${(shop.distance / 1000).toFixed(1)} km`
+                : shop.distance}{" "}
+              away
             </span>
           </div>
           {shop.phone && (
@@ -126,6 +143,38 @@ const ShopCard = ({ shop }: { shop: ShopInfo }) => {
     </div>
   );
 };
+
+// Carousel settings
+const getCarouselSettings = (itemCount: number) => ({
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: Math.min(itemCount, 3),
+  slidesToScroll: 1,
+  autoplay: false,
+  variableWidth: false,
+  centerMode: false,
+  prevArrow: <PrevArrow />,
+  nextArrow: <NextArrow />,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: Math.min(itemCount, 2),
+        slidesToScroll: 1,
+        variableWidth: false,
+      },
+    },
+    {
+      breakpoint: 640,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        variableWidth: false,
+      },
+    },
+  ],
+});
 
 const ChatInput = () => {
   const [messages, setMessages] = useState<Message[]>([
@@ -312,12 +361,22 @@ const ChatInput = () => {
                             <Pill className="w-4 h-4" />
                             Recommended Medicines
                           </h4>
-                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 min-w-0">
-                            {message.structured.medicines.map(
-                              (medicine, index) => (
-                                <MedicineCard key={index} medicine={medicine} />
-                              )
-                            )}
+                          <div className="relative">
+                            <Slider
+                              {...getCarouselSettings(
+                                message.structured.medicines.length
+                              )}
+                            >
+                              {message.structured.medicines.map(
+                                (medicine, index) => (
+                                  <div key={index} className="px-1">
+                                    <div className="mx-1">
+                                      <MedicineCard medicine={medicine} />
+                                    </div>
+                                  </div>
+                                )
+                              )}
+                            </Slider>
                           </div>
                         </div>
                       )}
@@ -330,10 +389,20 @@ const ChatInput = () => {
                             <MapPin className="w-4 h-4" />
                             Nearby Shops
                           </h4>
-                          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 min-w-0">
-                            {message.structured.shops.map((shop, index) => (
-                              <ShopCard key={index} shop={shop} />
-                            ))}
+                          <div className="relative">
+                            <Slider
+                              {...getCarouselSettings(
+                                message.structured.shops.length
+                              )}
+                            >
+                              {message.structured.shops.map((shop, index) => (
+                                <div key={index} className="px-1">
+                                  <div className="mx-1">
+                                    <ShopCard shop={shop} />
+                                  </div>
+                                </div>
+                              ))}
+                            </Slider>
                           </div>
                         </div>
                       )}
