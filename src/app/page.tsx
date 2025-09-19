@@ -114,7 +114,7 @@ export default function HomePage() {
         <motion.section
           id="chat"
           variants={fadeInUp}
-          className="my-10"
+          className="mb-10 sm:mt-10 mt:20"
         >
           <ChatInput />
         </motion.section>
@@ -124,7 +124,7 @@ export default function HomePage() {
         <motion.section id="shops" variants={fadeInUp}>
           <ShopList />
         </motion.section>
-        <motion.section id="contact" variants={fadeInUp} className="mt-20">
+        <motion.section id="contact" variants={fadeInUp} className="">
           <Footer />
         </motion.section>
       </motion.main>

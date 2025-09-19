@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Send,
   Pill,
@@ -131,6 +131,22 @@ const ChatInput = () => {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [geminiService] = useState(() => new GeminiService());
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Auto-scroll when messages change or when typing state changes
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
 
   const generateBotResponse = async (
     userMessage: string
@@ -161,6 +177,9 @@ const ChatInput = () => {
     const currentInput = inputValue;
     setInputValue("");
     setIsTyping(true);
+
+    // Scroll after user message is added
+    setTimeout(scrollToBottom, 100);
 
     try {
       // Generate bot response using Gemini API
@@ -219,7 +238,6 @@ const ChatInput = () => {
           </div>
         </div>
       </div>
-
       <div className="p-4 bg-gray-50 border-b">
         <p className="text-sm text-gray-600 mb-2">Quick questions:</p>
         <div className="flex flex-wrap gap-2">
@@ -234,8 +252,10 @@ const ChatInput = () => {
           ))}
         </div>
       </div>
-
-      <div className="h-96 overflow-y-auto p-4 space-y-4">
+      <div
+        className="h-96 overflow-y-auto p-4 space-y-4"
+        ref={messagesContainerRef}
+      >
         {messages.map((message) => (
           <div
             key={message.id}
@@ -348,8 +368,7 @@ const ChatInput = () => {
             </div>
           </div>
         )}
-      </div>
-
+      </div>{" "}
       {/* Disclaimer */}
       <div className="px-4 py-2 bg-yellow-50 border-t border-yellow-100">
         <div className="flex items-center gap-2 text-yellow-800">
@@ -360,7 +379,6 @@ const ChatInput = () => {
           </p>
         </div>
       </div>
-
       {/* Input Area */}
       <div className="p-4 border-t bg-white">
         <div className="flex sm:flex-row flex-col gap-3">
@@ -380,7 +398,7 @@ const ChatInput = () => {
           <button
             onClick={handleSend}
             disabled={!inputValue.trim() || isTyping}
-            className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 md:max-h-12"
+            className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 md:max-h-12 justify-center"
           >
             <Send className="w-4 h-4" />
             Send

@@ -9,8 +9,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Home", href: "#home" },
-  // { label: "How It Works", href: "#how-it-works" },
-  // { label: "Our Team", href: "#team" },
+  { label: "Chat", href: "#chat" },
+  { label: "Medicines", href: "#medicines" },
+  { label: "Shops", href: "#shops" }, 
   { label: "Contact", href: "#contact" },
 ];
 
@@ -76,7 +77,7 @@ const NavBar = () => {
   // };
 
   const renderNavLinks = (onClickHandler?: () => void) =>
-    navLinks.map(({ label }, index) => {
+    navLinks.map(({ href, label }, index) => {
       return (
         <motion.div
           key={label}
@@ -87,7 +88,7 @@ const NavBar = () => {
             delay: onClickHandler ? index * 0.1 : 0,
           }}
         >
-          {/* <Link
+          <Link
             href={href}
             className={`hover:text-secondary-200/70 transition-colors duration-300 ${
               activeSection === href.substring(1) ? "text-secondary-200" : ""
@@ -95,7 +96,7 @@ const NavBar = () => {
             onClick={onClickHandler}
           >
             {label}
-          </Link> */}
+          </Link>
         </motion.div>
       );
     });

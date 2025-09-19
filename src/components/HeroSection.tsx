@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const stats = [
   { label: "Medicines Listed", value: "500+" },
-  { label: "Pharmacies Connected", value: "100+" },
+  { label: "Shops Connected", value: "100+" },
   { label: "Search Speed", value: "<5 sec" },
 ];
 
@@ -105,19 +105,21 @@ const HeroSection = () => {
 
       {/* Right side - your uploaded illustration */}
       <motion.div
-        className="hidden lg:flex w-2/5 items-center justify-end py-12"
+        className="hidden lg:flex w-4/6 items-center justify-center py-12"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
       >
         <Image
-          src="/images/emergency-call-illustration.jpg"
+          src="/images/hero.png"
           alt="Emergency telemedicine consultation"
           radius="lg"
-          className="w-full h-full object-contain max-h-[600px] px-4"
+          className="w-full h-full object-contain max-h-[800px] px-4"
           isBlurred
         />
       </motion.div>
     </div>
   );
 };
+
+export default HeroSection;
