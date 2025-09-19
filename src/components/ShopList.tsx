@@ -142,8 +142,8 @@ const ShopList: React.FC = () => {
 
       <Slider {...sliderSettings}>
         {shop.map((shop) => (
-          <div key={shop.id} className="p-3 flex justify-center items-center">
-            <div className="w-[270px] h-[300px] bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 flex flex-col">
+          <div key={shop.id} className="p-3 flex justify-center items-center w-full">
+            <div className="h-[300px] bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 flex flex-col w-full">
               {/* Card Header */}
               <div className="bg-gradient-to-r from-[#4FAA84] to-[#3C7168] p-4 rounded-t-2xl">
                 <h3 className="text-lg font-bold text-white">{shop.name}</h3>

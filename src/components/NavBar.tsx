@@ -109,7 +109,7 @@ const NavBar = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Link href="/" className="w-full justify-start items-center">
+        <Link href="/" className="w-1/5 justify-start items-center">
           <motion.div
             className="text-2xl font-semibold "
             initial={{ opacity: 0, x: -30 }}
@@ -121,7 +121,7 @@ const NavBar = () => {
         </Link>
 
         <motion.div
-          className="md:flex hidden text-center items-center justify-between w-full font-medium text-lg"
+          className="md:flex hidden text-center items-center justify-evenly w-3/5 font-medium text-lg"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -130,7 +130,7 @@ const NavBar = () => {
         </motion.div>
 
         <motion.div
-          className="md:flex hidden items-center justify-end w-full"
+          className="md:flex hidden items-center justify-end w-1/5"
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}

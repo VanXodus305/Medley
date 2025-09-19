@@ -103,7 +103,7 @@ export default function HomePage() {
     <>
       <NavBar />
       <motion.main
-        className="pt-14"
+        className="sm:pt-14 pt-20"
         variants={staggerContainer}
         initial="initial"
         animate="animate"
