@@ -7,7 +7,6 @@ import {
   faSyringe,
   faCapsules,
   faTint,
-  faEye,
   faSprayCan,
   faMortarPestle,
   faEyeDropper,
