@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Contact Form Submission - Medley</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Arial", "Helvetica", sans-serif;
+        background-color: #f8fafc;
+        line-height: 1.6;
+      }
+
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+        background: linear-gradient(135deg, #059669, #0d9488);
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .header p {
+        margin: 8px 0 0 0;
+        font-size: 16px;
+        opacity: 0.9;
+      }
+
+      .content {
+        padding: 30px 20px;
+        background-color: #ffffff;
+      }
+
+      .form-section {
+        background-color: #f0fdf4;
+        border-left: 4px solid #059669;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+      }
+
+      .form-section h2 {
+        margin: 0 0 15px 0;
+        color: #065f46;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .field-group {
+        margin-bottom: 15px;
+      }
+
+      .field-label {
+        display: inline-block;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 5px;
+        min-width: 100px;
+      }
+
+      .field-value {
+        color: #1f2937;
+        background-color: #ffffff;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #d1d5db;
+        display: block;
+        margin-top: 5px;
+      }
+
+      .message-field {
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        margin-top: 10px;
+        white-space: pre-wrap;
+        line-height: 1.5;
+      }
+
+      .timestamp {
+        text-align: center;
+        padding: 20px;
+        background-color: #f9fafb;
+        color: #6b7280;
+        font-size: 14px;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .footer {
+        background-color: #065f46;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 14px;
+      }
+
+      .footer a {
+        color: #86efac;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      .alert-badge {
+        display: inline-block;
+        background-color: #dc2626;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-left: 10px;
+      }
+
+      @media (max-width: 600px) {
+        .email-container {
+          margin: 0;
+          box-shadow: none;
+        }
+
+        .header,
+        .content,
+        .footer {
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        .form-section {
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Header -->
+      <div class="header">
+        <h1>💊 Medley</h1>
+        <p>New Contact Form Submission</p>
+      </div>
+
+      <!-- Main Content -->
+      <div class="content">
+        <p>Hello,</p>
+        <p>
+          You have received a new message through your Medley contact form. Here
+          are the details:
+        </p>
+
+        <div class="form-section">
+          <h2>Contact Information</h2>
+
+          <div class="field-group">
+            <label class="field-label">Name:</label>
+            <div class="field-value">{{from_name}}</div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Email:</label>
+            <div class="field-value">{{from_email}}</div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Message</h2>
+          <div class="message-field">{{message}}</div>
+        </div>
+        <p style="color: #059669; font-weight: 600">
+          📧 Please respond to this inquiry as soon as possible.
+        </p>
+      </div>
+
+      <!-- Timestamp -->
+      <div class="timestamp">
+        <p>Received on: {{current_date}} at {{current_time}}</p>
+      </div>
+      <!-- Footer -->
+      <div class="footer">
+        <p>This email was sent from the Medley contact form.</p>
+        <p>© 2025 Team Sahayta. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>
