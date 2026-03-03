@@ -25,3 +25,5 @@ export async function connectDB() {
     if (error instanceof Error) {
       console.error("  Error message:", error.message);
     }
+  }
+}

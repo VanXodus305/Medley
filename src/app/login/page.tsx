@@ -1,33 +1,14 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-
-  // Redirect if already logged in with userType set
-  useEffect(() => {
-    if (status === "authenticated" && session?.user) {
-      const userType = (session.user as any).userType;
-      const needsRegistration = (session.user as any).needsRegistration;
-
-      // If user has userType, redirect to dashboard
-      if (userType) {
-        const redirectUrl = userType === "vendor" ? "/vendor" : "/customer";
-        router.push(redirectUrl);
-      }
-      // If user needs registration, redirect to register
-      else if (needsRegistration) {
-        router.push("/register");
-      }
-    }
-  }, [status, session, router]);
 
   if (status === "loading") {
     return (
@@ -45,7 +26,7 @@ export default function LoginPage() {
     try {
       await signIn("google", {
         redirect: true,
-        callbackUrl: "/login",
+        callbackUrl: "/register",
       });
     } catch (error) {
       console.error("Sign in error:", error);

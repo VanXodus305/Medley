@@ -62,7 +62,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: "User registered successfully",
-        user: { _id: user._id, userType: user.userType },
+        user: {
+          _id: user._id,
+          userType: user.userType,
+          licenseNumber: user.licenseNumber,
+        },
       },
       { status: 201 },
     );

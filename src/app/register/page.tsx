@@ -13,12 +13,18 @@ import {
   Radio,
 } from "@heroui/react";
 import toast from "react-hot-toast";
+import { useUserInfo } from "@/hooks/useUserInfo";
 
 type UserType = "customer" | "vendor";
 
 export default function RegisterPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const {
+    exists: isRegistered,
+    userType: dbUserType,
+    loading: userInfoLoading,
+  } = useUserInfo();
   const [isLoading, setIsLoading] = useState(false);
   const [userType, setUserType] = useState<UserType | "">("");
   const [formData, setFormData] = useState({
@@ -31,17 +37,12 @@ export default function RegisterPage() {
   });
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-
-    // If user already has userType, they're already registered
-    if (session?.user && (session.user as any).userType) {
-      const userType = (session.user as any).userType;
-      const redirectUrl = userType === "vendor" ? "/vendor" : "/customer";
+    // Check if user is already registered and redirect to dashboard
+    if (!userInfoLoading && isRegistered && dbUserType) {
+      const redirectUrl = dbUserType === "vendor" ? "/vendor" : "/customer";
       router.push(redirectUrl);
     }
-  }, [status, session, router]);
+  }, [isRegistered, dbUserType, userInfoLoading, router]);
 
   useEffect(() => {
     // Set initial form data from session
@@ -54,7 +55,7 @@ export default function RegisterPage() {
     }
   }, [session]);
 
-  if (status === "loading") {
+  if (status === "loading" || userInfoLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-50">
         <Spinner color="success" size="lg" />
@@ -64,6 +65,15 @@ export default function RegisterPage() {
 
   if (!session) {
     return null;
+  }
+
+  // If already registered, show loading and redirect will happen
+  if (isRegistered && dbUserType) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-50">
+        <Spinner color="success" size="lg" />
+      </div>
+    );
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
