@@ -1,22 +1,7 @@
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/db";
 
 const protectedRoutes = ["/customer", "/vendor"];
-const authRoutes = ["/login", "/register"];
-
-// Helper function to check if user is registered
-async function isUserRegistered(email: string): Promise<boolean> {
-  try {
-    await connectDB();
-    const User = await import("@/models/User").then((m) => m.default);
-    const user = await User.findOne({ email });
-    return !!user;
-  } catch (error) {
-    console.error("Error checking user registration:", error);
-    return false;
-  }
-}
 
 export default auth(function middleware(req) {
   const { pathname } = req.nextUrl;
@@ -42,10 +27,7 @@ export default auth(function middleware(req) {
     if (!session) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
-
-    // Note: Client-side will handle the final registration status check
-    // This prevents logged-in but unregistered users from accessing dashboards
-    // The dashboard pages should also check registration status and redirect if needed
+    // Client-side will handle registration status check via useUserInfo hook
   }
 
   return NextResponse.next();
