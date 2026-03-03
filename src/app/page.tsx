@@ -100,10 +100,16 @@ export default function HomePage() {
   }, []);
 
   return (
-    <>
+    <div className="relative overflow-hidden bg-slate-50">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
+        <div className="absolute top-64 -left-16 h-80 w-80 rounded-full bg-lime-200/40 blur-3xl" />
+        <div className="absolute bottom-0 right-10 h-64 w-64 rounded-full bg-emerald-300/30 blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.08),_transparent_55%)]" />
+      </div>
       <NavBar />
       <motion.main
-        className="sm:pt-14 pt-20"
+        className="relative z-10 sm:pt-16 pt-20"
         variants={staggerContainer}
         initial="initial"
         animate="animate"
@@ -114,20 +120,20 @@ export default function HomePage() {
         <motion.section
           id="chat"
           variants={fadeInUp}
-          className="mb-10 sm:mt-10 mt:20"
+          className="mb-12 sm:mt-12 mt-20"
         >
           <ChatInput />
         </motion.section>
-        <motion.section id="medicines" variants={fadeInUp} className="mt-20">
+        <motion.section id="medicines" variants={fadeInUp} className="mt-16">
           <MedicineList />
         </motion.section>
-        <motion.section id="shops" variants={fadeInUp}>
+        <motion.section id="shops" variants={fadeInUp} className="mt-12">
           <ShopList />
         </motion.section>
-        <motion.section id="contact" variants={fadeInUp} className="">
+        <motion.section id="contact" variants={fadeInUp} className="mt-16">
           <Footer />
         </motion.section>
       </motion.main>
-    </>
+    </div>
   );
 }

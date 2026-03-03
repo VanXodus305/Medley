@@ -54,17 +54,17 @@ interface Message {
 // Medicine Card Component
 const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 w-full max-w-[360px] shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white/90 border border-emerald-100 rounded-2xl p-4 w-full max-w-[360px] shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start gap-3">
-        <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-          <Pill className="w-5 h-5 text-blue-600" />
+        <div className="bg-emerald-100 p-2 rounded-xl flex-shrink-0">
+          <Pill className="w-5 h-5 text-emerald-600" />
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-gray-900 text-sm mb-1">
             {medicine.name}
           </h3>
           {medicine.dosage && (
-            <p className="text-xs text-green-600 mb-3 font-medium leading-relaxed">
+            <p className="text-xs text-emerald-700 mb-3 font-medium leading-relaxed">
               {medicine.dosage}
             </p>
           )}
@@ -78,7 +78,7 @@ const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
                 {medicine.shops.slice(0, 2).map((shop, index) => (
                   <div key={index} className="text-xs">
                     <div className="flex justify-start mb-2">
-                      <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                      <span className="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1">
                         <IndianRupee className="w-3 h-3" />
                         {shop.price}
                       </span>
@@ -91,7 +91,9 @@ const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
                         </span>
                       </div>
                       <div className="text-gray-500 text-xs ml-4">
-                        {typeof shop.distance === 'number' ? shop.distance : shop.distance}
+                        {typeof shop.distance === "number"
+                          ? shop.distance
+                          : shop.distance}
                       </div>
                     </div>
                   </div>
@@ -113,10 +115,10 @@ const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
 // Shop Card Component
 const ShopCard = ({ shop }: { shop: ShopInfo }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 w-full max-w-[360px] shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white/90 border border-emerald-100 rounded-2xl p-4 w-full max-w-[360px] shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-start gap-3">
-        <div className="bg-green-100 p-2 rounded-lg flex-shrink-0">
-          <MapPin className="w-5 h-5 text-green-600" />
+        <div className="bg-emerald-100 p-2 rounded-xl flex-shrink-0">
+          <MapPin className="w-5 h-5 text-emerald-600" />
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-gray-900 text-sm">{shop.name}</h3>
@@ -206,7 +208,7 @@ const ChatInput = () => {
   }, [messages, isTyping]);
 
   const generateBotResponse = async (
-    userMessage: string
+    userMessage: string,
   ): Promise<GeminiResponse> => {
     try {
       const response = await geminiService.processUserPrompt(userMessage);
@@ -281,28 +283,39 @@ const ChatInput = () => {
   ];
 
   return (
-    <div className="max-w-[1100px] sm:mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden mb-20 mx-5">
-      <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white p-6">
-        <div className="flex items-center gap-3">
-          <div className="bg-white/20 p-2 rounded-full">
-            <Heart className="w-6 h-6" />
+    <div className="max-w-[1100px] sm:mx-auto mx-4 mb-20 overflow-hidden rounded-3xl border border-emerald-100/70 bg-white/80 shadow-[0_30px_80px_-50px_rgba(16,185,129,0.45)] backdrop-blur">
+      <div className="relative bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 text-white p-6">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.2),_transparent_55%)]" />
+        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-white/20 p-2 rounded-2xl">
+              <Heart className="w-6 h-6" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-semibold">
+                Medley Health Assistant
+              </h1>
+              <p className="text-emerald-100">
+                Find medicines and remedies for your health concerns
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-2xl font-bold">Medley Health Assistant</h1>
-            <p className="text-green-100">
-              Find medicines and remedies for your health concerns
-            </p>
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
+            <span className="h-2 w-2 rounded-full bg-emerald-200" />
+            Online now
           </div>
         </div>
       </div>
-      <div className="p-4 bg-gray-50 border-b">
-        <p className="text-sm text-gray-600 mb-2">Quick questions:</p>
+      <div className="p-4 bg-emerald-50/70 border-b border-emerald-100">
+        <p className="text-sm font-semibold text-emerald-900 mb-2">
+          Quick questions
+        </p>
         <div className="flex flex-wrap gap-2">
           {quickQuestions.map((question, index) => (
             <button
               key={index}
               onClick={() => setInputValue(question)}
-              className="px-3 py-1 text-sm bg-white border border-gray-200 rounded-full hover:bg-green-50 hover:border-green-200 transition-colors"
+              className="px-3 py-1 text-sm bg-white/80 border border-emerald-100 rounded-full text-emerald-700 hover:bg-white hover:border-emerald-200 transition-colors"
             >
               {question}
             </button>
@@ -310,7 +323,7 @@ const ChatInput = () => {
         </div>
       </div>
       <div
-        className="h-96 overflow-y-auto p-4 space-y-4"
+        className="h-[420px] md:h-[460px] overflow-y-auto p-5 space-y-4 bg-gradient-to-b from-white to-emerald-50/40 scrollbar-thin"
         ref={messagesContainerRef}
       >
         {messages.map((message) => (
@@ -326,10 +339,10 @@ const ChatInput = () => {
               }`}
             >
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                className={`w-9 h-9 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm ${
                   message.type === "user"
-                    ? "bg-green-500 text-white"
-                    : "bg-gray-100 text-gray-600"
+                    ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white"
+                    : "bg-white text-emerald-600 border border-emerald-100"
                 }`}
               >
                 {message.type === "user" ? (
@@ -340,10 +353,10 @@ const ChatInput = () => {
               </div>
 
               <div
-                className={`rounded-2xl p-4 min-w-0 max-w-full ${
+                className={`rounded-2xl p-4 min-w-0 max-w-full shadow-sm ${
                   message.type === "user"
-                    ? "bg-green-500 text-white rounded-br-sm"
-                    : "bg-gray-100 text-gray-800 rounded-bl-sm"
+                    ? "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-br-sm"
+                    : "bg-white text-slate-700 border border-emerald-100 rounded-bl-sm"
                 }`}
               >
                 <div className="whitespace-pre-line text-sm leading-relaxed">
@@ -364,7 +377,7 @@ const ChatInput = () => {
                           <div className="relative">
                             <Slider
                               {...getCarouselSettings(
-                                message.structured.medicines.length
+                                message.structured.medicines.length,
                               )}
                             >
                               {message.structured.medicines.map(
@@ -374,7 +387,7 @@ const ChatInput = () => {
                                       <MedicineCard medicine={medicine} />
                                     </div>
                                   </div>
-                                )
+                                ),
                               )}
                             </Slider>
                           </div>
@@ -392,7 +405,7 @@ const ChatInput = () => {
                           <div className="relative">
                             <Slider
                               {...getCarouselSettings(
-                                message.structured.shops.length
+                                message.structured.shops.length,
                               )}
                             >
                               {message.structured.shops.map((shop, index) => (
@@ -427,28 +440,28 @@ const ChatInput = () => {
 
         {isTyping && (
           <div className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-2xl bg-white text-emerald-600 flex items-center justify-center border border-emerald-100 shadow-sm">
               <Bot className="w-4 h-4" />
             </div>
-            <div className="bg-gray-100 rounded-2xl rounded-bl-sm p-4">
+            <div className="bg-white rounded-2xl rounded-bl-sm p-4 border border-emerald-100 shadow-sm">
               <div className="flex gap-1">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-emerald-300 rounded-full animate-bounce"></div>
                 <div
-                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  className="w-2 h-2 bg-emerald-300 rounded-full animate-bounce"
                   style={{ animationDelay: "0.1s" }}
                 ></div>
                 <div
-                  className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  className="w-2 h-2 bg-emerald-300 rounded-full animate-bounce"
                   style={{ animationDelay: "0.2s" }}
                 ></div>
               </div>
             </div>
           </div>
         )}
-      </div>{" "}
+      </div>
       {/* Disclaimer */}
-      <div className="px-4 py-2 bg-yellow-50 border-t border-yellow-100">
-        <div className="flex items-center gap-2 text-yellow-800">
+      <div className="px-4 py-3 bg-amber-50 border-t border-amber-100">
+        <div className="flex items-center gap-2 text-amber-800">
           <AlertCircle className="w-4 h-4" />
           <p className="text-xs">
             This is for informational purposes only. Always consult healthcare
@@ -458,24 +471,24 @@ const ChatInput = () => {
       </div>
       {/* Input Area */}
       <div className="p-4 border-t bg-white">
-        <div className="flex sm:flex-row flex-col gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <div className="flex-1 relative">
             <textarea
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Describe your symptoms or ask about medicines..."
-              className="w-full p-3 pr-12 border border-gray-300 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full p-4 pr-12 border border-emerald-100 rounded-2xl resize-none bg-emerald-50/30 text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
               rows={2}
             />
-            <div className="absolute bottom-3 right-3 flex gap-2">
-              <Pill className="w-4 h-4 text-gray-400" />
+            <div className="absolute bottom-4 right-4 flex gap-2">
+              <Pill className="w-4 h-4 text-emerald-400" />
             </div>
           </div>
           <button
             onClick={handleSend}
             disabled={!inputValue.trim() || isTyping}
-            className="px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 md:max-h-12 justify-center"
+            className="px-6 py-3 bg-emerald-600 text-white rounded-2xl hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 md:max-h-12 justify-center shadow-md shadow-emerald-100"
           >
             <Send className="w-4 h-4" />
             Send
