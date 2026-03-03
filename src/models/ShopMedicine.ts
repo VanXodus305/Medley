@@ -7,7 +7,7 @@ const ShopMedicineSchema = new Schema(
     price: { type: Number, required: true, min: 0 },
     quantity: { type: Number, required: true, min: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Prevent duplicate entries (same shop & medicine)
@@ -20,4 +20,6 @@ ShopMedicineSchema.index({ shop: 1, price: 1 }); // stock price check for shop
 ShopMedicineSchema.index({ shop: 1, quantity: 1 }); //  stock check for a shop
 ShopMedicineSchema.index({ medicine: 1, price: 1 }); // find cheapest medicine
 
-export default models.ShopMedicine || model("ShopMedicine", ShopMedicineSchema);
+const ShopMedicine =
+  models["ShopMedicine"] || model("ShopMedicine", ShopMedicineSchema);
+export default ShopMedicine;

@@ -13,7 +13,8 @@ const MedicineSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-export default models.Medicine || model("Medicine", MedicineSchema);
+const Medicine = models["Medicine"] || model("Medicine", MedicineSchema);
+export default Medicine;

@@ -13,11 +13,15 @@ export async function connectDB() {
       throw new Error("MONGODB_URI is not defined in environment variables");
     }
 
-    await mongoose.connect(mongoUri);
+    await mongoose.connect(mongoUri, {
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
     isConnected = true;
-    console.log("MongoDB connected successfully");
+    console.log("✓ MongoDB connected successfully");
   } catch (error) {
-    console.error("MongoDB connection error:", error);
-    throw error;
-  }
-}
+    console.error("✗ MongoDB connection error:", error);
+    if (error instanceof Error) {
+      console.error("  Error message:", error.message);
+    }

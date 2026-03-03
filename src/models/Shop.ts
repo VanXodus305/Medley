@@ -10,7 +10,8 @@ const ShopSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-export default models.Shop || model("Shop", ShopSchema);
+const Shop = models["Shop"] || model("Shop", ShopSchema);
+export default Shop;

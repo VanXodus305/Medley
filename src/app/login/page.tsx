@@ -15,9 +15,16 @@ export default function LoginPage() {
   useEffect(() => {
     if (status === "authenticated" && session?.user) {
       const userType = (session.user as any).userType;
+      const needsRegistration = (session.user as any).needsRegistration;
+
+      // If user has userType, redirect to dashboard
       if (userType) {
         const redirectUrl = userType === "vendor" ? "/vendor" : "/customer";
         router.push(redirectUrl);
+      }
+      // If user needs registration, redirect to register
+      else if (needsRegistration) {
+        router.push("/register");
       }
     }
   }, [status, session, router]);
@@ -36,19 +43,12 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
-      const result = await signIn("google", {
-        redirect: false,
+      await signIn("google", {
+        redirect: true,
+        callbackUrl: "/login",
       });
-
-      if (result?.error) {
-        console.error("Sign in error:", result.error);
-      } else if (result?.ok) {
-        // Redirect will be handled by the redirect callback
-        router.push("/register");
-      }
     } catch (error) {
       console.error("Sign in error:", error);
-    } finally {
       setIsLoading(false);
     }
   };

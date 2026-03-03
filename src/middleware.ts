@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const protectedRoutes = ["/customer", "/vendor"];
 const authRoutes = ["/login", "/register"];
 
-export default auth(async function middleware(req) {
+export default auth(function middleware(req) {
   const { pathname } = req.nextUrl;
   const session = req.auth;
 
@@ -14,10 +14,9 @@ export default auth(async function middleware(req) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    // Check user type access
     const userType = (session.user as any)?.userType;
 
-    // If user doesn't have a userType, redirect to register
+    // If user doesn't have a userType, they need to complete registration
     if (!userType) {
       return NextResponse.redirect(new URL("/register", req.url));
     }
@@ -32,15 +31,8 @@ export default auth(async function middleware(req) {
     }
   }
 
-  // Redirect logged-in users away from auth pages
-  if (authRoutes.some((route) => pathname.startsWith(route))) {
-    if (session && (session.user as any)?.userType) {
-      const userType = (session.user as any)?.userType;
-      const dashboardRoute = userType === "vendor" ? "/vendor" : "/customer";
-      return NextResponse.redirect(new URL(dashboardRoute, req.url));
-    }
-  }
-
+  // Don't redirect authenticated users on auth pages - let client-side handle it
+  // This allows the useEffect in login/register to handle redirects properly
   return NextResponse.next();
 });
 

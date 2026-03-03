@@ -1,7 +1,5 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { connectDB } from "./db";
-import User from "@/models/User";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -13,51 +11,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/login",
   },
+  trustHost: true,
   callbacks: {
     async signIn({ user, account, profile }) {
       if (!user.email) return false;
-
-      try {
-        await connectDB();
-
-        // Check if user exists
-        const existingUser = await User.findOne({ email: user.email });
-
-        if (!existingUser) {
-          // User doesn't exist, will be redirected to register
-          return true;
-        }
-
-        // User exists, sign in normally
-        return true;
-      } catch (error) {
-        console.error("SignIn callback error:", error);
-        return false;
-      }
+      return true;
     },
 
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, trigger }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
+        token.image = user.image;
+        token.name = user.name;
       }
 
       if (account) {
         token.provider = account.provider;
-      }
-
-      try {
-        await connectDB();
-        const dbUser = await User.findOne({ email: token.email });
-        if (dbUser) {
-          token.userType = dbUser.userType;
-          token.id = dbUser._id.toString();
-        } else {
-          // Mark that user needs registration
-          token.needsRegistration = true;
-        }
-      } catch (error) {
-        console.error("JWT callback error:", error);
       }
 
       return token;
@@ -66,22 +36,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.userType = token.userType as string | undefined;
-        session.user.needsRegistration = token.needsRegistration as
-          | boolean
-          | undefined;
       }
       return session;
     },
 
     async redirect({ url, baseUrl }) {
-      // If url is login or base, check if user is new
-      if (url === baseUrl || url.includes("/api/auth/callback")) {
-        return `${baseUrl}/register`;
+      // Allow redirect to relative urls
+      if (url.startsWith("/")) {
+        return url;
       }
-
-      return url.startsWith(baseUrl) ? url : baseUrl;
+      // Allow redirect to same origin
+      if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+      return baseUrl;
     },
   },
-  secret: process.env.AUTH_SECRET,
 });

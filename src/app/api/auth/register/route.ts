@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
-import User from "@/models/User";
 
 export async function POST(request: NextRequest) {
   try {
     await connectDB();
+    const User = await import("@/models/User").then((m) => m.default);
 
     const body = await request.json();
     const {

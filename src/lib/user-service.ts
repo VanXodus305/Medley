@@ -1,9 +1,9 @@
 import { connectDB } from "@/lib/db";
-import User from "@/models/User";
 
 export async function getUserByEmail(email: string) {
   try {
     await connectDB();
+    const User = await import("@/models/User").then((m) => m.default);
     const user = await User.findOne({ email });
     return user;
   } catch (error) {
@@ -24,6 +24,7 @@ export async function createUser(userData: {
 }) {
   try {
     await connectDB();
+    const User = await import("@/models/User").then((m) => m.default);
     const user = new User(userData);
     await user.save();
     return user;
@@ -47,6 +48,7 @@ export async function updateUser(
 ) {
   try {
     await connectDB();
+    const User = await import("@/models/User").then((m) => m.default);
     const user = await User.findOneAndUpdate({ email }, userData, {
       new: true,
     });
