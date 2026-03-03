@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const { handlers, auth, signIn, signOut } = (NextAuth as any)({
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
@@ -13,12 +14,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   trustHost: true,
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user }: { user: Record<string, unknown> }) {
       if (!user.email) return false;
       return true;
     },
 
-    async jwt({ token, user, account, trigger }) {
+    async jwt({
+      token,
+      user,
+      account,
+    }: {
+      token: Record<string, unknown>;
+      user?: Record<string, unknown>;
+      account?: Record<string, unknown>;
+    }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
@@ -33,14 +42,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token;
     },
 
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
+    async session({
+      session,
+      token,
+    }: {
+      session: Record<string, unknown>;
+      token: Record<string, unknown>;
+    }) {
+      if (session && session.user) {
+        (session.user as Record<string, unknown>).id = token.id as string;
       }
       return session;
     },
 
-    async redirect({ url, baseUrl }) {
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       // Allow redirect to relative urls
       if (url.startsWith("/")) {
         return url;

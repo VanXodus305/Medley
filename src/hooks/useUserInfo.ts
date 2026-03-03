@@ -25,8 +25,9 @@ export function useUserInfo(): UserInfo {
 
     const fetchUserInfo = async () => {
       try {
+        if (!session?.user?.email) return;
         const response = await fetch(
-          `/api/user/check?email=${encodeURIComponent(session.user.email!)}`,
+          `/api/user/check?email=${encodeURIComponent(session.user.email)}`,
         );
         const data = await response.json();
         setUserInfo({

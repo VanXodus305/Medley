@@ -1,15 +1,14 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Button, Card, CardBody, Spinner } from "@heroui/react";
+import { Button, Spinner } from "@heroui/react";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import Link from "next/link";
 
 export default function CustomerDashboard() {
-  const { status } = useSession();
   const router = useRouter();
   const {
     exists: isRegistered,

@@ -157,7 +157,8 @@ export default function RegisterPage() {
                 Complete Your Profile
               </h1>
               <p className="text-gray-600">
-                Welcome {session.user?.name}! Let's get you set up on Medley
+                Welcome {session.user?.name}! Let&apos;s get you set up on
+                Medley
               </p>
             </div>
 

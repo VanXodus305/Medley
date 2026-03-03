@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create user object based on type
-    const userData: any = {
+    const userData: Record<string, string | string[] | null | undefined> = {
       email,
       name,
       userType,

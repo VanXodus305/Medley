@@ -2,11 +2,9 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { Button } from "@heroui/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const router = useRouter();
   const { status } = useSession();
   const [isLoading, setIsLoading] = useState(false);
 

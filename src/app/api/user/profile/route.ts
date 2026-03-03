@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { auth } from "@/lib/auth";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await auth();
 
@@ -57,7 +57,7 @@ export async function PUT(request: NextRequest) {
     await connectDB();
     const User = await import("@/models/User").then((m) => m.default);
 
-    const updateData: any = {};
+    const updateData: Record<string, string | undefined> = {};
     if (name !== undefined) updateData.name = name;
     if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
     if (address !== undefined) updateData.address = address;

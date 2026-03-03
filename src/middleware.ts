@@ -1,9 +1,10 @@
 import { auth } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 const protectedRoutes = ["/customer", "/vendor"];
 
-export default auth(function middleware(req) {
+export default auth(function middleware(req: NextRequest & { auth: unknown }) {
   const { pathname } = req.nextUrl;
   const session = req.auth;
 
