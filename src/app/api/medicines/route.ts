@@ -2,6 +2,14 @@ import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import Medicine from "@/models/Medicine";
 
+interface MedicineDoc {
+  medicineId: string;
+  name: string;
+  brand: string;
+  form: string;
+  uses: string[];
+}
+
 export async function GET() {
   try {
     // Check if already connected
@@ -9,10 +17,10 @@ export async function GET() {
       await mongoose.connect(process.env.MONGODB_URI || "");
     }
 
-    const medicines = await Medicine.find({}).lean();
+    const medicines = (await Medicine.find({}).lean()) as unknown as MedicineDoc[];
 
     // Transform the data to match the JSON format (id instead of _id, medicineId)
-    const transformedMedicines = medicines.map((med: any) => ({
+    const transformedMedicines = medicines.map((med) => ({
       id: med.medicineId,
       name: med.name,
       brand: med.brand,

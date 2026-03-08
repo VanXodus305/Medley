@@ -3,7 +3,23 @@ import { GoogleGenAI, Type } from "@google/genai";
 import mongoose from "mongoose";
 import Medicine from "@/models/Medicine";
 import Shop from "@/models/Shop";
-import ShopMedicine from "@/models/ShopMedicine";
+
+interface MedicineDoc {
+  medicineId: string;
+  name: string;
+  brand: string;
+  form: string;
+  uses: string[];
+}
+
+interface ShopDoc {
+  shopId: string;
+  name: string;
+  owner: string;
+  phone: string;
+  location: string;
+  distance_from_user: number;
+}
 
 export interface MedicineWithShops {
   name: string;
@@ -60,9 +76,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Fetch medicines from database
-    const medicinesDB = await Medicine.find({}).lean();
+    const medicinesDB = (await Medicine.find({}).lean()) as unknown as MedicineDoc[];
     const medicinesContext = JSON.stringify(
-      medicinesDB.map((med: any) => ({
+      medicinesDB.map((med) => ({
         id: med.medicineId,
         name: med.name,
         brand: med.brand,
@@ -72,9 +88,9 @@ export async function POST(request: NextRequest) {
     );
 
     // Fetch shops from database
-    const shopsDB = await Shop.find({}).lean();
+    const shopsDB = (await Shop.find({}).lean()) as unknown as ShopDoc[];
     const shopsContext = JSON.stringify(
-      shopsDB.map((shop: any) => ({
+      shopsDB.map((shop) => ({
         id: shop.shopId,
         name: shop.name,
         owner: shop.owner,

@@ -3,6 +3,24 @@ import mongoose from "mongoose";
 import Shop from "@/models/Shop";
 import ShopMedicine from "@/models/ShopMedicine";
 
+interface ShopDoc {
+  _id: string;
+  shopId: string;
+  name: string;
+  owner: string;
+  phone: string;
+  location: string;
+  distance_from_user: number;
+}
+
+interface ShopMedicineDoc {
+  medicine: {
+    medicineId: string;
+  };
+  quantity: number;
+  price: number;
+}
+
 export async function GET() {
   try {
     // Check if already connected
@@ -10,18 +28,18 @@ export async function GET() {
       await mongoose.connect(process.env.MONGODB_URI || "");
     }
 
-    const shops = await Shop.find({}).lean();
+    const shops = (await Shop.find({}).lean()) as unknown as ShopDoc[];
 
     // For each shop, get its medicines
     const shopsWithMedicines = await Promise.all(
-      shops.map(async (shop: any) => {
-        const shopMedicines = await ShopMedicine.find({
+      shops.map(async (shop) => {
+        const shopMedicines = (await ShopMedicine.find({
           shop: shop._id,
         })
           .populate("medicine")
-          .lean();
+          .lean()) as unknown as ShopMedicineDoc[];
 
-        const medicines = shopMedicines.map((sm: any) => ({
+        const medicines = shopMedicines.map((sm) => ({
           medicine_id: sm.medicine.medicineId,
           quantity: sm.quantity,
           price: sm.price,
