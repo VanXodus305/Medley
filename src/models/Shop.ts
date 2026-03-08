@@ -1,12 +1,15 @@
-import { Schema, models, model, Types } from "mongoose";
+import { Schema, models, model } from "mongoose";
 
 const ShopSchema = new Schema(
   {
+    shopId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
+    owner: { type: String, required: true },
+    phone: { type: String, required: true },
     location: { type: String, required: true },
-    openingTime: { type: String, required: true },
-    closingTime: { type: String, required: true },
-    owner: { type: Types.ObjectId, ref: "User", required: true, unique: true },
+    distance_from_user: { type: Number }, // in kilometers
+    openingTime: { type: String },
+    closingTime: { type: String },
   },
   {
     timestamps: true,
