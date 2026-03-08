@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
-import medicines from "../../../data/medicines.json";
-import shops from "../../../data/shops.json";
+import mongoose from "mongoose";
+import Medicine from "@/models/Medicine";
+import Shop from "@/models/Shop";
+import ShopMedicine from "@/models/ShopMedicine";
 
 export interface MedicineWithShops {
   name: string;
@@ -52,9 +54,35 @@ export async function POST(request: NextRequest) {
     const ai = new GoogleGenAI({ apiKey });
     const model = "gemini-2.5-flash-lite"; // Using flash for better reliability
 
-    // Prepare context data more efficiently
-    const medicinesContext = JSON.stringify(medicines);
-    const shopsContext = JSON.stringify(shops);
+    // Connect to MongoDB
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(process.env.MONGODB_URI || "");
+    }
+
+    // Fetch medicines from database
+    const medicinesDB = await Medicine.find({}).lean();
+    const medicinesContext = JSON.stringify(
+      medicinesDB.map((med: any) => ({
+        id: med.medicineId,
+        name: med.name,
+        brand: med.brand,
+        form: med.form,
+        uses: med.uses,
+      }))
+    );
+
+    // Fetch shops from database
+    const shopsDB = await Shop.find({}).lean();
+    const shopsContext = JSON.stringify(
+      shopsDB.map((shop: any) => ({
+        id: shop.shopId,
+        name: shop.name,
+        owner: shop.owner,
+        phone: shop.phone,
+        location: shop.location,
+        distance_from_user: shop.distance_from_user,
+      }))
+    );
 
     const prompt = `
 You are a medical assistant for a medicine price comparison platform. 

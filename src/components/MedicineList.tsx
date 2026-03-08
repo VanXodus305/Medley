@@ -18,9 +18,6 @@ import Slider from "react-slick";
 import { useState, useEffect } from "react";
 import { Select, SelectItem } from "@heroui/react";
 
-// Import the complete medicines dataset
-import medicinesData from "../data/medicines.json";
-
 interface Medicine {
   id: string;
   name: string;
@@ -30,26 +27,45 @@ interface Medicine {
 }
 
 const MedicineList: React.FC = () => {
+  const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [selectedForm, setSelectedForm] = useState<string>("All");
-  const [filteredMedicines, setFilteredMedicines] =
-    useState<Medicine[]>(medicinesData);
+  const [filteredMedicines, setFilteredMedicines] = useState<Medicine[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch medicines from API
+  useEffect(() => {
+    const fetchMedicines = async () => {
+      try {
+        const response = await fetch("/api/medicines");
+        if (!response.ok) throw new Error("Failed to fetch medicines");
+        const data = await response.json();
+        setMedicines(data);
+        setFilteredMedicines(data);
+      } catch (error) {
+        console.error("Error fetching medicines:", error);
+        setMedicines([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMedicines();
+  }, []);
 
   // Get unique forms from the medicines data
   const medicinalForms = [
     "All",
-    ...Array.from(new Set(medicinesData.map((med) => med.form))),
+    ...Array.from(new Set(medicines.map((med) => med.form))),
   ];
 
   // Filter medicines based on selected form
   useEffect(() => {
     if (selectedForm === "All") {
-      setFilteredMedicines(medicinesData);
+      setFilteredMedicines(medicines);
     } else {
-      setFilteredMedicines(
-        medicinesData.filter((med) => med.form === selectedForm)
-      );
+      setFilteredMedicines(medicines.filter((med) => med.form === selectedForm));
     }
-  }, [selectedForm]);
+  }, [selectedForm, medicines]);
 
   const sliderSettings = {
     dots: false,
@@ -110,38 +126,44 @@ const MedicineList: React.FC = () => {
 
   return (
     <div className="w-full px-6 py-12 font-poppins bg-gradient-to-r from-[#f8faf9] to-[#f1fdf8] pb-16">
-      <div className="flex items-center justify-center gap-10 mb-10 max-w-4xl mx-auto w-full sm:flex-row flex-col">
-        <h2 className="text-3xl font-bold text-[#1F2A37]">Popular Medicines</h2>
-
-        {/* Form Filter Dropdown */}
-        <div className="flex items-center gap-3 sm:w-[50%] w-[80%]">
-          <label className="text-sm font font-medium text-[#3C7168]">
-            Filter by:
-          </label>
-          <Select
-            selectedKeys={[selectedForm]}
-            onSelectionChange={(keys) => {
-              const selected = Array.from(keys)[0] as string;
-              setSelectedForm(selected);
-            }}
-            size="md"
-            className="max-w-xs"
-            classNames={{
-              trigger:
-                "bg-white border-[#4FAA84] hover:border-[#3C7168] focus:border-[#4FAA84]",
-              value: "text-[#3C7168] font-medium",
-              selectorIcon: "text-[#4FAA84]",
-            }}
-            variant="bordered"
-            aria-label="Filter medicines by form"
-          >
-            {medicinalForms.map((form) => (
-              <SelectItem key={form} className="text-[#3C7168]">
-                {form}
-              </SelectItem>
-            ))}
-          </Select>
+      {loading ? (
+        <div className="flex items-center justify-center h-64">
+          <p className="text-lg text-[#3C7168] font-medium">Loading medicines...</p>
         </div>
+      ) : (
+        <>
+          <div className="flex items-center justify-center gap-10 mb-10 max-w-4xl mx-auto w-full sm:flex-row flex-col">
+            <h2 className="text-3xl font-bold text-[#1F2A37]">Popular Medicines</h2>
+
+            {/* Form Filter Dropdown */}
+            <div className="flex items-center gap-3 sm:w-[50%] w-[80%]">
+              <label className="text-sm font font-medium text-[#3C7168]">
+                Filter by:
+              </label>
+              <Select
+                selectedKeys={[selectedForm]}
+                onSelectionChange={(keys) => {
+                  const selected = Array.from(keys)[0] as string;
+                  setSelectedForm(selected);
+                }}
+                size="md"
+                className="max-w-xs"
+                classNames={{
+                  trigger:
+                    "bg-white border-[#4FAA84] hover:border-[#3C7168] focus:border-[#4FAA84]",
+                  value: "text-[#3C7168] font-medium",
+                  selectorIcon: "text-[#4FAA84]",
+                }}
+                variant="bordered"
+                aria-label="Filter medicines by form"
+              >
+                {medicinalForms.map((form) => (
+                  <SelectItem key={form} className="text-[#3C7168]">
+                    {form}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
       </div>
 
       {filteredMedicines.length > 0 ? (
@@ -195,6 +217,8 @@ const MedicineList: React.FC = () => {
             different filter.
           </p>
         </div>
+      )}
+        </>
       )}
     </div>
   );
