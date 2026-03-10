@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { Button } from "@heroui/react";
 
 interface InventoryItem {
   _id: string;
@@ -46,7 +44,10 @@ export default function InventoryPage() {
 
   const startEdit = (item: InventoryItem) => {
     setEditing(item._id);
-    setEditForm({ quantity: item.quantity.toString(), price: item.price.toString() });
+    setEditForm({
+      quantity: item.quantity.toString(),
+      price: item.price.toString(),
+    });
   };
 
   const handleUpdate = async (id: string) => {
@@ -63,7 +64,9 @@ export default function InventoryPage() {
       });
       if (res.ok) {
         const updated = await res.json();
-        setInventory((prev) => prev.map((item) => (item._id === id ? updated : item)));
+        setInventory((prev) =>
+          prev.map((item) => (item._id === id ? updated : item)),
+        );
         setEditing(null);
         setMessage({ text: "✓ Inventory updated!", type: "success" });
         setTimeout(() => setMessage({ text: "", type: "" }), 3000);
@@ -77,7 +80,9 @@ export default function InventoryPage() {
     }
   };
 
-  const lowStockCount = inventory.filter((i) => i.quantity > 0 && i.quantity <= 10).length;
+  const lowStockCount = inventory.filter(
+    (i) => i.quantity > 0 && i.quantity <= 10,
+  ).length;
   const outOfStockCount = inventory.filter((i) => i.quantity === 0).length;
 
   if (loading) {
@@ -103,21 +108,29 @@ export default function InventoryPage() {
             <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-xl">
               📦
             </div>
-            <h1 className="text-2xl font-bold text-gray-800">Track Inventory</h1>
+            <h1 className="text-2xl font-bold text-gray-800">
+              Track Inventory
+            </h1>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="bg-gray-50 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-gray-800">{inventory.length}</p>
+              <p className="text-2xl font-bold text-gray-800">
+                {inventory.length}
+              </p>
               <p className="text-sm text-gray-500 mt-1">Total Medicines</p>
             </div>
             <div className="bg-yellow-50 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-yellow-600">{lowStockCount}</p>
+              <p className="text-2xl font-bold text-yellow-600">
+                {lowStockCount}
+              </p>
               <p className="text-sm text-yellow-600 mt-1">Low Stock (≤10)</p>
             </div>
             <div className="bg-red-50 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-red-600">{outOfStockCount}</p>
+              <p className="text-2xl font-bold text-red-600">
+                {outOfStockCount}
+              </p>
               <p className="text-sm text-red-600 mt-1">Out of Stock</p>
             </div>
           </div>
@@ -176,8 +189,8 @@ export default function InventoryPage() {
                     item.quantity === 0
                       ? "border-red-200 bg-red-50"
                       : item.quantity <= 10
-                      ? "border-yellow-200 bg-yellow-50"
-                      : "border-gray-200"
+                        ? "border-yellow-200 bg-yellow-50"
+                        : "border-gray-200"
                   }`}
                 >
                   {editing === item._id ? (
@@ -223,24 +236,32 @@ export default function InventoryPage() {
                   ) : (
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-semibold text-gray-800">{item.medicine?.name}</p>
+                        <p className="font-semibold text-gray-800">
+                          {item.medicine?.name}
+                        </p>
                         <p className="text-sm text-gray-500">
                           {item.medicine?.form}
-                          {item.medicine?.brand ? ` · ${item.medicine.brand}` : ""}
+                          {item.medicine?.brand
+                            ? ` · ${item.medicine.brand}`
+                            : ""}
                         </p>
                       </div>
                       <div className="flex items-center gap-4">
-                        <span className="font-semibold text-green-600">₹{item.price}</span>
+                        <span className="font-semibold text-green-600">
+                          ₹{item.price}
+                        </span>
                         <span
                           className={`text-sm px-3 py-1 rounded-full font-medium ${
                             item.quantity === 0
                               ? "bg-red-100 text-red-700"
                               : item.quantity <= 10
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-green-100 text-green-700"
+                                ? "bg-yellow-100 text-yellow-700"
+                                : "bg-green-100 text-green-700"
                           }`}
                         >
-                          {item.quantity === 0 ? "Out of Stock" : `${item.quantity} units`}
+                          {item.quantity === 0
+                            ? "Out of Stock"
+                            : `${item.quantity} units`}
                         </span>
                         <button
                           onClick={() => startEdit(item)}
