@@ -247,7 +247,7 @@ export default function CustomerDashboard() {
       <div className="fixed inset-0 z-[300] flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(4px)" }}>
         <div className="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
 
-          // Header
+          {/* Header */}
           <div className="px-6 py-5 border-b border-gray-100 flex-shrink-0" style={{ background: "linear-gradient(135deg, #ecfdf5, #f0fdfa)" }}>
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -315,7 +315,7 @@ export default function CustomerDashboard() {
             )}
           </div>
 
-         // Medicine list
+         {/*Medicine list*/}
           <div className="flex-1 overflow-y-auto">
             {filtered.length === 0 ? (
               <div className="text-center py-16 px-6">
@@ -331,7 +331,7 @@ export default function CustomerDashboard() {
                       {FORM_ICONS[med.form] || "💊"}
                     </div>
 
-                    // Medicine info
+                    {/* Medicine info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-sm font-bold text-gray-900">{med.name}</span>
@@ -555,7 +555,7 @@ export default function CustomerDashboard() {
             tabContent: "py-4",
           }}
         >
-          // Browse Medicines
+          {/*Browse Medicines*/}
           <Tab key="browse" title="Browse Medicines">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-4 py-3 mb-5">
               <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
@@ -667,7 +667,7 @@ export default function CustomerDashboard() {
             </div>
           </Tab>
 
-          // NearBy Pharmacy
+          {/* NearBy Pharmacy */}
           <Tab key="shops" title="Nearby Pharmacies">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b">
@@ -729,7 +729,7 @@ export default function CustomerDashboard() {
             </div>
           </Tab>
 
-          
+          {/* Manage Orders */}
           <Tab key="orders" title="Manage Orders">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-4 sm:px-6 py-4 border-b">
@@ -775,7 +775,8 @@ export default function CustomerDashboard() {
               </div>
             </div>
           </Tab>
-
+          
+          {/* Check Prices */}
           <Tab key="prices" title="Check Prices">
             <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
