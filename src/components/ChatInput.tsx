@@ -93,7 +93,8 @@ const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
                       <div className="text-gray-500 text-xs ml-4">
                         {typeof shop.distance === "number"
                           ? shop.distance
-                          : shop.distance}
+                          : shop.distance}{" "}
+                          km
                       </div>
                     </div>
                   </div>
@@ -131,7 +132,7 @@ const ShopCard = ({ shop }: { shop: ShopInfo }) => {
               {typeof shop.distance === "number"
                 ? `${(shop.distance / 1000).toFixed(1)} km`
                 : shop.distance}{" "}
-              away
+              km away
             </span>
           </div>
           {shop.phone && (
