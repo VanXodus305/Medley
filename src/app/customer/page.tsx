@@ -134,7 +134,6 @@ export default function CustomerDashboard() {
   const [shops, setShops] = useState<Shop[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
   const [dataError, setDataError] = useState<string | null>(null);
-  const [globalSearchTerm] = useState("");
   const [medicineSearchTerm, setMedicineSearchTerm] = useState("");
   const [selectedForm, setSelectedForm] = useState("All Forms");
   const [priceSearchTerm, setPriceSearchTerm] = useState("");
