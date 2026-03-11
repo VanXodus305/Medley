@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import NavBar from "@/components/NavBar";
 
 interface OrderItem {
   medicine: {
@@ -37,7 +38,7 @@ export default function OrdersPage() {
 
   const totalItems = orders.reduce(
     (acc, o) => acc + o.items.reduce((s, i) => s + i.quantity, 0),
-    0
+    0,
   );
 
   if (loading) {
@@ -50,6 +51,7 @@ export default function OrdersPage() {
 
   return (
     <div className="min-h-screen bg-[#dbe8e3] p-6">
+      <NavBar />
       <div className="max-w-3xl mx-auto">
         <button
           onClick={() => router.push("/vendor")}
@@ -64,7 +66,9 @@ export default function OrdersPage() {
               📋
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">Customer Orders</h1>
+              <h1 className="text-2xl font-bold text-gray-800">
+                Customer Orders
+              </h1>
               <p className="text-sm text-gray-500">
                 Customers who have requested medicines from your shop
               </p>
@@ -74,7 +78,9 @@ export default function OrdersPage() {
           {/* Stats */}
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="bg-orange-50 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-orange-600">{orders.length}</p>
+              <p className="text-2xl font-bold text-orange-600">
+                {orders.length}
+              </p>
               <p className="text-sm text-orange-600 mt-1">Total Orders</p>
             </div>
             <div className="bg-gray-50 rounded-lg p-4 text-center">
@@ -88,7 +94,8 @@ export default function OrdersPage() {
               <p className="text-5xl mb-4">📋</p>
               <p className="text-lg font-medium">No orders yet</p>
               <p className="text-sm mt-1">
-                Customer orders will appear here when they request medicines from your shop.
+                Customer orders will appear here when they request medicines
+                from your shop.
               </p>
             </div>
           ) : (
@@ -100,8 +107,12 @@ export default function OrdersPage() {
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <p className="font-semibold text-gray-800">{order.customerName}</p>
-                      <p className="text-sm text-gray-500">{order.customerEmail}</p>
+                      <p className="font-semibold text-gray-800">
+                        {order.customerName}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {order.customerEmail}
+                      </p>
                     </div>
                     <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
                       Order #{index + 1}

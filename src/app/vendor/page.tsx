@@ -7,6 +7,7 @@ import { useUserProfile } from "@/hooks/useUserProfile";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import { useEffect } from "react";
 import { Spinner } from "@heroui/react";
+import NavBar from "@/components/NavBar";
 
 const actions = [
   {
@@ -61,7 +62,11 @@ const features = [
 
 export default function VendorDashboard() {
   const router = useRouter();
-  const { exists: isRegistered, userType, loading: userInfoLoading } = useUserInfo();
+  const {
+    exists: isRegistered,
+    userType,
+    loading: userInfoLoading,
+  } = useUserInfo();
   const { profile, loading: profileLoading } = useUserProfile();
 
   useEffect(() => {
@@ -90,27 +95,9 @@ export default function VendorDashboard() {
       </div>
 
       {/* Navbar */}
-      <nav className="relative z-10 border-b border-emerald-100 bg-white/60 backdrop-blur-md">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
-          <span className="text-xl font-bold text-slate-900" style={{ fontFamily: 'Fraunces, serif' }}>Medley</span>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-600 hidden sm:block">{profile.name}</span>
-            <button
-              onClick={() => router.push("/")}
-              className="text-sm text-slate-500 hover:text-slate-700 transition-colors"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => signOut({ callbackUrl: "/login" })}
-              className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-1.5 text-sm font-medium text-rose-600 hover:bg-rose-100 transition-colors"
-            >
-              Sign Out
-            </button>
-          </div>
-        </div>
-      </nav>
+      <NavBar />
 
+      {/* Page Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-6 py-10">
         {/* Welcome header */}
         <motion.div
@@ -139,11 +126,18 @@ export default function VendorDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-400">From this dashboard</p>
+          <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
+            From this dashboard
+          </p>
           <ul className="grid sm:grid-cols-2 gap-2">
             {features.map((f, i) => (
-              <li key={i} className="flex items-center gap-2 text-slate-700 text-sm">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 text-xs">✓</span>
+              <li
+                key={i}
+                className="flex items-center gap-2 text-slate-700 text-sm"
+              >
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 text-xs">
+                  ✓
+                </span>
                 {f}
               </li>
             ))}
@@ -163,14 +157,20 @@ export default function VendorDashboard() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${action.gradient} text-2xl shadow-sm`}>
+              <div
+                className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${action.gradient} text-2xl shadow-sm`}
+              >
                 {action.icon}
               </div>
               <div>
                 <p className={`font-semibold ${action.text}`}>{action.label}</p>
                 <p className="text-xs text-slate-500 mt-0.5">{action.sub}</p>
               </div>
-              <span className={`ml-auto text-lg ${action.text} opacity-40 group-hover:opacity-80 transition-opacity`}>→</span>
+              <span
+                className={`ml-auto text-lg ${action.text} opacity-40 group-hover:opacity-80 transition-opacity`}
+              >
+                →
+              </span>
             </motion.button>
           ))}
         </div>

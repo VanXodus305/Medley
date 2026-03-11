@@ -58,7 +58,7 @@ const HeroSection = () => {
 
         {/* Call to Actions */}
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
-          <Link href="#medicines" className="w-full max-w-[200px]">
+          <Link href="/login" className="w-full max-w-[200px]">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 className="bg-primary text-white font-medium text-md md:text-lg shadow-md hover:shadow-lg transition-all"
@@ -72,7 +72,7 @@ const HeroSection = () => {
             </motion.div>
           </Link>
 
-          <Link href="#shops" className="w-full max-w-[200px]">
+          <Link href="/login" className="w-full max-w-[200px]">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 className="bg-secondary-100/70 border border-secondary-300 hover:bg-secondary-100 transition-all font-semibold text-neutral-00 text-lg px-28"

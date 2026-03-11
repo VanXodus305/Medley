@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@heroui/react";
+import NavBar from "@/components/NavBar";
 
 export default function ShopPage() {
   const router = useRouter();
@@ -55,11 +56,17 @@ export default function ShopPage() {
         body: JSON.stringify(form),
       });
       if (res.ok) {
-        setMessage({ text: "✓ Pharmacy profile saved successfully!", type: "success" });
+        setMessage({
+          text: "✓ Pharmacy profile saved successfully!",
+          type: "success",
+        });
         setIsNew(false);
       } else {
         const data = await res.json();
-        setMessage({ text: data.error || "Failed to save. Try again.", type: "error" });
+        setMessage({
+          text: data.error || "Failed to save. Try again.",
+          type: "error",
+        });
       }
     } catch {
       setMessage({ text: "Network error. Try again.", type: "error" });
@@ -88,19 +95,7 @@ export default function ShopPage() {
       </div>
 
       {/* Navbar */}
-      <nav className="relative z-10 border-b border-emerald-100 bg-white/60 backdrop-blur-md">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
-          <span className="text-xl font-bold text-slate-900" style={{ fontFamily: "Fraunces, serif" }}>
-            Medley
-          </span>
-          <button
-            onClick={() => router.push("/vendor")}
-            className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-800 transition-colors"
-          >
-            ← Dashboard
-          </button>
-        </div>
-      </nav>
+      <NavBar />
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 py-10">
         <motion.div
@@ -114,7 +109,9 @@ export default function ShopPage() {
               <span className="h-2 w-2 rounded-full bg-emerald-500" />
               Pharmacy Profile
             </div>
-            <h1 className="text-3xl font-bold text-slate-900">Manage Your Shop</h1>
+            <h1 className="text-3xl font-bold text-slate-900">
+              Manage Your Shop
+            </h1>
             <p className="mt-1 text-slate-500 text-sm">
               Keep your pharmacy info up to date so customers can find you.
             </p>
@@ -129,7 +126,9 @@ export default function ShopPage() {
               <div>
                 <p className="font-semibold text-slate-900">Shop Details</p>
                 <p className="text-xs text-slate-500">
-                  {isNew ? "Create your pharmacy profile" : "Update your pharmacy profile"}
+                  {isNew
+                    ? "Create your pharmacy profile"
+                    : "Update your pharmacy profile"}
                 </p>
               </div>
             </div>
@@ -187,28 +186,38 @@ export default function ShopPage() {
                   placeholder="e.g. Shop No. 5, MG Road, Bhubaneswar"
                   rows={2}
                   value={form.location}
-                  onChange={(e) => setForm({ ...form, location: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, location: e.target.value })
+                  }
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">Opening Time</label>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                    Opening Time
+                  </label>
                   <input
                     type="time"
                     className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
                     value={form.openingTime}
-                    onChange={(e) => setForm({ ...form, openingTime: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, openingTime: e.target.value })
+                    }
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">Closing Time</label>
+                  <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                    Closing Time
+                  </label>
                   <input
                     type="time"
                     className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
                     value={form.closingTime}
-                    onChange={(e) => setForm({ ...form, closingTime: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, closingTime: e.target.value })
+                    }
                   />
                 </div>
               </div>

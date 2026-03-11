@@ -4,13 +4,38 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@heroui/react";
+import NavBar from "@/components/NavBar";
 
 const MEDICINE_FORMS = [
-  "Capsule", "Cream", "Drops", "Ear Drops", "Eye Drops", "Film", "Gel",
-  "Granules", "Gum", "Implant", "Inhaled Gas", "Inhaler", "Injection",
-  "Lotion", "Lozenge", "Mouthwash", "Nasal Spray", "Ointment", "Paste",
-  "Patch", "Powder", "Shampoo", "Solution", "Spray", "Suspension",
-  "Syrup", "Tablet", "Toothpaste", "Wafer",
+  "Capsule",
+  "Cream",
+  "Drops",
+  "Ear Drops",
+  "Eye Drops",
+  "Film",
+  "Gel",
+  "Granules",
+  "Gum",
+  "Implant",
+  "Inhaled Gas",
+  "Inhaler",
+  "Injection",
+  "Lotion",
+  "Lozenge",
+  "Mouthwash",
+  "Nasal Spray",
+  "Ointment",
+  "Paste",
+  "Patch",
+  "Powder",
+  "Shampoo",
+  "Solution",
+  "Spray",
+  "Suspension",
+  "Syrup",
+  "Tablet",
+  "Toothpaste",
+  "Wafer",
 ];
 
 interface Medicine {
@@ -71,7 +96,7 @@ export default function MedicinesPage() {
   }, []);
 
   const filteredMedicines = allMedicines.filter((m) =>
-    m.name.toLowerCase().includes(searchQuery.toLowerCase())
+    m.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const handleAdd = async (e: React.FormEvent) => {
@@ -144,7 +169,10 @@ export default function MedicinesPage() {
       });
       if (!createRes.ok) {
         const data = await createRes.json();
-        setMessage({ text: data.error || "Failed to create medicine", type: "error" });
+        setMessage({
+          text: data.error || "Failed to create medicine",
+          type: "error",
+        });
         setAddingCustom(false);
         return;
       }
@@ -173,13 +201,26 @@ export default function MedicinesPage() {
           }
           return [...prev, shopItem];
         });
-        setCustomForm({ name: "", brand: "", form: "Tablet", manufacturer: "", price: "", quantity: "" });
+        setCustomForm({
+          name: "",
+          brand: "",
+          form: "Tablet",
+          manufacturer: "",
+          price: "",
+          quantity: "",
+        });
         setShowCustomForm(false);
         setShowAddForm(false);
-        setMessage({ text: `✓ "${newMed.name}" created and added to your shop!`, type: "success" });
+        setMessage({
+          text: `✓ "${newMed.name}" created and added to your shop!`,
+          type: "success",
+        });
       } else {
         const data = await shopRes.json();
-        setMessage({ text: data.error || "Medicine created but failed to add to shop", type: "error" });
+        setMessage({
+          text: data.error || "Medicine created but failed to add to shop",
+          type: "error",
+        });
       }
     } catch {
       setMessage({ text: "Network error", type: "error" });
@@ -215,8 +256,8 @@ export default function MedicinesPage() {
 
   return (
     <div className="min-h-screen bg-[#dbe8e3] p-6">
+      <NavBar />
       <div className="max-w-3xl mx-auto">
-
         {/* Back Button */}
         <button
           onClick={() => router.push("/vendor")}
@@ -226,7 +267,6 @@ export default function MedicinesPage() {
         </button>
 
         <div className="bg-white rounded-xl shadow-lg p-8">
-
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold text-gray-800">
@@ -269,7 +309,9 @@ export default function MedicinesPage() {
                     type="button"
                     onClick={() => setShowCustomForm(false)}
                     className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                      !showCustomForm ? "bg-blue-600 text-white" : "bg-white text-gray-600 border"
+                      !showCustomForm
+                        ? "bg-blue-600 text-white"
+                        : "bg-white text-gray-600 border"
                     }`}
                   >
                     Search Existing
@@ -278,7 +320,9 @@ export default function MedicinesPage() {
                     type="button"
                     onClick={() => setShowCustomForm(true)}
                     className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                      showCustomForm ? "bg-purple-600 text-white" : "bg-white text-gray-600 border"
+                      showCustomForm
+                        ? "bg-purple-600 text-white"
+                        : "bg-white text-gray-600 border"
                     }`}
                   >
                     + Add New Medicine to DB
@@ -310,8 +354,13 @@ export default function MedicinesPage() {
                                 setSearchQuery(m.name);
                               }}
                             >
-                              <span className="font-medium text-gray-800">{m.name}</span>
-                              <span className="text-gray-400 text-xs">{m.form}{m.brand ? ` · ${m.brand}` : ""}</span>
+                              <span className="font-medium text-gray-800">
+                                {m.name}
+                              </span>
+                              <span className="text-gray-400 text-xs">
+                                {m.form}
+                                {m.brand ? ` · ${m.brand}` : ""}
+                              </span>
                             </button>
                           ))}
                           {filteredMedicines.length === 0 && (
@@ -329,7 +378,9 @@ export default function MedicinesPage() {
                         </div>
                       )}
                       {addForm.medicineId && (
-                        <p className="text-xs text-blue-600 mt-1">✓ Medicine selected</p>
+                        <p className="text-xs text-blue-600 mt-1">
+                          ✓ Medicine selected
+                        </p>
                       )}
                     </div>
 
@@ -341,7 +392,9 @@ export default function MedicinesPage() {
                         placeholder="Price (₹)"
                         className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                         value={addForm.price}
-                        onChange={(e) => setAddForm({ ...addForm, price: e.target.value })}
+                        onChange={(e) =>
+                          setAddForm({ ...addForm, price: e.target.value })
+                        }
                         required
                       />
                       <input
@@ -350,7 +403,9 @@ export default function MedicinesPage() {
                         placeholder="Quantity"
                         className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                         value={addForm.quantity}
-                        onChange={(e) => setAddForm({ ...addForm, quantity: e.target.value })}
+                        onChange={(e) =>
+                          setAddForm({ ...addForm, quantity: e.target.value })
+                        }
                         required
                       />
                     </div>
@@ -358,7 +413,11 @@ export default function MedicinesPage() {
                     <Button
                       type="submit"
                       isLoading={adding}
-                      isDisabled={!addForm.medicineId || !addForm.price || !addForm.quantity}
+                      isDisabled={
+                        !addForm.medicineId ||
+                        !addForm.price ||
+                        !addForm.quantity
+                      }
                       className="w-full bg-blue-600 text-white font-semibold"
                     >
                       Add to Shop
@@ -367,62 +426,95 @@ export default function MedicinesPage() {
                 ) : (
                   <form onSubmit={handleAddCustom} className="space-y-4">
                     <p className="text-sm text-purple-700 font-medium">
-                      This will add the medicine to the global database and to your shop.
+                      This will add the medicine to the global database and to
+                      your shop.
                     </p>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-gray-600 mb-1">Medicine Name *</label>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">
+                          Medicine Name *
+                        </label>
                         <input
                           type="text"
                           placeholder="e.g. Paracetamol"
                           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
                           value={customForm.name}
-                          onChange={(e) => setCustomForm({ ...customForm, name: e.target.value })}
+                          onChange={(e) =>
+                            setCustomForm({
+                              ...customForm,
+                              name: e.target.value,
+                            })
+                          }
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-gray-600 mb-1">Brand</label>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">
+                          Brand
+                        </label>
                         <input
                           type="text"
                           placeholder="e.g. Cipla"
                           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
                           value={customForm.brand}
-                          onChange={(e) => setCustomForm({ ...customForm, brand: e.target.value })}
+                          onChange={(e) =>
+                            setCustomForm({
+                              ...customForm,
+                              brand: e.target.value,
+                            })
+                          }
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-gray-600 mb-1">Form *</label>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">
+                          Form *
+                        </label>
                         <select
                           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white"
                           value={customForm.form}
-                          onChange={(e) => setCustomForm({ ...customForm, form: e.target.value })}
+                          onChange={(e) =>
+                            setCustomForm({
+                              ...customForm,
+                              form: e.target.value,
+                            })
+                          }
                           required
                         >
                           {MEDICINE_FORMS.map((f) => (
-                            <option key={f} value={f}>{f}</option>
+                            <option key={f} value={f}>
+                              {f}
+                            </option>
                           ))}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-gray-600 mb-1">Manufacturer</label>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">
+                          Manufacturer
+                        </label>
                         <input
                           type="text"
                           placeholder="e.g. Sun Pharma"
                           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
                           value={customForm.manufacturer}
-                          onChange={(e) => setCustomForm({ ...customForm, manufacturer: e.target.value })}
+                          onChange={(e) =>
+                            setCustomForm({
+                              ...customForm,
+                              manufacturer: e.target.value,
+                            })
+                          }
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-gray-600 mb-1">Price (₹) *</label>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">
+                          Price (₹) *
+                        </label>
                         <input
                           type="number"
                           min="0"
@@ -430,19 +522,31 @@ export default function MedicinesPage() {
                           placeholder="e.g. 45.00"
                           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
                           value={customForm.price}
-                          onChange={(e) => setCustomForm({ ...customForm, price: e.target.value })}
+                          onChange={(e) =>
+                            setCustomForm({
+                              ...customForm,
+                              price: e.target.value,
+                            })
+                          }
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-gray-600 mb-1">Quantity *</label>
+                        <label className="block text-xs font-semibold text-gray-600 mb-1">
+                          Quantity *
+                        </label>
                         <input
                           type="number"
                           min="0"
                           placeholder="e.g. 100"
                           className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
                           value={customForm.quantity}
-                          onChange={(e) => setCustomForm({ ...customForm, quantity: e.target.value })}
+                          onChange={(e) =>
+                            setCustomForm({
+                              ...customForm,
+                              quantity: e.target.value,
+                            })
+                          }
                           required
                         />
                       </div>
@@ -451,7 +555,12 @@ export default function MedicinesPage() {
                     <Button
                       type="submit"
                       isLoading={addingCustom}
-                      isDisabled={!customForm.name || !customForm.form || !customForm.price || !customForm.quantity}
+                      isDisabled={
+                        !customForm.name ||
+                        !customForm.form ||
+                        !customForm.price ||
+                        !customForm.quantity
+                      }
                       className="w-full bg-purple-600 text-white font-semibold"
                     >
                       Create Medicine &amp; Add to Shop
@@ -502,7 +611,6 @@ export default function MedicinesPage() {
               ))}
             </div>
           )}
-
         </div>
       </div>
     </div>
