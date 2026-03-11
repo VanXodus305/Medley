@@ -222,7 +222,6 @@ export default function CustomerDashboard() {
     );
   };
 
-
   const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
 
   const getMedicineById = (id: string): Medicine | undefined =>
@@ -517,7 +516,8 @@ export default function CustomerDashboard() {
             </div>
             {shopMedSearch && (
               <p className="text-xs text-gray-400 mt-1.5 ml-1">
-                {filtered.length} result{filtered.length !== 1 ? "s" : ""} for &quot;{shopMedSearch}&quot;
+                {filtered.length} result{filtered.length !== 1 ? "s" : ""} for
+                &quot;{shopMedSearch}&quot;
               </p>
             )}
           </div>
@@ -865,7 +865,7 @@ export default function CustomerDashboard() {
           </div>
         </div>
 
-        {/* @ts-expect-error */}
+        {/* @ts-expect-error HeroUI Tabs with children is valid at runtime despite type mismatch */}
         <Tabs
           fullWidth
           aria-label="Dashboard features"
@@ -1202,8 +1202,8 @@ export default function CustomerDashboard() {
                 ).length === 0 && (
                   <div className="text-center py-8 mt-4">
                     <p className="text-gray-500">
-                      No medicines found for &quot;{priceSearchTerm}&quot;. Try another
-                      search.
+                      No medicines found for &quot;{priceSearchTerm}&quot;. Try
+                      another search.
                     </p>
                   </div>
                 )}
