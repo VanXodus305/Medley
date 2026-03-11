@@ -4,22 +4,22 @@ import mongoose from "mongoose";
 import Medicine from "@/models/Medicine";
 import Shop from "@/models/Shop";
 
-interface MedicineDoc {
-  medicineId: string;
-  name: string;
-  brand: string;
-  form: string;
-  uses: string[];
-}
+// interface MedicineDoc {
+//   medicineId: string;
+//   name: string;
+//   brand: string;
+//   form: string;
+//   uses: string[];
+// }
 
-interface ShopDoc {
-  shopId: string;
-  name: string;
-  owner: string;
-  phone: string;
-  location: string;
-  distance_from_user: number;
-}
+// interface ShopDoc {
+//   shopId: string;
+//   name: string;
+//   owner: string;
+//   phone: string;
+//   location: string;
+//   distance_from_user: number;
+// }
 
 export interface MedicineWithShops {
   name: string;
