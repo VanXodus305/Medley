@@ -2,14 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Medicine from "@/models/Medicine";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     await connectDB();
-    const medicines = await Medicine.find({}).lean();
+
+    // Get pagination parameters from query string
+    const { searchParams } = new URL(request.url);
+    const limit = Math.min(parseInt(searchParams.get("limit") || "1000"), 1000); // Max 1000
+    const skip = Math.max(parseInt(searchParams.get("skip") || "0"), 0);
+
+    const medicines = await Medicine.find({}).lean().skip(skip).limit(limit);
     // Return _id so vendors can reference it when adding to their shop
     const result = medicines.map((med: Record<string, unknown>) => ({
+      id: med.medicineId,
       _id: (med._id as { toString: () => string }).toString(),
-      medicineId: med.medicineId,
       name: med.name,
       brand: med.brand,
       form: med.form,
@@ -19,7 +25,10 @@ export async function GET() {
     return NextResponse.json(result);
   } catch (error) {
     console.error("Error fetching medicines:", error);
-    return NextResponse.json({ error: "Failed to fetch medicines" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch medicines" },
+      { status: 500 },
+    );
   }
 }
 
@@ -30,7 +39,10 @@ export async function POST(request: NextRequest) {
     const { name, brand, form, uses, manufacturer, composition } = body;
 
     if (!name || !form) {
-      return NextResponse.json({ error: "name and form are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "name and form are required" },
+        { status: 400 },
+      );
     }
 
     // Generate a unique medicineId
@@ -41,26 +53,31 @@ export async function POST(request: NextRequest) {
       name: name.trim(),
       brand: brand?.trim() || undefined,
       form,
-      uses: Array.isArray(uses) ? uses : (uses ? [uses] : []),
+      uses: Array.isArray(uses) ? uses : uses ? [uses] : [],
       manufacturer: manufacturer?.trim() || undefined,
-      composition: Array.isArray(composition) ? composition : (composition ? [composition] : []),
+      composition: Array.isArray(composition)
+        ? composition
+        : composition
+          ? [composition]
+          : [],
     });
 
     return NextResponse.json(
       {
+        id: medicine.medicineId,
         _id: medicine._id.toString(),
-        medicineId: medicine.medicineId,
         name: medicine.name,
         brand: medicine.brand,
         form: medicine.form,
         uses: medicine.uses,
         manufacturer: medicine.manufacturer,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: unknown) {
     console.error("Error creating medicine:", error);
-    const msg = error instanceof Error ? error.message : "Failed to create medicine";
+    const msg =
+      error instanceof Error ? error.message : "Failed to create medicine";
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
