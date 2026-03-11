@@ -12,7 +12,18 @@ export async function GET() {
     }
 
     await connectDB();
-    const shop = await Shop.findOne({ owner: session.user.email }).lean();
+
+    // Find user by email to get their _id
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Find shop by owner (now using User _id)
+    const shop = await Shop.findOne({ owner: user._id })
+      .populate("owner", "email name")
+      .lean();
+
     if (!shop) {
       return NextResponse.json({ error: "No shop found" }, { status: 404 });
     }
@@ -20,7 +31,10 @@ export async function GET() {
     return NextResponse.json(shop);
   } catch (error) {
     console.error("Vendor shop GET error:", error);
-    return NextResponse.json({ error: "Failed to fetch shop" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch shop" },
+      { status: 500 },
+    );
   }
 }
 
@@ -32,34 +46,56 @@ export async function POST(request: NextRequest) {
     }
 
     await connectDB();
-    const existing = await Shop.findOne({ owner: session.user.email });
+
+    // Find user by email to get their _id
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Check if shop already exists for this user
+    const existing = await Shop.findOne({ owner: user._id });
     if (existing) {
-      return NextResponse.json({ error: "Shop already exists. Use PUT to update." }, { status: 409 });
+      return NextResponse.json(
+        { error: "Shop already exists. Use PUT to update." },
+        { status: 409 },
+      );
     }
 
     const body = await request.json();
     const { name, phone, location, openingTime, closingTime } = body;
 
     if (!name || !phone || !location) {
-      return NextResponse.json({ error: "Name, phone, and location are required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Name, phone, and location are required" },
+        { status: 400 },
+      );
     }
+
+    // Generate random distance between 0.5 and 50 km
+    const distance_from_user = Math.random() * 49.5 + 0.5;
 
     const shop = await Shop.create({
       shopId: `shop_${Date.now()}`,
       name,
-      owner: session.user.email,
+      owner: user._id, // Use User _id as reference
       phone,
       location,
+      distance_from_user: Math.round(distance_from_user * 10) / 10, // Round to 1 decimal
       openingTime: openingTime || "",
       closingTime: closingTime || "",
     });
 
-    await User.findOneAndUpdate({ email: session.user.email }, { shopName: name });
+    // Update user shopName
+    await User.findByIdAndUpdate(user._id, { shopName: name });
 
     return NextResponse.json(shop, { status: 201 });
   } catch (error) {
     console.error("Vendor shop POST error:", error);
-    return NextResponse.json({ error: "Failed to create shop" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create shop" },
+      { status: 500 },
+    );
   }
 }
 
@@ -71,13 +107,20 @@ export async function PUT(request: NextRequest) {
     }
 
     await connectDB();
+
+    // Find user by email to get their _id
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
     const body = await request.json();
     const { name, phone, location, openingTime, closingTime } = body;
 
     const shop = await Shop.findOneAndUpdate(
-      { owner: session.user.email },
+      { owner: user._id }, // Find by User _id
       { name, phone, location, openingTime, closingTime },
-      { new: true }
+      { new: true },
     );
 
     if (!shop) {
@@ -85,12 +128,15 @@ export async function PUT(request: NextRequest) {
     }
 
     if (name) {
-      await User.findOneAndUpdate({ email: session.user.email }, { shopName: name });
+      await User.findByIdAndUpdate(user._id, { shopName: name });
     }
 
     return NextResponse.json(shop);
   } catch (error) {
     console.error("Vendor shop PUT error:", error);
-    return NextResponse.json({ error: "Failed to update shop" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update shop" },
+      { status: 500 },
+    );
   }
 }

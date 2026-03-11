@@ -33,6 +33,8 @@ export default function RegisterPage() {
     phoneNumber: "",
     address: "",
     shopName: "",
+    shopPhone: "",
+    shopLocation: "",
     licenseNumber: "",
   });
 
@@ -102,6 +104,16 @@ export default function RegisterPage() {
       return;
     }
 
+    if (userType === "vendor" && !formData.shopPhone) {
+      toast.error("Shop phone number is required");
+      return;
+    }
+
+    if (userType === "vendor" && !formData.shopLocation) {
+      toast.error("Shop location is required");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -114,6 +126,8 @@ export default function RegisterPage() {
         image: session.user?.image,
         ...(userType === "vendor" && {
           shopName: formData.shopName,
+          shopPhone: formData.shopPhone,
+          shopLocation: formData.shopLocation,
           licenseNumber: formData.licenseNumber,
         }),
       };
@@ -276,6 +290,28 @@ export default function RegisterPage() {
                       isRequired={userType === "vendor"}
                       variant="bordered"
                     />
+
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <Input
+                        label="Shop Phone"
+                        name="shopPhone"
+                        value={formData.shopPhone}
+                        onChange={handleInputChange}
+                        placeholder="Enter your pharmacy phone number"
+                        isRequired={userType === "vendor"}
+                        variant="bordered"
+                      />
+
+                      <Input
+                        label="Shop Location"
+                        name="shopLocation"
+                        value={formData.shopLocation}
+                        onChange={handleInputChange}
+                        placeholder="Enter your pharmacy location/address"
+                        isRequired={userType === "vendor"}
+                        variant="bordered"
+                      />
+                    </div>
 
                     <Input
                       label="License Number (Optional)"

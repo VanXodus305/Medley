@@ -5,6 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     await connectDB();
     const User = await import("@/models/User").then((m) => m.default);
+    const Shop = await import("@/models/Shop").then((m) => m.default);
 
     const body = await request.json();
     const {
@@ -16,6 +17,8 @@ export async function POST(request: NextRequest) {
       shopName,
       licenseNumber,
       image,
+      shopPhone,
+      shopLocation,
     } = body;
 
     // Validate required fields
@@ -31,6 +34,14 @@ export async function POST(request: NextRequest) {
     if (existingUser) {
       return NextResponse.json(
         { error: "User already exists" },
+        { status: 400 },
+      );
+    }
+
+    // Validate vendor-specific fields
+    if (userType === "vendor" && (!shopName || !shopPhone || !shopLocation)) {
+      return NextResponse.json(
+        { error: "Shop name, phone, and location are required for vendors" },
         { status: 400 },
       );
     }
@@ -58,6 +69,23 @@ export async function POST(request: NextRequest) {
     // Create new user
     const user = new User(userData);
     await user.save();
+
+    // Create shop for vendor and link to user
+    if (userType === "vendor") {
+      // Generate random distance between 0.5 and 50 km
+      const distance_from_user =
+        Math.round((Math.random() * 49.5 + 0.5) * 10) / 10;
+
+      const shop = new Shop({
+        shopId: `shop_${Date.now()}`,
+        name: shopName,
+        owner: user._id, // Reference to the newly created user
+        phone: shopPhone,
+        location: shopLocation,
+        distance_from_user,
+      });
+      await shop.save();
+    }
 
     return NextResponse.json(
       {

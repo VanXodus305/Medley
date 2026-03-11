@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import Shop from "@/models/Shop";
 import ShopMedicine from "@/models/ShopMedicine";
+import User from "@/models/User";
 
 export async function GET() {
   try {
@@ -12,7 +13,11 @@ export async function GET() {
     }
 
     await connectDB();
-    const shop = await Shop.findOne({ owner: session.user.email });
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+    const shop = await Shop.findOne({ owner: user._id });
     if (!shop) {
       return NextResponse.json([]);
     }
@@ -25,7 +30,10 @@ export async function GET() {
     return NextResponse.json(inventory);
   } catch (error) {
     console.error("Vendor inventory GET error:", error);
-    return NextResponse.json({ error: "Failed to fetch inventory" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch inventory" },
+      { status: 500 },
+    );
   }
 }
 
@@ -37,7 +45,11 @@ export async function PUT(request: NextRequest) {
     }
 
     await connectDB();
-    const shop = await Shop.findOne({ owner: session.user.email });
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+    const shop = await Shop.findOne({ owner: user._id });
     if (!shop) {
       return NextResponse.json({ error: "Shop not found" }, { status: 404 });
     }
@@ -56,16 +68,22 @@ export async function PUT(request: NextRequest) {
     const updated = await ShopMedicine.findOneAndUpdate(
       { _id: id, shop: shop._id },
       updateData,
-      { new: true }
+      { new: true },
     ).populate("medicine");
 
     if (!updated) {
-      return NextResponse.json({ error: "Inventory item not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Inventory item not found" },
+        { status: 404 },
+      );
     }
 
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Vendor inventory PUT error:", error);
-    return NextResponse.json({ error: "Failed to update inventory" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update inventory" },
+      { status: 500 },
+    );
   }
 }

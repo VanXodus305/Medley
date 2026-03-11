@@ -12,7 +12,11 @@ export async function GET() {
     }
 
     await connectDB();
-    const shop = await Shop.findOne({ owner: session.user.email });
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+    const shop = await Shop.findOne({ owner: user._id });
     if (!shop) {
       return NextResponse.json([]);
     }
@@ -26,15 +30,17 @@ export async function GET() {
       .lean();
 
     const orders = customers.map((customer) => ({
-    //   customerId: customer._id.toString(),
-        customerId: String(customer._id),
+      //   customerId: customer._id.toString(),
+      customerId: String(customer._id),
       customerName: customer.name,
       customerEmail: customer.email,
-      items: (customer.list as Array<{
-        shop?: { toString: () => string };
-        medicine?: unknown;
-        quantity?: number;
-      }>)
+      items: (
+        customer.list as Array<{
+          shop?: { toString: () => string };
+          medicine?: unknown;
+          quantity?: number;
+        }>
+      )
         .filter((item) => item.shop?.toString() === shop._id.toString())
         .map((item) => ({
           medicine: item.medicine,
@@ -45,6 +51,9 @@ export async function GET() {
     return NextResponse.json(orders);
   } catch (error) {
     console.error("Vendor orders GET error:", error);
-    return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch orders" },
+      { status: 500 },
+    );
   }
 }

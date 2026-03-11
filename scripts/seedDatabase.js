@@ -87,7 +87,11 @@ const medicineSchema = new mongoose.Schema({
 const shopSchema = new mongoose.Schema({
   shopId: { type: String, required: true, unique: true },
   name: { type: String, required: true },
-  owner: { type: String, required: true },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   phone: { type: String, required: true },
   location: { type: String, required: true },
   distance_from_user: { type: Number }, // in kilometers
@@ -99,18 +103,60 @@ const shopSchema = new mongoose.Schema({
 
 const shopMedicineSchema = new mongoose.Schema({
   shop: { type: mongoose.Schema.Types.ObjectId, ref: "Shop", required: true },
-  medicine: { type: mongoose.Schema.Types.ObjectId, ref: "Medicine", required: true },
+  medicine: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Medicine",
+    required: true,
+  },
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
 
+const userSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
+    image: String,
+    userType: {
+      type: String,
+      enum: ["customer", "vendor"],
+      required: true,
+    },
+    phoneNumber: String,
+    address: String,
+    shopName: String,
+    licenseNumber: String,
+    list: [
+      {
+        shop: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Shop",
+          required: false,
+        },
+        medicine: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Medicine",
+          required: false,
+        },
+        quantity: { type: Number, default: 1 },
+        _id: false,
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  },
+);
+
 const Medicine =
   mongoose.models.Medicine || mongoose.model("Medicine", medicineSchema);
 const Shop = mongoose.models.Shop || mongoose.model("Shop", shopSchema);
 const ShopMedicine =
-  mongoose.models.ShopMedicine || mongoose.model("ShopMedicine", shopMedicineSchema);
+  mongoose.models.ShopMedicine ||
+  mongoose.model("ShopMedicine", shopMedicineSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -149,7 +195,7 @@ async function seedDatabase() {
     await Medicine.deleteMany({});
     await Shop.deleteMany({});
     await ShopMedicine.deleteMany({});
-    
+
     // Drop all indexes except _id to remove stale unique constraints
     try {
       await Shop.collection.dropIndexes();
@@ -160,7 +206,7 @@ async function seedDatabase() {
         log(`   ⚠️  Warning dropping indexes: ${err.message}`);
       }
     }
-    
+
     try {
       await ShopMedicine.collection.dropIndexes();
       log("   - Dropped old ShopMedicine indexes");
@@ -169,8 +215,60 @@ async function seedDatabase() {
         log(`   ⚠️  Warning dropping indexes: ${err.message}`);
       }
     }
-    
+
     log("✅ Existing data cleared");
+
+    // Create test vendor users
+    log("\n👥 Creating test vendor users...");
+    const testVendors = [
+      { name: "Vendor One", email: "vendor1@medley.com", shopName: "MediCare" },
+      {
+        name: "Vendor Two",
+        email: "vendor2@medley.com",
+        shopName: "Health Plus",
+      },
+      {
+        name: "Vendor Three",
+        email: "vendor3@medley.com",
+        shopName: "Wellness",
+      },
+      {
+        name: "Vendor Four",
+        email: "vendor4@medley.com",
+        shopName: "Care Point",
+      },
+      {
+        name: "Vendor Five",
+        email: "vendor5@medley.com",
+        shopName: "Pharma Hub",
+      },
+    ];
+
+    const vendorUsers = [];
+    for (const vendorData of testVendors) {
+      try {
+        const existingVendor = await User.findOne({ email: vendorData.email });
+        if (existingVendor) {
+          vendorUsers.push(existingVendor);
+          log(`   - Vendor ${vendorData.email} already exists`);
+        } else {
+          const vendor = await User.create({
+            name: vendorData.name,
+            email: vendorData.email,
+            userType: "vendor",
+            shopName: vendorData.shopName,
+            list: [],
+          });
+          vendorUsers.push(vendor);
+          log(`   - Created vendor: ${vendor.email}`);
+        }
+      } catch (error) {
+        log(
+          `   ⚠️  Error creating vendor ${vendorData.email}: ${error.message}`,
+        );
+      }
+    }
+    log(`✅ ${vendorUsers.length} vendor users ready`);
 
     // Transform and insert medicines
     log("\n💊 Uploading medicines...");
@@ -193,14 +291,20 @@ async function seedDatabase() {
 
     // Transform and insert shops
     log("\n🏪 Uploading shops...");
-    const transformedShops = shopsData.map((shop) => ({
-      shopId: shop.id,
-      name: shop.name,
-      owner: shop.owner,
-      phone: shop.phone,
-      location: shop.location,
-      distance_from_user: parseDistance(shop.distance_from_user),
-    }));
+    const transformedShops = shopsData.map((shop, index) => {
+      // Generate random distance between 0.5 and 50 km
+      const randomDistance = Math.round((Math.random() * 49.5 + 0.5) * 10) / 10;
+      // Assign shop to a random vendor
+      const randomVendor = vendorUsers[index % vendorUsers.length];
+      return {
+        shopId: shop.id,
+        name: shop.name,
+        owner: randomVendor._id, // Use vendor's ObjectId
+        phone: shop.phone,
+        location: shop.location,
+        distance_from_user: randomDistance,
+      };
+    });
 
     const shopResult = await Shop.insertMany(transformedShops);
     log(`✅ ${shopResult.length} shops uploaded successfully`);
@@ -231,11 +335,11 @@ async function seedDatabase() {
       for (const medId in medicinesByID) {
         const medItem = medicinesByID[medId];
         const medicineObjectId = medicineIdMap[medId];
-        
+
         if (medicineObjectId) {
           // Create unique key to prevent duplicate entries
           const key = `${shopDoc._id}-${medicineObjectId}`;
-          
+
           if (!shopMedicineMap.has(key)) {
             shopMedicineData.push({
               shop: shopDoc._id,
@@ -247,7 +351,7 @@ async function seedDatabase() {
           }
         } else {
           log(
-            `⚠️  Medicine "${medId}" not found in medicineIdMap for shop "${shop.name}"`
+            `⚠️  Medicine "${medId}" not found in medicineIdMap for shop "${shop.name}"`,
           );
         }
       }
@@ -259,12 +363,14 @@ async function seedDatabase() {
         shopMedicineResult = await ShopMedicine.insertMany(shopMedicineData, {
           ordered: false,
         });
-        log(`✅ ${shopMedicineResult.length} shop-medicine relationships created`);
+        log(
+          `✅ ${shopMedicineResult.length} shop-medicine relationships created`,
+        );
       } catch (insertError) {
         // If there are some errors due to duplicates, still log success for inserted documents
         if (insertError.insertedDocs && insertError.insertedDocs.length > 0) {
           log(
-            `⚠️  Inserted ${insertError.insertedDocs.length} shop-medicine relationships (${insertError.writeErrors.length} duplicates skipped)`
+            `⚠️  Inserted ${insertError.insertedDocs.length} shop-medicine relationships (${insertError.writeErrors.length} duplicates skipped)`,
           );
           shopMedicineResult = insertError.insertedDocs;
         } else {

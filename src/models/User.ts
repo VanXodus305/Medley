@@ -14,23 +14,18 @@ const UserSchema = new Schema(
     address: String,
     // Customer-specific fields
     // (can be added later for customer preferences)
-
-    // Vendor-specific fields
-    shopName: String,
-    licenseNumber: String,
-
-    list: [
-      {
-        shop: { type: Schema.Types.ObjectId, ref: "Shop", required: false },
-        medicine: {
-          type: Schema.Types.ObjectId,
-          ref: "Medicine",
-          required: false,
-        },
-        quantity: { type: Number, default: 1 },
-        _id: false,
-      },
-    ],
+    // list: [
+    //   {
+    //     shop: { type: Schema.Types.ObjectId, ref: "Shop", required: false },
+    //     medicine: {
+    //       type: Schema.Types.ObjectId,
+    //       ref: "Medicine",
+    //       required: false,
+    //     },
+    //     quantity: { type: Number, default: 1 },
+    //     _id: false,
+    //   },
+    // ],
   },
   {
     timestamps: true,

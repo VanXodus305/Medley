@@ -4,7 +4,11 @@ const ShopSchema = new Schema(
   {
     shopId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    owner: { type: String, required: true },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     phone: { type: String, required: true },
     location: { type: String, required: true },
     distance_from_user: { type: Number }, // in kilometers
@@ -15,6 +19,9 @@ const ShopSchema = new Schema(
     timestamps: true,
   },
 );
+
+// Index for faster queries on owner
+ShopSchema.index({ owner: 1 });
 
 const Shop = models["Shop"] || model("Shop", ShopSchema);
 export default Shop;
