@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { signOut } from "next-auth/react";
 import { useUserProfile } from "@/hooks/useUserProfile";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import { useEffect } from "react";
@@ -87,7 +86,7 @@ export default function VendorDashboard() {
   if (!isRegistered || !profile) return null;
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-lime-50">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-lime-50 pt-20">
       {/* Decorative blobs */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-10 right-8 h-64 w-64 rounded-full bg-emerald-200/40 blur-3xl" />

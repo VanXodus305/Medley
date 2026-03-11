@@ -7,7 +7,6 @@ import { Button } from "@heroui/react";
 import NavBar from "@/components/NavBar";
 
 export default function ShopPage() {
-  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [isNew, setIsNew] = useState(false);

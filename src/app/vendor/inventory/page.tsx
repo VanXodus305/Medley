@@ -95,7 +95,7 @@ export default function InventoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#dbe8e3] p-6">
+    <div className="min-h-screen bg-[#dbe8e3] p-6 pt-28">
       <NavBar />
       <div className="max-w-4xl mx-auto">
         <button

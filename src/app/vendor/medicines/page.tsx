@@ -255,7 +255,7 @@ export default function MedicinesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#dbe8e3] p-6">
+    <div className="min-h-screen bg-[#dbe8e3] p-6 pt-28">
       <NavBar />
       <div className="max-w-3xl mx-auto">
         {/* Back Button */}
