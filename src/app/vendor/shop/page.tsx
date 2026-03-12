@@ -95,7 +95,7 @@ export default function ShopPage() {
       {/* Navbar */}
       <NavBar />
 
-      <div className="relative z-10 mx-auto max-w-3xl px-6 py-10">
+      <div className="relative z-10 mx-auto max-w-3xl px-6 pb-10 pt-28">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
