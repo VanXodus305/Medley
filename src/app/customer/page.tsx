@@ -864,8 +864,6 @@ export default function CustomerDashboard() {
             </p>
           </div>
         </div>
-
-        {/* @ts-expect-error HeroUI Tabs with children is valid at runtime despite type mismatch */}
         <Tabs
           fullWidth
           aria-label="Dashboard features"
