@@ -12,6 +12,8 @@ import {
   Phone,
   ChevronLeft,
   ChevronRight,
+  CheckCircle,
+  AlertTriangle,
 } from "lucide-react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -20,6 +22,8 @@ import GeminiService, {
   GeminiResponse,
   MedicineWithShops,
   ShopInfo,
+  ShopWithCoverage,
+  FindShopsResponse,
 } from "../services/geminiService";
 
 // Custom Arrow Components for Carousel
@@ -48,8 +52,76 @@ interface Message {
   type: "user" | "bot";
   text: string;
   timestamp: string;
-  structured?: GeminiResponse; // Add structured data for bot responses
+  structured?: GeminiResponse | FindShopsResponse;
+  queryType?: "symptoms" | "medicines";
 }
+
+// Shop with Coverage Card Component
+const ShopWithCoverageCard = ({ shop }: { shop: ShopWithCoverage }) => {
+  const coveragePercent = shop.coverage ? Math.round(shop.coverage * 100) : 0;
+  const hasCoverage = shop.available && shop.coverage && shop.coverage > 0;
+
+  return (
+    <div className="bg-white/90 border border-emerald-100 rounded-2xl p-4 w-full max-w-[360px] shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex items-start gap-3">
+        <div className="bg-emerald-100 p-2 rounded-xl flex-shrink-0">
+          <MapPin className="w-5 h-5 text-emerald-600" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="font-semibold text-gray-900 text-sm">{shop.name}</h3>
+          <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+            {shop.location}
+          </p>
+
+          {/* Coverage Badge */}
+          <div
+            className={`mt-2 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${
+              hasCoverage
+                ? "bg-emerald-100 text-emerald-700"
+                : "bg-amber-100 text-amber-700"
+            }`}
+          >
+            {hasCoverage ? (
+              <CheckCircle className="w-3 h-3" />
+            ) : (
+              <AlertTriangle className="w-3 h-3" />
+            )}
+            {shop.coveredCount}/{shop.requiredCount} ({coveragePercent}%)
+          </div>
+
+          {/* Distance and Price */}
+          <div className="mt-2 space-y-1">
+            <div className="flex items-center gap-1">
+              <Clock className="w-3 h-3 text-gray-400" />
+              <span className="text-xs text-gray-600">
+                {typeof shop.distance === "number"
+                  ? `${shop.distance.toFixed(1)} km`
+                  : shop.distance}{" "}
+                away
+              </span>
+            </div>
+
+            {shop.totalPrice && shop.totalPrice > 0 && (
+              <div className="flex items-center gap-1">
+                <IndianRupee className="w-3 h-3 text-gray-400" />
+                <span className="text-xs text-gray-600">
+                  ₹{shop.totalPrice.toFixed(0)} total
+                </span>
+              </div>
+            )}
+
+            {shop.phone && (
+              <div className="flex items-center gap-1">
+                <Phone className="w-3 h-3 text-gray-400" />
+                <span className="text-xs text-gray-600">{shop.phone}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Medicine Card Component
 const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
@@ -92,9 +164,8 @@ const MedicineCard = ({ medicine }: { medicine: MedicineWithShops }) => {
                       </div>
                       <div className="text-gray-500 text-xs ml-4">
                         {typeof shop.distance === "number"
-                          ? shop.distance
-                          : shop.distance}{" "}
-                          km
+                          ? `${shop.distance.toFixed(1)} km`
+                          : shop.distance}
                       </div>
                     </div>
                   </div>
@@ -130,9 +201,8 @@ const ShopCard = ({ shop }: { shop: ShopInfo }) => {
             <Clock className="w-3 h-3 text-gray-400" />
             <span className="text-xs text-gray-600">
               {typeof shop.distance === "number"
-                ? `${(shop.distance / 1000).toFixed(1)} km`
-                : shop.distance}{" "}
-              km away
+                ? `${shop.distance.toFixed(1)} km away`
+                : `${shop.distance} away`}
             </span>
           </div>
           {shop.phone && (
@@ -210,7 +280,7 @@ const ChatInput = () => {
 
   const generateBotResponse = async (
     userMessage: string,
-  ): Promise<GeminiResponse> => {
+  ): Promise<GeminiResponse | FindShopsResponse> => {
     try {
       const response = await geminiService.processUserPrompt(userMessage);
       return response;
@@ -251,6 +321,7 @@ const ChatInput = () => {
         text: structuredResponse.response,
         timestamp: new Date().toLocaleTimeString(),
         structured: structuredResponse,
+        queryType: (structuredResponse as any).queryType,
       };
 
       setMessages((prev) => [...prev, botResponse]);
@@ -279,8 +350,8 @@ const ChatInput = () => {
     "I have a headache",
     "I'm feeling feverish",
     "I have a cold",
-    "My stomach hurts",
-    "I have a persistent cough",
+    "Paracetamol, Ibuprofen, Aspirin",
+    "Find shops for Cough Syrup",
   ];
 
   return (
@@ -367,9 +438,11 @@ const ChatInput = () => {
                 {/* Render structured data for bot messages */}
                 {message.type === "bot" && message.structured && (
                   <div className="mt-4 space-y-4 min-w-0">
-                    {/* Medicines Carousel */}
-                    {message.structured.medicines &&
-                      message.structured.medicines.length > 0 && (
+                    {/* For Symptoms Query - Show Medicines Carousel */}
+                    {message.queryType === "symptoms" &&
+                      (message.structured as GeminiResponse).medicines &&
+                      (message.structured as GeminiResponse).medicines!.length >
+                        0 && (
                         <div className="min-w-0">
                           <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                             <Pill className="w-4 h-4" />
@@ -378,26 +451,62 @@ const ChatInput = () => {
                           <div className="relative">
                             <Slider
                               {...getCarouselSettings(
-                                message.structured.medicines.length,
+                                (message.structured as GeminiResponse)
+                                  .medicines!.length,
                               )}
                             >
-                              {message.structured.medicines.map(
-                                (medicine, index) => (
-                                  <div key={index} className="px-1">
-                                    <div className="mx-1">
-                                      <MedicineCard medicine={medicine} />
-                                    </div>
+                              {(
+                                message.structured as GeminiResponse
+                              ).medicines!.map((medicine, index) => (
+                                <div key={index} className="px-1">
+                                  <div className="mx-1">
+                                    <MedicineCard medicine={medicine} />
                                   </div>
-                                ),
-                              )}
+                                </div>
+                              ))}
                             </Slider>
                           </div>
                         </div>
                       )}
 
-                    {/* Shops Carousel */}
-                    {message.structured.shops &&
-                      message.structured.shops.length > 0 && (
+                    {/* For Medicines Query - Show Shops with Coverage */}
+                    {message.queryType === "medicines" &&
+                      (message.structured as FindShopsResponse).shops &&
+                      (message.structured as FindShopsResponse).shops.length >
+                        0 && (
+                        <div className="min-w-0">
+                          <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                            <MapPin className="w-4 h-4" />
+                            Best Shops to Visit
+                          </h4>
+                          <div className="relative">
+                            <Slider
+                              {...getCarouselSettings(
+                                (message.structured as FindShopsResponse).shops
+                                  .length,
+                              )}
+                            >
+                              {(
+                                message.structured as FindShopsResponse
+                              ).shops.map((shop, index) => (
+                                <div key={index} className="px-1">
+                                  <div className="mx-1">
+                                    <ShopWithCoverageCard
+                                      shop={shop as ShopWithCoverage}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </Slider>
+                          </div>
+                        </div>
+                      )}
+
+                    {/* For Symptoms Query - Show Nearby Shops */}
+                    {message.queryType === "symptoms" &&
+                      (message.structured as GeminiResponse).shops &&
+                      (message.structured as GeminiResponse).shops!.length >
+                        0 && (
                         <div className="min-w-0">
                           <h4 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
                             <MapPin className="w-4 h-4" />
@@ -406,10 +515,13 @@ const ChatInput = () => {
                           <div className="relative">
                             <Slider
                               {...getCarouselSettings(
-                                message.structured.shops.length,
+                                (message.structured as GeminiResponse).shops!
+                                  .length,
                               )}
                             >
-                              {message.structured.shops.map((shop, index) => (
+                              {(
+                                message.structured as GeminiResponse
+                              ).shops!.map((shop, index) => (
                                 <div key={index} className="px-1">
                                   <div className="mx-1">
                                     <ShopCard shop={shop} />
@@ -478,7 +590,7 @@ const ChatInput = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Describe your symptoms or ask about medicines..."
+              placeholder="Describe symptoms or list medicines (e.g., 'Paracetamol, Ibuprofen')..."
               className="w-full p-4 pr-12 border border-emerald-100 rounded-2xl resize-none bg-emerald-50/30 text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
               rows={2}
             />

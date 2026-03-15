@@ -173,7 +173,7 @@ Format your response in JSON with this structure:
 `;
 
     const ai = new GoogleGenAI({ apiKey });
-    const model = "gemini-2.5-flash-lite";
+    const model = "gemini-3.1-flash-lite-preview";
 
     // Step 5: Use Gemini to get appropriate dosages for the matched medicines
     const dosagePrompt = `
