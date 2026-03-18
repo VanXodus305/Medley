@@ -72,6 +72,79 @@ export async function POST(request: NextRequest) {
       await mongoose.connect(process.env.MONGODB_URI || "");
     }
 
+    const ai = new GoogleGenAI({ apiKey });
+    const model = "gemini-3.1-flash-lite-preview";
+
+    // Check if this is a medical query or just a normal chat message
+    const symptomKeywords = [
+      "symptom",
+      "pain",
+      "ache",
+      "fever",
+      "cough",
+      "cold",
+      "headache",
+      "medicine",
+      "drug",
+      "tablet",
+      "capsule",
+      "treatment",
+      "disease",
+      "illness",
+      "sick",
+      "hurt",
+      "itch",
+      "allergy",
+      "nausea",
+      "vomit",
+      "diarrhea",
+      "constipation",
+      "inflammation",
+      "infection",
+      "relief",
+      "cure",
+      "health",
+      "medical",
+      "pharma",
+      "prescription",
+      "dosage",
+      "dose",
+    ];
+
+    const lowerSymptoms = symptoms.toLowerCase();
+    const isMedicalQuery = symptomKeywords.some((keyword) =>
+      lowerSymptoms.includes(keyword),
+    );
+
+    // If it's not a medical query, just respond with Gemini directly
+    if (!isMedicalQuery) {
+      const genericResponsePrompt = `You are a helpful assistant for Medley, a medicine price comparison platform. 
+
+The user asked: "${symptoms}"
+
+Provide a friendly, helpful response. Keep it concise and conversational. If relevant, you can mention that Medley helps find medicines and compare prices, but don't push it if the question is unrelated.`;
+
+      const response = await ai.models.generateContent({
+        model,
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: genericResponsePrompt }],
+          },
+        ],
+      });
+
+      const responseText = await response.text;
+      return NextResponse.json(
+        {
+          response:
+            responseText ||
+            "I'm here to help! How can I assist you with Medley?",
+        },
+        { status: 200 },
+      );
+    }
+
     // Step 1: Call the ML backend /symptoms endpoint
     let mlBackendResponse: MLBackendResponse;
     try {
@@ -168,9 +241,6 @@ Format your response in JSON with this structure:
 }
 `;
 
-    const ai = new GoogleGenAI({ apiKey });
-    const model = "gemini-3.1-flash-lite-preview";
-
     // Step 5: Get dosage recommendations from Gemini
     const dosagePrompt = `
 You are a medical assistant. Based on the user's symptoms and the recommended medicines, provide appropriate dosage recommendations.
@@ -239,45 +309,49 @@ Respond with ONLY a JSON object (no markdown, no extra text):
       // Get MongoDB ObjectId for this medicine
       const medObjectId = medicineIdToObjectId.get(med.id);
 
-      const shopsForMedicine = dbContext.best_shops.slice(0, 3).map((shop) => {
-        let price = 0;
+      let shopsForMedicine: Array<{
+        id: string;
+        name: string;
+        distance: number;
+        price: number;
+      }> = [];
 
-        // We'll fetch prices below in a single query
-        return {
-          id: shop.shop_id,
-          name: shop.shop_name,
-          distance: shop.distance,
-          price: price, // Will be updated below
-        };
-      });
-
-      // Fetch all prices at once for this medicine from all top shops
-      if (medObjectId) {
+      // Fetch shop data for this medicine (with or without prices)
+      if (medObjectId && dbContext.best_shops.length > 0) {
         const shopObjectIds = dbContext.best_shops
           .slice(0, 3)
           .map((s) => shopIdToObjectId.get(s.shop_id))
-          .filter((id): id is any => id !== undefined);
+          .filter((id): id is object => id !== undefined);
 
         if (shopObjectIds.length > 0) {
           // Query ShopMedicine with both medicine and shops
-          const prices = await ShopMedicine.find({
+          const pricesData = await ShopMedicine.find({
             medicine: medObjectId,
             shop: { $in: shopObjectIds },
           }).lean();
 
           // Create a map of shop ObjectId -> price for quick lookup
           const priceMap = new Map(
-            prices.map((p) => [String(p.shop), p.price || 0]),
+            pricesData.map((p) => [String(p.shop), p.price || 0]),
           );
 
-          // Update prices in shopsForMedicine
-          for (let i = 0; i < shopsForMedicine.length; i++) {
-            const shopId = dbContext.best_shops[i].shop_id;
-            const shopObjId = shopIdToObjectId.get(shopId);
-            if (shopObjId) {
-              shopsForMedicine[i].price = priceMap.get(String(shopObjId)) || 0;
-            }
-          }
+          // Build shops list from best_shops, falling back to price 0 if not found
+          shopsForMedicine = dbContext.best_shops
+            .slice(0, 3)
+            .map((shop) => {
+              const shopObjId = shopIdToObjectId.get(shop.shop_id);
+              const price = shopObjId
+                ? (priceMap.get(String(shopObjId)) ?? 0)
+                : 0;
+
+              return {
+                id: shop.shop_id,
+                name: shop.shop_name,
+                distance: shop.distance || 0,
+                price: price,
+              };
+            })
+            .filter((shop) => shop.price > 0); // Only show shops where medicine is actually available
         }
       }
 
@@ -295,13 +369,21 @@ Respond with ONLY a JSON object (no markdown, no extra text):
 
     const shopsForDisplay: ShopInfo[] = dbContext.best_shops
       .slice(0, 5)
-      .map((shop) => ({
-        name: shop.shop_name,
-        id: shop.shop_id,
-        distance: `${shop.distance.toFixed(1)} km`,
-        location: shop.location,
-        phone: shop.phone,
-      }));
+      .map((shop) => {
+        const distance = shop.distance || 0;
+        const distanceStr =
+          typeof distance === "number"
+            ? `${distance.toFixed(1)} km`
+            : String(distance);
+
+        return {
+          name: shop.shop_name,
+          id: shop.shop_id,
+          distance: distanceStr,
+          location: shop.location,
+          phone: shop.phone,
+        };
+      });
 
     const config = {
       responseMimeType: "application/json",

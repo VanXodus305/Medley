@@ -18,8 +18,12 @@ export interface ShopInfo {
   phone: string;
 }
 
-export interface ShopWithCoverage extends ShopInfo {
+export interface ShopWithCoverage {
+  name: string;
+  id: string;
   distance: string | number;
+  location: string;
+  phone: string;
   coverage?: number;
   coveredCount?: number;
   requiredCount?: number;

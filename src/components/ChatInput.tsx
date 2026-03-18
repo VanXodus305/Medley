@@ -200,9 +200,7 @@ const ShopCard = ({ shop }: { shop: ShopInfo }) => {
           <div className="flex items-center gap-1 mt-2">
             <Clock className="w-3 h-3 text-gray-400" />
             <span className="text-xs text-gray-600">
-              {typeof shop.distance === "number"
-                ? `${shop.distance.toFixed(1)} km away`
-                : `${shop.distance} away`}
+              {`${shop.distance} away`}
             </span>
           </div>
           {shop.phone && (
@@ -321,7 +319,10 @@ const ChatInput = () => {
         text: structuredResponse.response,
         timestamp: new Date().toLocaleTimeString(),
         structured: structuredResponse,
-        queryType: (structuredResponse as any).queryType,
+        queryType:
+          "queryType" in structuredResponse
+            ? (structuredResponse as FindShopsResponse).queryType
+            : undefined,
       };
 
       setMessages((prev) => [...prev, botResponse]);
