@@ -158,9 +158,9 @@ export default function CustomerDashboard() {
       setDataLoading(true);
       setDataError(null);
       try {
-        // Load only first 300 medicines and 50 nearby shops for better performance
+        // Load all medicines and shops
         const [medicinesRes, shopsRes] = await Promise.all([
-          fetch("/api/medicines?limit=300&skip=0"),
+          fetch("/api/medicines?limit=1000&skip=0"),
           fetch("/api/shops?limit=50&skip=0"),
         ]);
         if (!medicinesRes.ok) throw new Error("Failed to load medicines");
@@ -578,26 +578,53 @@ export default function CustomerDashboard() {
                       <span className="text-base font-black text-emerald-600">
                         ₹{med.price}
                       </span>
-                      <button
-                        onClick={() =>
-                          addToCart({
-                            id: med.id,
-                            name: med.name,
-                            uses: med.uses,
-                            brand: med.brand,
-                            form: med.form,
-                          })
-                        }
-                        disabled={med.quantity === 0}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                          med.quantity === 0
-                            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                            : "bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm hover:shadow-emerald-200 hover:shadow-md active:scale-95"
-                        }`}
-                      >
-                        <FaPlus className="w-2.5 h-2.5" />
-                        {med.quantity === 0 ? "Out of stock" : "Add to cart"}
-                      </button>
+                      {(() => {
+                        const cartItem = cart.find(
+                          (item) => item.medicine.id === med.id,
+                        );
+                        return cartItem ? (
+                          <div className="flex items-center gap-1.5 bg-emerald-500 rounded-xl overflow-hidden">
+                            <button
+                              onClick={() => updateQty(med.id, -1)}
+                              className="px-2.5 py-1.5 text-white hover:bg-emerald-600 transition-colors active:scale-95"
+                            >
+                              <FaMinus className="w-2.5 h-2.5" />
+                            </button>
+                            <span className="px-2 py-1.5 text-white font-bold text-xs min-w-[2rem] text-center">
+                              {cartItem.quantity}
+                            </span>
+                            <button
+                              onClick={() => updateQty(med.id, 1)}
+                              className="px-2.5 py-1.5 text-white hover:bg-emerald-600 transition-colors active:scale-95"
+                            >
+                              <FaPlus className="w-2.5 h-2.5" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() =>
+                              addToCart({
+                                id: med.id,
+                                name: med.name,
+                                uses: med.uses,
+                                brand: med.brand,
+                                form: med.form,
+                              })
+                            }
+                            disabled={med.quantity === 0}
+                            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                              med.quantity === 0
+                                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                                : "bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm hover:shadow-emerald-200 hover:shadow-md active:scale-95"
+                            }`}
+                          >
+                            <FaPlus className="w-2.5 h-2.5" />
+                            {med.quantity === 0
+                              ? "Out of stock"
+                              : "Add to cart"}
+                          </button>
+                        );
+                      })()}
                     </div>
                   </div>
                 ))}
@@ -982,17 +1009,42 @@ export default function CustomerDashboard() {
                           </span>
                         ))}
                       </div>
-                      <button
-                        onClick={() => addToCart(med)}
-                        className="mt-auto w-full flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-bold text-white transition-all hover:opacity-90 active:scale-[0.98]"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, #10b981, #0d9488)",
-                        }}
-                      >
-                        <FaPlus className="w-3 h-3" />
-                        Add to Cart
-                      </button>
+                      {(() => {
+                        const cartItem = cart.find(
+                          (item) => item.medicine.id === med.id,
+                        );
+                        return cartItem ? (
+                          <div className="mt-auto flex items-center justify-center gap-1 bg-emerald-500 rounded-xl overflow-hidden">
+                            <button
+                              onClick={() => updateQty(med.id, -1)}
+                              className="px-3 py-2 text-white hover:bg-emerald-600 transition-colors active:scale-95"
+                            >
+                              <FaMinus className="w-3 h-3" />
+                            </button>
+                            <span className="px-3 py-2 text-white font-bold text-sm min-w-[2.5rem] text-center">
+                              {cartItem.quantity}
+                            </span>
+                            <button
+                              onClick={() => updateQty(med.id, 1)}
+                              className="px-3 py-2 text-white hover:bg-emerald-600 transition-colors active:scale-95"
+                            >
+                              <FaPlus className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => addToCart(med)}
+                            className="mt-auto w-full flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-bold text-white transition-all hover:opacity-90 active:scale-[0.98]"
+                            style={{
+                              background:
+                                "linear-gradient(135deg, #10b981, #0d9488)",
+                            }}
+                          >
+                            <FaPlus className="w-3 h-3" />
+                            Add to Cart
+                          </button>
+                        );
+                      })()}
                     </div>
                   ))}
                 </div>

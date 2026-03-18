@@ -47,6 +47,14 @@ interface CartItem {
 interface ShopStop {
   shop: Shop;
   medicines: CartItem[]; // which cart medicines to pick up here
+  backendMedicines: Array<{
+    medicine_id: string;
+    name: string;
+    brand: string;
+    form: string;
+    price: number;
+    quantity: number;
+  }>; // backend medicine data with correct prices
   distanceNum: number; // parsed km for sorting
 }
 
@@ -140,9 +148,25 @@ function buildVisitPlan(
 
     if (!bestShop || bestCovered.length === 0) break; // safety
 
+    // Build backendMedicines from shop data for consistency
+    const backendMedicines = bestCovered.map((item) => {
+      const shopMed = bestShop!.medicines.find(
+        (sm) => sm.medicine_id === item.medicine.id,
+      );
+      return {
+        medicine_id: item.medicine.id,
+        name: item.medicine.name,
+        brand: item.medicine.brand,
+        form: item.medicine.form,
+        price: shopMed?.price ?? 0,
+        quantity: shopMed?.quantity ?? 0,
+      };
+    });
+
     stops.push({
       shop: bestShop,
       medicines: bestCovered,
+      backendMedicines,
       distanceNum: parseKm(bestShop.distance_from_user),
     });
 
@@ -310,10 +334,128 @@ function FindPharmaciesContent() {
   }, []);
 
   // ── Build visit plan ───────────────────────────────────────────────────────
-  const { stops, unavailable } =
-    cartItems.length && shops.length
-      ? buildVisitPlan(cartItems, shops)
-      : { stops: [], unavailable: cartItems };
+  const [stops, setStops] = useState<ShopStop[]>([]);
+  const [unavailable, setUnavailable] = useState<CartItem[]>([]);
+  const [planLoading, setPlanLoading] = useState(false);
+
+  // Fetch optimized visit plan from backend
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      setStops([]);
+      setUnavailable([]);
+      setPlanLoading(false);
+      return;
+    }
+
+    setPlanLoading(true);
+    (async () => {
+      try {
+        const backendUrl =
+          process.env.NEXT_PUBLIC_BACKEND_API || "http://localhost:8000";
+        const response = await fetch(`${backendUrl}/optimize-cart`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            cart_items: cartItems.map((item) => ({
+              medicine_id: item.medicine.id,
+              quantity: item.quantity,
+            })),
+          }),
+        });
+
+        if (!response.ok) {
+          console.error("Backend /optimize-cart failed, using local fallback");
+          // Fallback to local optimization if backend fails
+          const localPlan = buildVisitPlan(cartItems, shops);
+          setStops(localPlan.stops);
+          setUnavailable(localPlan.unavailable);
+          setPlanLoading(false);
+          return;
+        }
+
+        const data = await response.json();
+
+        // Convert backend response to frontend ShopStop format
+        const backendStops: ShopStop[] = data.stops.map(
+          (stop: {
+            shop_id: string;
+            shop_name: string;
+            owner: string;
+            owner_name: string;
+            phone: string;
+            location: string;
+            distance: string;
+            distance_km: number;
+            total_price: number;
+            medicines: Array<{
+              medicine_id: string;
+              name: string;
+              brand: string;
+              form: string;
+              price: number;
+              quantity: number;
+            }>;
+          }) => {
+            // Format distance to ensure " km" suffix
+            let formattedDistance = stop.distance;
+            if (typeof formattedDistance === "number") {
+              formattedDistance = `${formattedDistance} km`;
+            } else if (
+              typeof formattedDistance === "string" &&
+              !formattedDistance.includes("km")
+            ) {
+              formattedDistance = `${formattedDistance} km`;
+            }
+
+            const shop = shops.find((s) => s.id === stop.shop_id) || {
+              id: stop.shop_id,
+              name: stop.shop_name,
+              owner: stop.owner_name || stop.owner,
+              phone: stop.phone,
+              location: stop.location,
+              distance_from_user: formattedDistance,
+              medicines: [],
+            };
+
+            const medicines: CartItem[] = stop.medicines
+              .map((med) => {
+                const cartItem = cartItems.find(
+                  (ci) => ci.medicine.id === med.medicine_id,
+                );
+                return cartItem || null;
+              })
+              .filter((item): item is CartItem => item !== null);
+
+            return {
+              shop,
+              medicines,
+              backendMedicines: stop.medicines,
+              distanceNum: stop.distance_km,
+            };
+          },
+        );
+
+        const backendUnavailable: CartItem[] = (
+          data.unavailable as Array<{ medicine_id: string }>
+        )
+          .map((unavailMed) =>
+            cartItems.find((ci) => ci.medicine.id === unavailMed.medicine_id),
+          )
+          .filter((item): item is CartItem => item !== null);
+
+        setStops(backendStops);
+        setUnavailable(backendUnavailable);
+        setPlanLoading(false);
+      } catch (error) {
+        console.error("Error calling /optimize-cart:", error);
+        // Fallback to local optimization
+        const localPlan = buildVisitPlan(cartItems, shops);
+        setStops(localPlan.stops);
+        setUnavailable(localPlan.unavailable);
+        setPlanLoading(false);
+      }
+    })();
+  }, [cartItems, shops]);
 
   const availableItems = cartItems.filter(
     (ci) => !unavailable.some((u) => u.medicine.id === ci.medicine.id),
@@ -448,7 +590,7 @@ function FindPharmaciesContent() {
           Total paid:{" "}
           <span className="font-black text-emerald-600">₹{totalPaid}</span>
         </p>
-        <p className="text-xs text-gray-400 mt-2">Redirecting to history…</p>
+        <p className="text-xs text-gray-400 mt-2">Redirecting to dashboard…</p>
       </Screen>
     );
 
@@ -525,9 +667,18 @@ function FindPharmaciesContent() {
 
               {stops.length === 0 ? (
                 <div className="bg-white rounded-2xl p-5 text-center border border-red-100">
-                  <p className="text-sm font-bold text-red-400">
-                    No nearby pharmacy has your medicines in stock
-                  </p>
+                  {planLoading ? (
+                    <>
+                      <Spinner color="success" size="sm" />
+                      <p className="text-sm text-gray-500 mt-3">
+                        Optimizing your medicine route...
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-sm font-bold text-red-400">
+                      No nearby pharmacy has your medicines in stock
+                    </p>
+                  )}
                 </div>
               ) : (
                 <div className="relative">
@@ -641,14 +792,29 @@ function FindPharmaciesContent() {
                               </div>
 
                               {/* Contact row */}
-                              <div className="flex flex-wrap gap-x-3 gap-y-0 mt-2">
+                              <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
                                 <span className="inline-flex items-center gap-1 text-[11px] text-gray-400">
                                   <FaPhone className="w-2.5 h-2.5" />
                                   {stop.shop.phone}
                                 </span>
                                 <span className="inline-flex items-center gap-1 text-[11px] text-gray-400">
                                   <FaUser className="w-2.5 h-2.5" />
-                                  {stop.shop.owner}
+                                  Owner: {stop.shop.owner}
+                                </span>
+                                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600">
+                                  <FaRupeeSign className="w-2.5 h-2.5" />
+                                  {stop.medicines.reduce((sum, m) => {
+                                    const backendMed =
+                                      stop.backendMedicines.find(
+                                        (bm) =>
+                                          bm.medicine_id === m.medicine.id,
+                                      );
+                                    return (
+                                      sum +
+                                      (backendMed?.price || 0) * m.quantity
+                                    );
+                                  }, 0)}{" "}
+                                  total
                                 </span>
                               </div>
                             </div>
@@ -657,8 +823,8 @@ function FindPharmaciesContent() {
                             <div className="border-t border-gray-100">
                               {stop.medicines.map((item, mIdx) => {
                                 const rec = received[item.medicine.id];
-                                const sm = stop.shop.medicines.find(
-                                  (s) => s.medicine_id === item.medicine.id,
+                                const backendMed = stop.backendMedicines.find(
+                                  (m) => m.medicine_id === item.medicine.id,
                                 );
                                 const isLast =
                                   mIdx === stop.medicines.length - 1;
@@ -704,20 +870,20 @@ function FindPharmaciesContent() {
                                           Collected · ₹{rec.pricePaid}/unit · ₹
                                           {rec.pricePaid * rec.quantity} total
                                         </p>
-                                      ) : sm ? (
+                                      ) : backendMed ? (
                                         <p className="text-[11px] text-gray-400 mt-0.5">
                                           Price:{" "}
                                           <span className="font-semibold text-gray-600">
-                                            ₹{sm.price}
+                                            ₹{backendMed.price}
                                           </span>
                                           <span className="text-gray-300 mx-1">
                                             ·
                                           </span>
                                           Stock:{" "}
                                           <span
-                                            className={`font-semibold ${sm.quantity > 10 ? "text-emerald-500" : "text-amber-500"}`}
+                                            className={`font-semibold ${backendMed.quantity > 10 ? "text-emerald-500" : "text-amber-500"}`}
                                           >
-                                            {sm.quantity} units
+                                            {backendMed.quantity} units
                                           </span>
                                         </p>
                                       ) : null}
@@ -735,7 +901,8 @@ function FindPharmaciesContent() {
                                             setModal({
                                               item,
                                               shop: stop.shop,
-                                              listedPrice: sm?.price ?? 0,
+                                              listedPrice:
+                                                backendMed?.price ?? 0,
                                             })
                                           }
                                           className="px-3 py-1.5 rounded-xl text-xs font-bold text-white transition-all active:scale-95 hover:opacity-90"
