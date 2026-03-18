@@ -1,30 +1,38 @@
 import { Schema, models, model } from "mongoose";
 
-const SessionSchema = new Schema(
+const PurchaseSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    medicines: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Medicine",
-      },
-    ],
-    shops: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Shop",
-      },
-    ],
-    sessionDate: {
-      type: Date,
-      default: Date.now,
-    },
-    notes: {
+    purchaseId: {
       type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    date: {
+      type: Date,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["complete", "pending", "cancelled"],
+      default: "complete",
+    },
+    items: [
+      {
+        medicineId: String,
+        shopId: String,
+        quantity: Number,
+        pricePaid: Number,
+      },
+    ],
+    total: {
+      type: Number,
+      required: true,
     },
   },
   {
@@ -33,7 +41,7 @@ const SessionSchema = new Schema(
 );
 
 // Index for faster queries on userId
-SessionSchema.index({ userId: 1, sessionDate: -1 });
+PurchaseSchema.index({ userId: 1, date: -1 });
 
-const Session = models["Session"] || model("Session", SessionSchema);
-export default Session;
+const Purchase = models["Purchase"] || model("Purchase", PurchaseSchema);
+export default Purchase;

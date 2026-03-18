@@ -147,10 +147,24 @@ export default function CustomerDashboard() {
   const [purchaseHistory, setPurchaseHistory] = useState<PurchaseRecord[]>([]);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(PURCHASE_HISTORY_KEY);
-      if (stored) setPurchaseHistory(JSON.parse(stored));
-    } catch {}
+    // Load purchase history from database
+    const loadPurchaseHistory = async () => {
+      try {
+        const res = await fetch("/api/purchases");
+        if (res.ok) {
+          const purchases = await res.json();
+          setPurchaseHistory(purchases);
+        }
+      } catch (error) {
+        console.error("Failed to load purchase history:", error);
+        // Fallback to localStorage if API fails
+        try {
+          const stored = localStorage.getItem(PURCHASE_HISTORY_KEY);
+          if (stored) setPurchaseHistory(JSON.parse(stored));
+        } catch {}
+      }
+    };
+    loadPurchaseHistory();
   }, []);
 
   useEffect(() => {
@@ -898,7 +912,6 @@ export default function CustomerDashboard() {
             tabList: "gap-2 border-b border-gray-200",
             cursor: "bg-gradient-to-r from-emerald-500 to-teal-500 shadow-lg",
             tab: "px-4 sm:px-6 py-3 data-[selected=true]:text-white text-sm sm:text-base",
-            tabContent: "py-4",
           }}
         >
           <Tab key="browse" title="Browse Medicines">

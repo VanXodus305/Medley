@@ -492,6 +492,14 @@ function FindPharmaciesContent() {
   const complete = async () => {
     const items = Object.values(received);
 
+    // Simplify items to only store medicineId, shopId, quantity, pricePaid
+    const simplifiedItems = items.map((it) => ({
+      medicineId: it.medicineId,
+      shopId: it.shopId,
+      quantity: it.quantity,
+      pricePaid: it.pricePaid,
+    }));
+
     // Group into per-shop summaries
     const shopSummary: Record<
       string,
@@ -520,10 +528,9 @@ function FindPharmaciesContent() {
     const record = {
       id: `PUR-${Date.now()}`,
       date: new Date().toISOString(),
-      items,
+      items: simplifiedItems,
       total: totalPaid,
       status: "complete" as const,
-      shops: Object.values(shopSummary),
     };
 
     try {
@@ -537,13 +544,6 @@ function FindPharmaciesContent() {
     }
 
     try {
-      const prev = JSON.parse(
-        localStorage.getItem("medley_purchase_history") ?? "[]",
-      );
-      localStorage.setItem(
-        "medley_purchase_history",
-        JSON.stringify([record, ...prev]),
-      );
       localStorage.removeItem("medley_cart");
     } catch {
       /* silent */
