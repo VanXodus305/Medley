@@ -10,7 +10,34 @@ interface PurchaseItem {
   pricePaid: number;
 }
 
-export async function GET(request: NextRequest) {
+interface EnrichedItem extends PurchaseItem {
+  medicineName: string;
+  brand: string;
+  form: string;
+  shopName: string;
+}
+
+interface ShopData {
+  name?: string;
+  location?: string;
+  phone?: string;
+}
+
+interface MedicineData {
+  name?: string;
+  brand?: string;
+  form?: string;
+}
+
+interface ShopSummary {
+  shopId: string;
+  shopName: string;
+  shopLocation: string;
+  shopPhone: string;
+  subtotal: number;
+}
+
+export async function GET() {
   try {
     const session = await auth();
     if (!session?.user?.email) {
@@ -41,41 +68,55 @@ export async function GET(request: NextRequest) {
 
         // Fetch unique shops and medicines once
         const uniqueShopIds = [...new Set(items.map((i) => i.shopId))];
-        const shopsMap: Record<string, any> = {};
+        const shopsMap: Record<string, ShopData> = {};
 
         await Promise.all(
           uniqueShopIds.map(async (shopId) => {
-            const shop = await Shop.findOne({ shopId }).lean();
-            shopsMap[shopId] = shop;
+            const shop = (await Shop.findOne({
+              shopId,
+            }).lean()) as ShopData | null;
+            shopsMap[shopId] = {
+              name: shop?.name,
+              location: shop?.location,
+              phone: shop?.phone,
+            };
           }),
         );
 
         const medicineIds = [...new Set(items.map((i) => i.medicineId))];
-        const medicinesMap: Record<string, any> = {};
+        const medicinesMap: Record<string, MedicineData> = {};
 
         await Promise.all(
           medicineIds.map(async (medicineId) => {
-            const medicine = await Medicine.findOne({ medicineId }).lean();
-            medicinesMap[medicineId] = medicine;
+            const medicine = (await Medicine.findOne({
+              medicineId,
+            }).lean()) as MedicineData | null;
+            medicinesMap[medicineId] = {
+              name: medicine?.name,
+              brand: medicine?.brand,
+              form: medicine?.form,
+            };
           }),
         );
 
         // Enrich items with cached data
-        const enrichedItems = items.map((item: PurchaseItem) => {
-          const medicine = medicinesMap[item.medicineId];
-          const shop = shopsMap[item.shopId];
-          return {
-            ...item,
-            medicineName: medicine?.name || "Unknown",
-            brand: medicine?.brand || "",
-            form: medicine?.form || "",
-            shopName: shop?.name || "Unknown",
-          };
-        });
+        const enrichedItems: EnrichedItem[] = items.map(
+          (item: PurchaseItem) => {
+            const medicine = medicinesMap[item.medicineId];
+            const shop = shopsMap[item.shopId];
+            return {
+              ...item,
+              medicineName: medicine?.name || "Unknown",
+              brand: medicine?.brand || "",
+              form: medicine?.form || "",
+              shopName: shop?.name || "Unknown",
+            };
+          },
+        );
 
         // Build shops summary
-        const shopSummaryMap: Record<string, any> = {};
-        enrichedItems.forEach((item: any) => {
+        const shopSummaryMap: Record<string, ShopSummary> = {};
+        enrichedItems.forEach((item: EnrichedItem) => {
           if (!shopSummaryMap[item.shopId]) {
             const shop = shopsMap[item.shopId];
             shopSummaryMap[item.shopId] = {
