@@ -63,7 +63,8 @@ interface PurchaseItem {
 }
 
 interface PurchaseRecord {
-  id: string;
+  _id?: string;
+  purchaseId: string;
   date: string;
   items: PurchaseItem[];
   total: number;
@@ -704,7 +705,7 @@ export default function CustomerDashboard() {
             <div className="divide-y divide-gray-100">
               {purchaseHistory.map((record) => (
                 <div
-                  key={record.id}
+                  key={record.purchaseId}
                   className="px-4 sm:px-6 py-5 hover:bg-gray-50/50 transition-colors"
                 >
                   {/* Record header */}
@@ -712,7 +713,7 @@ export default function CustomerDashboard() {
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-xs font-mono text-gray-400">
-                          {record.id}
+                          {record.purchaseId}
                         </span>
                         <span className="text-xs text-gray-400">
                           {new Date(record.date).toLocaleDateString("en-IN", {
@@ -757,7 +758,7 @@ export default function CustomerDashboard() {
                   <div className="bg-gray-50 rounded-xl overflow-hidden">
                     {record.items.map((item, idx) => (
                       <div
-                        key={`${record.id}-${item.medicineId}-${idx}`}
+                        key={`${record.purchaseId}-${item.medicineId}-${idx}`}
                         className={`flex items-center gap-3 px-4 py-2.5 ${
                           idx !== record.items.length - 1
                             ? "border-b border-gray-100"
