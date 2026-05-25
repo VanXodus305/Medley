@@ -165,7 +165,7 @@ Format your response in JSON with this structure:
 `;
 
     const ai = new GoogleGenAI({ apiKey });
-    const model = "gemini-3.1-flash-lite-preview";
+    const model = "gemini-3.1-flash-lite";
 
     const config = {
       responseMimeType: "application/json",

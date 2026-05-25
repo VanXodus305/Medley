@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
     }
 
     const ai = new GoogleGenAI({ apiKey });
-    const model = "gemini-3.1-flash-lite-preview";
+    const model = "gemini-3.1-flash-lite";
 
     // Check if this is a medical query or just a normal chat message
     const symptomKeywords = [
