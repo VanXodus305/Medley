@@ -151,12 +151,20 @@ Provide a friendly, helpful response. Keep it concise and conversational. If rel
       const backendBaseUrl =
         process.env.NEXT_PUBLIC_BACKEND_API || "http://localhost:8000";
       const backendUrl = `${backendBaseUrl}/symptoms`;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 180_000);
 
-      const backendResponse = await fetch(backendUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ symptoms }),
-      });
+      let backendResponse: Response;
+      try {
+        backendResponse = await fetch(backendUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ symptoms }),
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
 
       if (!backendResponse.ok) {
         throw new Error(
